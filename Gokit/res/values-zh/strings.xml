@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+ <string name="app_name">Gokit Demo</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_device_list">设备列表</string>
+    <string name="title_activity_air_link">AirLink网络配置</string>
+    <string name="title_activity_control_device"></string>
+    <string name="title_activity_login">账号登陆</string>
+    <string name="title_activity_bind_device">设备绑定</string>
+    <string name="title_activity_device_ap"></string>
+    <string name="title_activity_ned_device_control">未知设备</string>
+    <string name="title_activity_qtest">QTestActivity</string>
+    <string name="title_activity_device_log">硬件日志</string>
+    <string name="title_activity_register">注册账号</string>
+    <string name="title_activity_forget_password">忘记密码</string>
+    <string name="title_activity_qmultiline"></string>
+    <string name="title_activity_setting">设置</string>
+    
+    <string name="checking_network">查找网络</string>
+
+</resources>

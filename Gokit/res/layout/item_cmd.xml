@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout 
+        android:id="@+id/item_cmd_bool"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_deivce_height">
+
+        <TextView
+            android:id="@+id/tv_bool_name"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="18dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tv_bool_type"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_bool_name"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/tv_bool_name"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ToggleButton
+            android:id="@+id/tgb_bool_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+             />
+        
+    </RelativeLayout>
+    <RelativeLayout 
+        android:visibility="gone"
+        android:id="@+id/item_cmd_number"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_deivce_height">
+
+        <TextView
+            android:id="@+id/tv_number_name"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="18dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tv_number_type"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_number_name"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/tv_number_name"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tv_number_val"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_number_type"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+    </RelativeLayout>
+    <RelativeLayout 
+        android:visibility="gone"
+        android:id="@+id/item_cmd_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_deivce_height">
+
+        <TextView
+            android:id="@+id/tv_date_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tv_date_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_alignBottom="@+id/tv_date_name"
+            android:layout_toRightOf="@+id/tv_date_name"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tv_date_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_alignBaseline="@+id/tv_date_type"
+            android:layout_alignBottom="@+id/tv_date_type"
+            android:layout_alignParentRight="true"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+    </RelativeLayout>
+	<LinearLayout 
+	    android:id="@+id/item_cmd_string"
+	    android:visibility="gone"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical">
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	   		android:layout_height="@dimen/item_deivce_height">
+		 <TextView
+	            android:id="@+id/tv_string_name"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="@color/black"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:text=""
+	            
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+		 <TextView
+		     android:id="@+id/tv_string_type"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:layout_centerVertical="true"
+		     android:textColor="@color/black"
+		     android:layout_toRightOf="@+id/tv_string_name"
+		     android:text=""
+		     android:textAppearance="?android:attr/textAppearanceMedium" />
+	        
+	    </RelativeLayout>
+	    <RelativeLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="5dip"
+	        android:layout_margin="10dip"
+	        android:background="@drawable/round_rect">
+		        <TextView
+		            android:id="@+id/tv_string_val"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentLeft="true"
+		            android:layout_centerVertical="true"
+		            android:textColor="@color/black"
+		            android:layout_marginLeft="36dp"
+		            android:text=""
+		            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+		       
+
+	    </RelativeLayout>
+	</LinearLayout>
+</RelativeLayout>
