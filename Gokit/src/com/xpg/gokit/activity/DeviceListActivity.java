@@ -31,7 +31,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xpg.gokit.R;
 import com.xpg.gokit.adapter.DeviceListAdapter;
 import com.xpg.gokit.bean.ControlDevice;
-import com.xpg.gokit.constant.Constant;
 import com.xpg.gokit.setting.SettingManager;
 import com.xpg.gokit.utils.CRCUtils;
 import com.xpg.gokit.utils.NetUtils;
@@ -39,7 +38,6 @@ import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 
 /**
  * 设备列表界面
@@ -71,7 +69,7 @@ public class DeviceListActivity extends BaseActivity implements
 			case REFLASH:
 				if (!isGettingDevice) {
 					initEmptyData();
-					mCenter.getXPGWifiSDK().setListener(gccDelegate);
+//					mCenter.getXPGWifiSDK().setListener(gccDelegate);
 					getDeviceList();
 				}
 				break;
@@ -104,103 +102,65 @@ public class DeviceListActivity extends BaseActivity implements
 
 	};
 	boolean finishdownload = false;
-	XPGWifiSDKListener gccDelegate = new XPGWifiSDKListener() {
-		public void onUpdateProduct(int result) {
-			finishdownload = true;
-		};
-
-		public void onDiscovered(int result, XPGWifiDeviceList devices) {
-			Log.d("c", "Device count:" + devices.GetCount());
-			storeDeviceList(devices);
-			Message msg = new Message();
-			msg.what = NEW_DEVICE;
-			handler.sendMessage(msg);
-		};
-
-		public void onGetDeviceInfo(int error, String errorMessage,
-				String productKey, String did, String mac, String passCode,
-				String host, int port, int isOnline) {
-		};
-
-		public void onChangeUserEmail(int error, String errorMessage) {
-		};
-
-		public void onChangeUserPassword(int error, String errorMessage) {
-		};
-
-		public void onChangeUserPhone(int error, String errorMessage) {
-		};
-
-		public void onTransUser(int error, String errorMessage) {
-		};
-
-		public void onUserLogout(int error, String errorMessage) {
-			String uid = setmanager.getUid();
-			String token = setmanager.getToken();
-			String hideuid = setmanager.getHideUid();
-			String hidetoken = setmanager.getHideToken();
-			if (!uid.equals("") && !token.equals("")) {
-				mCenter.getXPGWifiSDK().GetBoundDevices(uid, token);
-			} else if (!hideuid.equals("") && !hidetoken.equals("")) {
-				mCenter.getXPGWifiSDK().GetBoundDevices(hideuid, hidetoken);
-			} else {
-				mCenter.getXPGWifiSDK().RegisterAnonymousUser(
-						setmanager.getPhoneId());
-			}
-		};
-
-		public void onRequestSendVerifyCode(int error, String errorMessage) {
-		};
-
-		public void onBindDevice(int error, String errorMessage) {
-		};
-
-		public void onRegisterUser(int error, String errorMessage, String uid,
-				String token) {
-		};
-
-		public void onUnbindDevice(int error, String errorMessage) {
-		};
-
-		public void onUserLogin(int error, String errorMessage, String uid,
-				String token) {
-			if (uid != null && token != null && !uid.equals("")
-					&& !token.equals("") && error == 0) {
-				final String fuid = uid;
-				final String ftoken = token;
-				setmanager.setHideUid(fuid);
-				setmanager.setHideToken(ftoken);
-				getDeviceList();
-			} else {
-				Message msg = new Message();
-				msg.what = LOG;
-				msg.obj = "网络较差，请检查网络连接";
-				handler.sendMessage(msg);
-
-			}
-		};
-
-		public long onCalculateCRC(byte[] data) {
-			return CRCUtils.CalculateCRC(xpgWifiDevice.GetProductKey(), data);
-		};
-
-		private void storeDeviceList(XPGWifiDeviceList devices) {
-			// TODO Auto-generated method stub
-			BaseActivity.deviceslist = new ArrayList<XPGWifiDevice>();
-			for (int i = 0; i < devices.GetCount(); i++) {
-
-				BaseActivity.deviceslist.add(devices.GetItem(i));
-			}
-		}
-
-		public void onGetSSIDList(
-				com.xtremeprog.xpgconnect.XPGWifiSSIDList list, int result) {
-		};
-
-		public void onSetAirLink(com.xtremeprog.xpgconnect.XPGWifiDevice device) {
-
-		};
+	
+	protected void onUpdateProduct(int result) {
+		finishdownload = true;
 	};
+	
+	protected void onDiscovered(int result, XPGWifiDeviceList devices) {
+		Log.d("c", "Device count:" + devices.GetCount());
+		storeDeviceList(devices);
+		Message msg = new Message();
+		msg.what = NEW_DEVICE;
+		handler.sendMessage(msg);
+	};
+	
+	protected void onUserLogout(int error, String errorMessage) {
+		String uid = setmanager.getUid();
+		String token = setmanager.getToken();
+		String hideuid = setmanager.getHideUid();
+		String hidetoken = setmanager.getHideToken();
+		if (!uid.equals("") && !token.equals("")) {
+			mCenter.getXPGWifiSDK().GetBoundDevices(uid, token);
+		} else if (!hideuid.equals("") && !hidetoken.equals("")) {
+			mCenter.getXPGWifiSDK().GetBoundDevices(hideuid, hidetoken);
+		} else {
+			mCenter.getXPGWifiSDK().RegisterAnonymousUser(
+					setmanager.getPhoneId());
+		}
+	};
+	
+	public void onUserLogin(int error, String errorMessage, String uid,
+			String token) {
+		if (uid != null && token != null && !uid.equals("")
+				&& !token.equals("") && error == 0) {
+			final String fuid = uid;
+			final String ftoken = token;
+			setmanager.setHideUid(fuid);
+			setmanager.setHideToken(ftoken);
+			getDeviceList();
+		} else {
+			Message msg = new Message();
+			msg.what = LOG;
+			msg.obj = "网络较差，请检查网络连接";
+			handler.sendMessage(msg);
+
+		}
+	};
+	
+	public long onCalculateCRC(byte[] data) {
+		return CRCUtils.CalculateCRC(xpgWifiDevice.GetProductKey(), data);
+	};
+
+	private void storeDeviceList(XPGWifiDeviceList devices) {
+		// TODO Auto-generated method stub
+		BaseActivity.deviceslist = new ArrayList<XPGWifiDevice>();
+		for (int i = 0; i < devices.GetCount(); i++) {
+
+			BaseActivity.deviceslist.add(devices.GetItem(i));
+		}
+	}
+	
 
 	XPGWifiDeviceListener deviceDelegate = new XPGWifiDeviceListener() {
 
@@ -319,7 +279,7 @@ public class DeviceListActivity extends BaseActivity implements
 
 		setmanager = new SettingManager(this.getApplicationContext());
 		Log.i("androidid", setmanager.getPhoneId());
-		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
+//		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 
 		// mCenter.getXPGWifiSDK().RegisterAnonymousUser(setmanager.getPhoneId());
 
@@ -396,7 +356,6 @@ public class DeviceListActivity extends BaseActivity implements
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		menu.clear();
 		String uid = setmanager.getUid();
 		if (uid.equals("")) {
@@ -446,7 +405,6 @@ public class DeviceListActivity extends BaseActivity implements
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 
 		timer.cancel();
@@ -457,10 +415,8 @@ public class DeviceListActivity extends BaseActivity implements
 	}
 
 	public void onResume() {
-		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
+//		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 		super.onResume();
-		// notfinish = true;
-		// downLoadThread();
 
 		if (timer == null) {
 			timer = new Timer();
@@ -468,14 +424,12 @@ public class DeviceListActivity extends BaseActivity implements
 
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					final String product_key = setmanager
 							.getDownLoadProduct_key();
 					if (product_key != null) {
 						AsyncHttpClient client = new AsyncHttpClient();
 
 						// http://site.gizwits.com/v2/datapoint?product_key=be606a7b34d441b59d7eba2c080ff805&format=json
-						servername = Constant.Server;
 						client.get("http://" + servername
 								+ "/v2/datapoint?product_key=" + product_key
 								+ "&format=json",
@@ -483,8 +437,6 @@ public class DeviceListActivity extends BaseActivity implements
 									@Override
 									public void onSuccess(int arg0,
 											JSONObject json) {
-										// TODO Auto-generated method stub
-										// super.onSuccess(arg0, arg1);
 										File file = new File(
 												DeviceListActivity.this
 														.getFilesDir()
@@ -504,7 +456,6 @@ public class DeviceListActivity extends BaseActivity implements
 											Log.i("filesuccess",
 													file.toString());
 										} catch (IOException e) {
-											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
 									}
