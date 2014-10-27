@@ -7,11 +7,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 
 import com.xpg.gokit.sdk.MessageCenter;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
+import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
 import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 import com.xtremeprog.xpgconnect.XPGWifiSSIDList;
 
@@ -21,7 +23,74 @@ public class BaseActivity extends Activity {
 	protected static List<XPGWifiDevice> deviceslist = new ArrayList<XPGWifiDevice>();
 	static boolean isInit = false;
 	MessageCenter mCenter;
-	private XPGWifiSDKListener listener = new XPGWifiSDKListener() {
+
+	private XPGWifiDeviceListener deviceListener = new XPGWifiDeviceListener() {
+		public void onBindDevice(int error, String errorMessage) {
+			BaseActivity.this.onSDKBindDevice(error, errorMessage);
+		};
+
+		public void onUnbindDevice(int error, String errorMessage) {
+			BaseActivity.this.onUnbindDevice(error, errorMessage);
+		};
+
+		public void onUpdateUI() {
+			BaseActivity.this.onUpdateUI();
+		};
+
+		public void onConnectFailed() {
+			BaseActivity.this.onConnectFailed();
+		};
+
+		public void onLogin(int result) {
+			BaseActivity.this.onLogin(result);
+		};
+
+		public void onQueryHardwareInfo(int error,
+				com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct pInfo) {
+			BaseActivity.this.onQueryHardwareInfo(error, pInfo);
+		};
+
+		public void onReceiveAlertsAndFaultsInfo(
+				com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo alerts,
+				com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo faults) {
+			BaseActivity.this.onReceiveAlertsAndFaultsInfo(alerts, faults);
+		};
+
+		public void onDeviceOnline(boolean isOnline) {
+			BaseActivity.this.onDeviceOnline(isOnline);
+		};
+
+		public void onGetPasscode(int result) {
+			BaseActivity.this.onGetPasscode(result);
+		};;
+
+		public void onDisconnected() {
+			BaseActivity.this.onDisconnected();
+		}
+
+		public boolean onReceiveData(String data) {
+			return BaseActivity.this.onReceiveData(data);
+		};
+
+		public void onConnected() {
+			BaseActivity.this.onConnected();
+		}
+
+		public void onSetSwitcher(int result) {
+			BaseActivity.this.onSetSwitcher(result);
+		};
+
+		public void onDeviceLog(short nLevel, String tag, String source,
+				String content) {
+			BaseActivity.this.onDeviceLog(nLevel, tag, source, content);
+		};
+
+		public void onLoginMQTT(int result) {
+			BaseActivity.this.onLoginMQTT(result);
+		}
+	};
+
+	private XPGWifiSDKListener sdkListener = new XPGWifiSDKListener() {
 
 		public void onChangeUserEmail(int error, String errorMessage) {
 			BaseActivity.this.onChangeUserEmail(error, errorMessage);
@@ -55,21 +124,21 @@ public class BaseActivity extends Activity {
 		public void onGetDeviceInfo(int error, String errorMessage,
 				String productKey, String did, String mac, String passCode,
 				String host, int port, int isOnline) {
-			BaseActivity.this.onGetDeviceInfo(error, errorMessage, productKey, did, mac, passCode, host, port, isOnline);
+			BaseActivity.this.onGetDeviceInfo(error, errorMessage, productKey,
+					did, mac, passCode, host, port, isOnline);
 		};
 
 		public void onBindDevice(int error, String errorMessage) {
 			BaseActivity.this.onBindDevice(error, errorMessage);
 		};
 
-		// public long onCalculateCRC(byte[] data) {};
 		public void onRegisterUser(int error, String errorMessage, String uid,
 				String token) {
 			BaseActivity.this.onRegisterUser(error, errorMessage, uid, token);
 		};
 
 		public void onUnbindDevice(int error, String errorMessage) {
-			BaseActivity.this.onUnbindDevice(error, errorMessage);
+			BaseActivity.this.onSDKUnbindDevice(error, errorMessage);
 		};
 
 		public void onUserLogin(int error, String errorMessage, String uid,
@@ -98,7 +167,7 @@ public class BaseActivity extends Activity {
 		actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		mCenter = MessageCenter.getInstance(this.getApplicationContext());
-		mCenter.getXPGWifiSDK().setListener(listener);
+		mCenter.getXPGWifiSDK().setListener(sdkListener);
 	}
 
 	public static XPGWifiDevice findDeviceByMac(String mac, String did) {
@@ -149,7 +218,7 @@ public class BaseActivity extends Activity {
 	};
 
 	protected void onDiscovered(int result, XPGWifiDeviceList devices) {
-		
+
 	}
 
 	protected void onGetDeviceInfo(int error, String errorMessage,
@@ -157,14 +226,14 @@ public class BaseActivity extends Activity {
 			String host, int port, int isOnline) {
 	};
 
-	protected void onBindDevice(int error, String errorMessage) {
+	protected void onSDKBindDevice(int error, String errorMessage) {
 	};
 
 	protected void onRegisterUser(int error, String errorMessage, String uid,
 			String token) {
 	};
 
-	protected void onUnbindDevice(int error, String errorMessage) {
+	protected void onSDKUnbindDevice(int error, String errorMessage) {
 	};
 
 	protected void onUserLogin(int error, String errorMessage, String uid,
@@ -179,4 +248,55 @@ public class BaseActivity extends Activity {
 
 	protected void onGetSSIDList(XPGWifiSSIDList list, int result) {
 	};
+
+	public void onBindDevice(int error, String errorMessage) {
+	};
+
+	public void onUnbindDevice(int error, String errorMessage) {
+	};
+
+	public void onUpdateUI() {
+	};
+
+	public void onConnectFailed() {
+	};
+
+	public void onLogin(int result) {
+	};
+
+	public void onQueryHardwareInfo(int error,
+			com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct pInfo) {
+	};
+
+	public void onReceiveAlertsAndFaultsInfo(
+			com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo alerts,
+			com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo faults) {
+	};
+
+	public void onDeviceOnline(boolean isOnline) {
+	};
+
+	public void onGetPasscode(int result) {
+	};;
+
+	public void onDisconnected() {
+	}
+
+	public boolean onReceiveData(String data) {
+		return true;
+	};
+
+	public void onConnected() {
+	}
+
+	public void onSetSwitcher(int result) {
+	};
+
+	public void onDeviceLog(short nLevel, String tag, String source,
+			String content) {
+	};
+
+	public void onLoginMQTT(int result) {
+	}
+
 }

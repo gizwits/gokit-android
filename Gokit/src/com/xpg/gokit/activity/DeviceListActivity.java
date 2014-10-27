@@ -69,7 +69,6 @@ public class DeviceListActivity extends BaseActivity implements
 			case REFLASH:
 				if (!isGettingDevice) {
 					initEmptyData();
-//					mCenter.getXPGWifiSDK().setListener(gccDelegate);
 					getDeviceList();
 				}
 				break;
@@ -102,11 +101,11 @@ public class DeviceListActivity extends BaseActivity implements
 
 	};
 	boolean finishdownload = false;
-	
+
 	protected void onUpdateProduct(int result) {
 		finishdownload = true;
 	};
-	
+
 	protected void onDiscovered(int result, XPGWifiDeviceList devices) {
 		Log.d("c", "Device count:" + devices.GetCount());
 		storeDeviceList(devices);
@@ -114,7 +113,7 @@ public class DeviceListActivity extends BaseActivity implements
 		msg.what = NEW_DEVICE;
 		handler.sendMessage(msg);
 	};
-	
+
 	protected void onUserLogout(int error, String errorMessage) {
 		String uid = setmanager.getUid();
 		String token = setmanager.getToken();
@@ -129,7 +128,7 @@ public class DeviceListActivity extends BaseActivity implements
 					setmanager.getPhoneId());
 		}
 	};
-	
+
 	public void onUserLogin(int error, String errorMessage, String uid,
 			String token) {
 		if (uid != null && token != null && !uid.equals("")
@@ -147,7 +146,7 @@ public class DeviceListActivity extends BaseActivity implements
 
 		}
 	};
-	
+
 	public long onCalculateCRC(byte[] data) {
 		return CRCUtils.CalculateCRC(xpgWifiDevice.GetProductKey(), data);
 	};
@@ -160,114 +159,6 @@ public class DeviceListActivity extends BaseActivity implements
 			BaseActivity.deviceslist.add(devices.GetItem(i));
 		}
 	}
-	
-
-	XPGWifiDeviceListener deviceDelegate = new XPGWifiDeviceListener() {
-
-		public void onReceiveAlertsAndFaultsInfo(
-				com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo alerts,
-				com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo faults) {
-		};
-
-		public void onBindDevice(int error, String errorMessage) {
-		};
-
-		public void onUnbindDevice(int error, String errorMessage) {
-		};
-
-		public void onUpdateUI() {
-		};
-
-		public void onLogin(int result) {
-			Log.d("wifi", "onLogin:" + result);
-			if (result == 0) {
-				handler.sendEmptyMessage(LOGINSUCCESS);
-				Intent it = new Intent();
-				it.setClass(DeviceListActivity.this,
-						ControlDeviceActivity.class);
-				it.putExtra("device", device);
-				it.putExtra("islocal", device.getIp() == null
-						|| !device.getIp().equals(""));
-				startActivity(it);
-			} else {
-				handler.sendEmptyMessage(LOGINFAIL);
-			}
-		};
-
-		public void onQueryHardwareInfo(int error,
-				com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct pInfo) {
-		};
-
-		public boolean onReceiveData(String data) {
-			return false;
-		};
-
-		public void onDeviceOnline(boolean isOnline) {
-		};
-
-		public void onGetPasscode(int result) {
-		};
-
-		public void onLoginMQTT(int result) {
-			Log.d("wifi", "onLoginCloud:" + result);
-			if (result == 0) {
-				handler.sendEmptyMessage(LOGINSUCCESS);
-				Intent it = new Intent();
-
-				it.setClass(DeviceListActivity.this,
-						ControlDeviceActivity.class);
-				it.putExtra("device", device);
-				it.putExtra("islocal", device.getIp() == null
-						|| !device.getIp().equals(""));
-				startActivity(it);
-
-			} else {
-				handler.sendEmptyMessage(LOGINFAIL);
-			}
-		};
-
-		public void onConnected() {
-			Log.i("connected", "connected");
-			if (xpgWifiDevice.IsLAN()) {
-				if (xpgWifiDevice.GetPasscode() != null
-						&& !xpgWifiDevice.GetPasscode().equals("")) {
-					xpgWifiDevice.Login("", xpgWifiDevice.GetPasscode());
-				} else {
-					Intent it = new Intent();
-					it.setClass(DeviceListActivity.this,
-							NewDeviceControlActivity.class);
-					it.putExtra("device", device);
-					startActivity(it);
-				}
-			} else {
-				String uid = setmanager.getUid();
-				String token = setmanager.getToken();
-				String hideuid = setmanager.getHideUid();
-				String hidetoken = setmanager.getHideToken();
-				if (!uid.equals("") && !token.equals("")) {
-					xpgWifiDevice.Login(uid, token);
-				} else if (!hideuid.equals("") && !hidetoken.equals("")) {
-					xpgWifiDevice.Login(hideuid, hidetoken);
-				}
-
-			}
-		}
-
-		public void onConnectFailed() {
-			Log.i("conn fail", "conn fail");
-			handler.sendEmptyMessage(CONNECTEDFAIL);
-		};
-
-		public void onDisconnected() {
-		};
-
-		public void onDeviceLog(short nLevel, String tag, String source,
-				String content) {
-		};
-
-		public void onSetSwitcher(int result) {
-		};
-	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -279,7 +170,7 @@ public class DeviceListActivity extends BaseActivity implements
 
 		setmanager = new SettingManager(this.getApplicationContext());
 		Log.i("androidid", setmanager.getPhoneId());
-//		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
+		// this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 
 		// mCenter.getXPGWifiSDK().RegisterAnonymousUser(setmanager.getPhoneId());
 
@@ -410,12 +301,9 @@ public class DeviceListActivity extends BaseActivity implements
 		timer.cancel();
 		timer = null;
 
-		// notfinish = false;
-		// downloadThread.interrupt();
 	}
 
 	public void onResume() {
-//		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 		super.onResume();
 
 		if (timer == null) {
@@ -529,7 +417,7 @@ public class DeviceListActivity extends BaseActivity implements
 			}
 			if (!device.isNew()) {
 				if (xpgWifiDevice != null) {
-					xpgWifiDevice.setListener(deviceDelegate);
+					// xpgWifiDevice.setListener(deviceDelegate);
 					dialog.show();
 					if (xpgWifiDevice.IsLAN()) {
 
@@ -556,7 +444,7 @@ public class DeviceListActivity extends BaseActivity implements
 			} else {
 				if (xpgWifiDevice != null) {
 
-					xpgWifiDevice.setListener(deviceDelegate);
+					// xpgWifiDevice.setListener(deviceDelegate);
 					dialog.show();
 					if (xpgWifiDevice.IsLAN()) {
 						// if(!xpgWifiDevice.ConnectToLAN()){
@@ -611,4 +499,72 @@ public class DeviceListActivity extends BaseActivity implements
 
 		isGettingDevice = false;
 	}
+
+	@Override
+	public void onLogin(int result) {
+		Log.d("wifi", "onLogin:" + result);
+		if (result == 0) {
+			handler.sendEmptyMessage(LOGINSUCCESS);
+			Intent it = new Intent();
+			it.setClass(DeviceListActivity.this, ControlDeviceActivity.class);
+			it.putExtra("device", device);
+			it.putExtra("islocal", device.getIp() == null
+					|| !device.getIp().equals(""));
+			startActivity(it);
+		} else {
+			handler.sendEmptyMessage(LOGINFAIL);
+		}
+	};
+
+	@Override
+	public void onLoginMQTT(int result) {
+		Log.d("wifi", "onLoginCloud:" + result);
+		if (result == 0) {
+			handler.sendEmptyMessage(LOGINSUCCESS);
+			Intent it = new Intent();
+
+			it.setClass(DeviceListActivity.this, ControlDeviceActivity.class);
+			it.putExtra("device", device);
+			it.putExtra("islocal", device.getIp() == null
+					|| !device.getIp().equals(""));
+			startActivity(it);
+
+		} else {
+			handler.sendEmptyMessage(LOGINFAIL);
+		}
+	};
+
+	@Override
+	public void onConnected() {
+		Log.i("connected", "connected");
+		if (xpgWifiDevice.IsLAN()) {
+			if (xpgWifiDevice.GetPasscode() != null
+					&& !xpgWifiDevice.GetPasscode().equals("")) {
+				xpgWifiDevice.Login("", xpgWifiDevice.GetPasscode());
+			} else {
+				Intent it = new Intent();
+				it.setClass(DeviceListActivity.this,
+						NewDeviceControlActivity.class);
+				it.putExtra("device", device);
+				startActivity(it);
+			}
+		} else {
+			String uid = setmanager.getUid();
+			String token = setmanager.getToken();
+			String hideuid = setmanager.getHideUid();
+			String hidetoken = setmanager.getHideToken();
+			if (!uid.equals("") && !token.equals("")) {
+				xpgWifiDevice.Login(uid, token);
+			} else if (!hideuid.equals("") && !hidetoken.equals("")) {
+				xpgWifiDevice.Login(hideuid, hidetoken);
+			}
+
+		}
+	}
+
+	@Override
+	public void onConnectFailed() {
+		Log.i("conn fail", "conn fail");
+		handler.sendEmptyMessage(CONNECTEDFAIL);
+	};
 }

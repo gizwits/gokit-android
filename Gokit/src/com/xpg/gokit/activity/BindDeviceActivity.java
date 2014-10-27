@@ -41,6 +41,9 @@ public class BindDeviceActivity extends BaseActivity implements OnClickListener 
 			}
 		}
 	};
+	
+	
+	
 	XPGWifiDeviceListener deviceDelegate = new XPGWifiDeviceListener() {
 		public void onBindDevice(int error, String errorMessage) {};
 		public void onUnbindDevice(int error, String errorMessage) {};
