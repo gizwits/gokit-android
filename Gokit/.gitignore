@@ -35,8 +35,6 @@ proguard/
 *.log
 
 local
-libs/armeabi
-libs/xpgconnectcli.jar
 src/com/xtremeprog/xpgconnect/*.java
 jni/*_wrap.*
 /obj/
