@@ -6,15 +6,40 @@ import android.util.Log;
 
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
-
+/**
+ * 设备的IP地址，MAC地址等信息存储类
+ * @author Sunny Ding
+ * */
+@SuppressWarnings("serial")
 public class ControlDevice implements Serializable {
 	private boolean isOnline ;
+	/**
+	 * mac地址
+	 * */
 	private String mac;
+	/**
+	 * ip地址
+	 * */
 	private String ip;
+	/**
+	 * 设备名字
+	 * */
 	private String name;
+	/**
+	 * 是否没有passcode
+	 * */
 	private boolean isNew;
+	/**
+	 * 设备did
+	 * */
 	private String did;
+	/**
+	 * 设备的productKey
+	 * */
 	private String productKey;
+	/**
+	 * 设备的passcode
+	 * */
 	private String passcode;
 	
 	private boolean isTitle = false;
@@ -25,7 +50,11 @@ public class ControlDevice implements Serializable {
 		this.titleName = titleName;
 		
 	}
-	
+	/**
+	 * 
+	 * 把设备的IP地址，MAC地址等信息从XPGWifiDevice存进这个类
+	 * 
+	 * */
 	public ControlDevice(String name,XPGWifiDevice device){
 		if(device!=null){
 			this.mac = device.GetMacAddress();			
@@ -89,10 +118,6 @@ public class ControlDevice implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-
-	
 	public boolean isTitle() {
 		return isTitle;
 	}
@@ -113,12 +138,9 @@ public class ControlDevice implements Serializable {
 		return isOnline;
 	}
 
-
 	public void setOnline(boolean isOnline) {
 		this.isOnline = isOnline;
 	}
-
-
 	public void setProductKey(String productKey) {
 		this.productKey = productKey;
 	}

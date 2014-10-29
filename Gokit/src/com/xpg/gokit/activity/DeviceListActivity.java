@@ -151,7 +151,6 @@ public class DeviceListActivity extends BaseActivity implements
 	};
 
 	private void storeDeviceList(XPGWifiDeviceList devices) {
-		// TODO Auto-generated method stub
 		BaseActivity.deviceslist = new ArrayList<XPGWifiDevice>();
 		for (int i = 0; i < devices.GetCount(); i++) {
 
@@ -266,7 +265,6 @@ public class DeviceListActivity extends BaseActivity implements
 			Message msg = new Message();
 			msg.what = REFLASH;
 			handler.sendMessage(msg);
-
 			break;
 		case R.id.action_add_device:
 			boolean iswifi = NetUtils.isWifiConnected(this);
@@ -360,12 +358,7 @@ public class DeviceListActivity extends BaseActivity implements
 		getDeviceList();
 	}
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		// notfinish = false;
-	}
+
 
 	private void EmptyData() {
 		devicelist = new ArrayList<ControlDevice>();
@@ -378,28 +371,23 @@ public class DeviceListActivity extends BaseActivity implements
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
 		devicelist = new ArrayList<ControlDevice>();
 		adapter = new DeviceListAdapter(this, devicelist);
 		lv_device_list.setAdapter(adapter);
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
-
 		lv_device_list = (ListView) findViewById(R.id.lv_device_list);
 		dialog = new ProgressDialog(this);
 	}
 
 	private void initListener() {
-		// TODO Auto-generated method stub
 		lv_device_list.setOnItemClickListener(this);
 		lv_device_list.setOnItemLongClickListener(this);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-		// TODO Auto-generated method stub
 		device = devicelist.get(pos);
 		if (!device.isTitle()) {
 			xpgWifiDevice = BaseActivity.findDeviceByMac(device.getMac(),
@@ -474,7 +462,6 @@ public class DeviceListActivity extends BaseActivity implements
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View v, int pos,
 			long id) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -567,4 +554,10 @@ public class DeviceListActivity extends BaseActivity implements
 		Log.i("conn fail", "conn fail");
 		handler.sendEmptyMessage(CONNECTEDFAIL);
 	};
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		// notfinish = false;
+	}
 }

@@ -10,8 +10,21 @@ import java.io.OutputStream;
 
 import android.content.Context;
 import android.util.Log;
-
+/**
+ * 
+ * Assert文件夹处理工具
+ * 
+ * @author Sunny Ding
+ * */
 public class AssertsUtils {
+	/**
+	 * 从assert中的name文件读出内容
+	 * @param c
+	 * @param name
+	 * @param 
+	 * @return result
+	 *          文件内容
+	 */
 	static public String getTextByName(Context c,String name){
 		String result = "";  
         try {  
@@ -53,16 +66,22 @@ public class AssertsUtils {
 		
 		return true;
 	}
-	
+	/**
+	 * 把所有assert的文件复制到SDK卡中
+	 * @param c
+	 * @throws IOException 
+	 */
 	static public boolean copyAllAssertToCacheFolder(Context c ) throws IOException{
-		
+		//获取asset文件夹下的文件列表
 		String [] files = c.getAssets().list("Devices");
+		//用于获取/data/data//files目录
 		String filefolder = c.getFilesDir().toString();
 //		File configfile = new File(filefolder+"/XPGWifiConfig.json");
 		
 //		if(!configfile.exists()){
 //			copyFileTo(c, "XPGWifiConfig.json", filefolder+"/XPGWifiConfig.json");
 //		}
+		//新建目录
 		File devicefile = new File(filefolder+"/Devices/");
 		devicefile.mkdirs();
 		

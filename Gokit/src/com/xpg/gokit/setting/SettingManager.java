@@ -9,6 +9,7 @@ import android.util.Log;
  * 
  * SharePreference处理类
  * 
+ * @author Sunny Ding
  * */
 public class SettingManager {
 	SharedPreferences spf;
@@ -58,7 +59,7 @@ public class SettingManager {
 		return android_id;
 	}
 	/**
-	 *下载ProductKey
+	 *set一堆ProductKey在SharePreference的一个变量下
 	 *
 	 * */
 	public void DownLoadProduct_key(String produck_key) {
@@ -74,7 +75,10 @@ public class SettingManager {
 		}
 
 	}
-	
+	/**
+	 *在SharePreference的一个变量下的一堆ProductKey中获取第一个ProductKey
+	 *
+	 * */
 	public String getDownLoadProduct_key() {
 		String allkeys = spf.getString("keys", "");
 		String[] keys = allkeys.split(filter);

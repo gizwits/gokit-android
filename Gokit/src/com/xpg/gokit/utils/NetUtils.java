@@ -6,9 +6,20 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
-
+/**
+ * 网络工具类
+ * 
+ *@author Sunny Ding
+ * 
+ * **/
 public class NetUtils {
-
+	/**
+	  * 判断当前手机是否连上Wifi
+	  * 
+	  * @param context 上下文
+	  * @return boolean 是否连上网络
+	  * 
+	  * **/
 	 static public boolean isWifiConnected(Context context) {  
 		      if (context != null) {  
 		          ConnectivityManager mConnectivityManager = (ConnectivityManager) context  
@@ -25,6 +36,13 @@ public class NetUtils {
 		     }  
 		     return false;  
 		 }  
+	 /**
+	  * 判断当前手机的网络是否可用
+	  * 
+	  * @param context 上下文
+	  * @return boolean 是否连上网络
+	  * 
+	  * **/
 	 static public boolean isMobileConnected(Context context) {  
 		      if (context != null) {  
 		          ConnectivityManager mConnectivityManager = (ConnectivityManager) context  
@@ -44,6 +62,9 @@ public class NetUtils {
 	 /**
 	  * 判断当前网络是手机网络还是WIFI
 	  * 
+	  * @param context 上下文
+	  * @return ConnectedType 数据类型
+	  * 
 	  * **/
 	 public static int getConnectedType(Context context) {  
 		      if (context != null) {  
@@ -60,6 +81,9 @@ public class NetUtils {
 		 }
 	 /**
 	  * 获取当前WIFI的SSID
+	  * 
+	  * @param context 上下文
+	  * @return ssid 
 	  * 
 	  * **/
 	 public static String getCurentWifiSSID(Context context){
