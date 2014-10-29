@@ -41,17 +41,27 @@ public class NetUtils {
 		     }  
 		     return false;  
 		 } 
+	 /**
+	  * 判断当前网络是手机网络还是WIFI
+	  * 
+	  * **/
 	 public static int getConnectedType(Context context) {  
 		      if (context != null) {  
 		          ConnectivityManager mConnectivityManager = (ConnectivityManager) context  
-		                  .getSystemService(Context.CONNECTIVITY_SERVICE);  
-		          NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();  
+		                  .getSystemService(Context.CONNECTIVITY_SERVICE);
+		       // 获取代表联网状态的NetWorkInfo对象 
+		          NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo(); 
+		          // 判断NetWorkInfo对象是否为空；判断当前的网络连接是否可用 
 		          if (mNetworkInfo != null && mNetworkInfo.isAvailable()) {  
 		              return mNetworkInfo.getType();  
 		          }  
 		      }  
 		     return -1;  
 		 }
+	 /**
+	  * 获取当前WIFI的SSID
+	  * 
+	  * **/
 	 public static String getCurentWifiSSID(Context context){
 		 String ssid = "";
 		 if(context!=null){

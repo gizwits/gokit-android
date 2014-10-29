@@ -5,9 +5,7 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 
 import com.xpg.gokit.sdk.MessageCenter;

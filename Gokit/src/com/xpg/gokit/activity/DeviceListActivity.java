@@ -37,7 +37,6 @@ import com.xpg.gokit.utils.NetUtils;
 import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
-import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
 
 /**
  * 设备列表界面
@@ -164,6 +163,7 @@ public class DeviceListActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_device_list);
+		 //使左上角图标显示并且可以按
 		this.actionBar.setDisplayShowHomeEnabled(true);
 		this.actionBar.setHomeButtonEnabled(true);
 		this.actionBar.setIcon(R.drawable.reflash_bt);

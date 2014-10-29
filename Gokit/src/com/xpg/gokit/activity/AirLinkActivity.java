@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import com.xpg.gokit.R;
 import com.xpg.gokit.utils.NetUtils;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 
 public class AirLinkActivity extends BaseActivity implements OnClickListener {
 	protected static final int SUCCESS = 0;

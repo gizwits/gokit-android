@@ -2,9 +2,6 @@ package com.xpg.gokit;
 
 import java.io.IOException;
 
-import org.orman.dbms.Database;
-import org.orman.dbms.sqliteandroid.SQLiteAndroid;
-import org.orman.mapper.MappingSession;
 
 import com.xpg.gokit.utils.AssertsUtils;
 

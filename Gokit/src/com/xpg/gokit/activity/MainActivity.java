@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	/**
-	 * 检查网络是否可用
+	 * 检查网络是否可用，判断是用手机网络还是WIFI网络
 	 * */
 	private void checkNetType() {
 		int type = NetUtils.getConnectedType(this);
