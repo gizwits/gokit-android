@@ -1,12 +1,8 @@
 package com.xpg.gokit.sdk;
 
-import java.io.IOException;
 import android.content.Context;
-import android.util.Log;
 
 import com.xpg.gokit.BuildConfig;
-import com.xpg.gokit.setting.SettingManager;
-import com.xpg.gokit.utils.FileUitls;
 import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiLogLevel;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
@@ -17,7 +13,7 @@ import com.xtremeprog.xpgconnect.XPGWifiSDK;
 public class MessageCenter {
 	private static XPGWifiSDK xpgWifiGCC;
 	private static MessageCenter mCenter;
-	private static SettingManager setmManager;
+//	private static SettingManager setmManager;
 
 	private MessageCenter(Context c) {
 		if (mCenter == null) {
@@ -27,9 +23,9 @@ public class MessageCenter {
 
 	private void init(Context c) {
 
-		setmManager = new SettingManager(c);
+//		setmManager = new SettingManager(c);
 		XPGWifiConfig.sharedInstance().SetDebug(BuildConfig.DEBUG);
-		String file[] = c.getFilesDir().list();
+//		String file[] = c.getFilesDir().list();
 
 		// try {
 		// String tt =

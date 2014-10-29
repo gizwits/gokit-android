@@ -56,7 +56,6 @@ public class DeviceListActivity extends BaseActivity implements
 	private ListView lv_device_list;
 	private List<ControlDevice> devicelist;
 	private DeviceListAdapter adapter;
-	private SettingManager setmanager;
 	private XPGWifiDevice xpgWifiDevice;
 	ControlDevice device;
 	ProgressDialog dialog;
@@ -167,7 +166,6 @@ public class DeviceListActivity extends BaseActivity implements
 		this.actionBar.setHomeButtonEnabled(true);
 		this.actionBar.setIcon(R.drawable.reflash_bt);
 
-		setmanager = new SettingManager(this.getApplicationContext());
 		Log.i("androidid", setmanager.getPhoneId());
 		// this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 
@@ -476,8 +474,10 @@ public class DeviceListActivity extends BaseActivity implements
 		String hideuid = setmanager.getHideUid();
 		String hidetoken = setmanager.getHideToken();
 		if (!uid.equals("") && !token.equals("")) {
+			//绑定后刷新设备列表
 			this.mCenter.getXPGWifiSDK().GetBoundDevices(uid, token);
 		} else if (!hideuid.equals("") && !hidetoken.equals("")) {
+			//绑定后刷新设备列表
 			this.mCenter.getXPGWifiSDK().GetBoundDevices(hideuid, hidetoken);
 		} else {
 			this.mCenter.getXPGWifiSDK().RegisterAnonymousUser(

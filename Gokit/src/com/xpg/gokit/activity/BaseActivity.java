@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.xpg.gokit.sdk.MessageCenter;
+import com.xpg.gokit.setting.SettingManager;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
@@ -21,6 +22,7 @@ public class BaseActivity extends Activity {
 	protected static List<XPGWifiDevice> deviceslist = new ArrayList<XPGWifiDevice>();
 	static boolean isInit = false;
 	MessageCenter mCenter;
+	protected SettingManager setmanager;
 
 	private XPGWifiDeviceListener deviceListener = new XPGWifiDeviceListener() {
 		public void onBindDevice(int error, String errorMessage) {
@@ -162,12 +164,16 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setmanager=new SettingManager(this);
 		actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		mCenter = MessageCenter.getInstance(this.getApplicationContext());
 		mCenter.getXPGWifiSDK().setListener(sdkListener);
 	}
 
+	/**
+	 * 通过did和mac在列表寻找对应的device
+	 * */
 	public static XPGWifiDevice findDeviceByMac(String mac, String did) {
 		XPGWifiDevice xpgdevice = null;
 		Log.i("count", BaseActivity.deviceslist.size() + "");
@@ -212,6 +218,9 @@ public class BaseActivity extends Activity {
 	protected void onChangeUserPassword(int error, String errorMessage) {
 	};
 
+	/**
+	 * 手机验证码已经发送 if error == 0
+	 * */
 	protected void onRequestSendVerifyCode(int error, String errorMessage) {
 	};
 
@@ -262,9 +271,15 @@ public class BaseActivity extends Activity {
 	public void onUpdateUI() {
 	};
 
+	/**
+	 * socket 连接失败
+	 * */
 	public void onConnectFailed() {
 	};
 
+	/**
+	 * 小循环授权成功如果 result == 0, 失败如果 result == 2
+	 * */
 	public void onLogin(int result) {
 	};
 
@@ -283,13 +298,22 @@ public class BaseActivity extends Activity {
 	public void onGetPasscode(int result) {
 	};;
 
+	/**
+	 * socket 连接被断开
+	 * */
 	public void onDisconnected() {
 	}
 
+	/**
+	 * 收到设备数据
+	 * */
 	public boolean onReceiveData(String data) {
 		return true;
 	};
 
+	/**
+	 * socket 连接成功
+	 * */
 	public void onConnected() {
 	}
 
@@ -300,6 +324,9 @@ public class BaseActivity extends Activity {
 			String content) {
 	};
 
+	/**
+	 * 大循环授权成功如果 result == 0, 失败如果 result == 2
+	 * */
 	public void onLoginMQTT(int result) {
 	}
 

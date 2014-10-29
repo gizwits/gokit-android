@@ -46,7 +46,6 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 	String produck_key ="";// = it.getStringExtra("product_key");
 	String passcode="";// = it.getStringExtra("passcode");
 	String did ="";// = it.getStringExtra("did");
-	SettingManager setmanager;
 	ProgressDialog dialog ;
 	Handler handler = new Handler(){
 		public void handleMessage(Message msg){
@@ -237,7 +236,6 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_device_control);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		setmanager = new SettingManager(this);
 		
 		Intent it = getIntent();
 		 produck_key = it.getStringExtra("product_key");
