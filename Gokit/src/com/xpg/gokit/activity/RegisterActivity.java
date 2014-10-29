@@ -23,7 +23,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * 注册界面
+ * @author Lien Li
+ * */
 public class RegisterActivity extends BaseActivity implements OnClickListener {
 	protected static final int TOAST = 0;
 	protected static final int REG_SUCCESS = 1;

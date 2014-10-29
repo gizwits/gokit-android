@@ -241,6 +241,12 @@ public class BaseActivity extends Activity {
 	protected void onUpdateProduct(int result) {
 	};
 
+	/**
+	 * 通过airlink成功配置模块后，回调该函数。
+	 * 
+	 * @param device
+	 *            成功配置的设备实体
+	 * */
 	protected void onSetAirLink(XPGWifiDevice device) {
 	}
 

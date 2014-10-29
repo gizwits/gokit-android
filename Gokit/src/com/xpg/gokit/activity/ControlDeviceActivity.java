@@ -41,7 +41,10 @@ import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
 import com.xtremeprog.xpgconnect.XPGWifiReceiveInfo;
 import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
-
+/**
+ * 控制界面
+ * @author Lien Li
+ * */
 public class ControlDeviceActivity extends BaseActivity implements ValueChangeListener    {
 	protected static final int LOG = 6;
 	protected static final int RESP = 7;

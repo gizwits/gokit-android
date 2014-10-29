@@ -92,7 +92,10 @@ public class NetUtils {
 			 WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 			 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 			 ssid = wifiInfo.getSSID();
-			 
+			 if (ssid.substring(0, 1).equals("\"")
+						&& ssid.substring(ssid.length() - 1).equals("\"")) {
+					ssid = ssid.substring(1, ssid.length() - 1);
+				}
 		 }
 		 return ssid;
 	 }

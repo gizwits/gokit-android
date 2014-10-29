@@ -10,21 +10,22 @@ import com.xpg.gokit.utils.FileUitls;
 import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiLogLevel;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
-
+/**
+ * 信息管理器
+ * @author Lien Li
+ * */
 public class MessageCenter {
 	private static XPGWifiSDK xpgWifiGCC;
 	private static MessageCenter mCenter;
 	private static SettingManager setmManager;
 
 	private MessageCenter(Context c) {
-		// TODO Auto-generated constructor stub
 		if (mCenter == null) {
 			init(c);
 		}
 	}
 
 	private void init(Context c) {
-		// TODO Auto-generated method stub
 
 		setmManager = new SettingManager(c);
 		XPGWifiConfig.sharedInstance().SetDebug(BuildConfig.DEBUG);

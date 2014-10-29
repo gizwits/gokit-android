@@ -22,7 +22,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * 忘记密码界面
+ * @author Lien Li
+ * */
 public class ForgetPasswordActivity extends BaseActivity implements OnClickListener {
 	protected static final int TIMER = 0;
 	protected static final int SUCCESS = 1;
@@ -117,15 +120,11 @@ public class ForgetPasswordActivity extends BaseActivity implements OnClickListe
 		this.mCenter.getXPGWifiSDK().setListener(listener);
 		initView();
 		initListener();
-		initData();
-	}
-	private void initData() {
-		// TODO Auto-generated method stub
 		
 	}
 
+
 	private void initListener() {
-		// TODO Auto-generated method stub
 		btn_reset.setOnClickListener(this);
 		btn_send_verify_code.setOnClickListener(this);
 		
@@ -162,7 +161,6 @@ public class ForgetPasswordActivity extends BaseActivity implements OnClickListe
 	}
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		if(v == btn_reset){
 			String phone = edt_phone_number.getText().toString();
 			String code = edt_verify_code.getText().toString();
