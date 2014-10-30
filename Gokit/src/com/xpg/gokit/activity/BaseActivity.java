@@ -21,7 +21,7 @@ public class BaseActivity extends Activity {
 	protected static XPGWifiDeviceList xpgwifidevicelist;
 	protected static List<XPGWifiDevice> deviceslist = new ArrayList<XPGWifiDevice>();
 	static boolean isInit = false;
-	MessageCenter mCenter;
+	protected MessageCenter mCenter;
 	protected SettingManager setmanager;
 
 	private XPGWifiDeviceListener deviceListener = new XPGWifiDeviceListener() {
@@ -164,7 +164,7 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setmanager=new SettingManager(this);
+		setmanager = new SettingManager(this);
 		actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		mCenter = MessageCenter.getInstance(this.getApplicationContext());
@@ -236,6 +236,14 @@ public class BaseActivity extends Activity {
 	protected void onSDKBindDevice(int error, String errorMessage) {
 	};
 
+	/**
+	 * 注册账号回调该函数。
+	 * 
+	 * @param error
+	 * @param errorMessage
+	 * @param uid
+	 * @param token
+	 * */
 	protected void onRegisterUser(int error, String errorMessage, String uid,
 			String token) {
 	};
@@ -294,7 +302,9 @@ public class BaseActivity extends Activity {
 
 	public void onDeviceOnline(boolean isOnline) {
 	};
-
+	/**
+	 * 获取Passcode
+	 * */
 	public void onGetPasscode(int result) {
 	};;
 

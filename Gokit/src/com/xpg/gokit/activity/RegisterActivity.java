@@ -4,13 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.xpg.gokit.R;
-import com.xpg.gokit.R.id;
-import com.xpg.gokit.R.layout;
-import com.xpg.gokit.R.menu;
 import com.xpg.gokit.setting.SettingManager;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,54 +35,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	SettingManager setmanager;
 	int secondleft = 60;
 	Timer timer ;
-	XPGWifiSDKListener listener = new XPGWifiSDKListener(){
-		
-		public void onBindDevice(int error, String errorMessage) {};
-//		public long onCalculateCRC(byte[] data) {};
-		public void onDiscovered(int result, com.xtremeprog.xpgconnect.XPGWifiDeviceList devices) {};
-		public void onGetSSIDList(com.xtremeprog.xpgconnect.XPGWifiSSIDList list, int result) {};
-		public void onChangeUserEmail(int error, String errorMessage) {};
-		public void onChangeUserPassword(int error, String errorMessage) {};
-		public void onChangeUserPhone(int error, String errorMessage) {};
-		public void onTransUser(int error, String errorMessage) {};
-		public void onUserLogout(int error, String errorMessage) {};
-		public void onGetDeviceInfo(int error, String errorMessage, String productKey, String did, String mac, String passCode, String host, int port, int isOnline) {};
-		public void onRegisterUser(int error, String errorMessage, String uid, String token) {
-			Log.i("error message uid token", error + " " +errorMessage +" " +uid+ " "+token);
-			if(!uid.equals("")&&!token.equals("")){
-				Message msg = new Message();
-				msg.what = REG_SUCCESS;
-				msg.obj = "注册成功";
-				handler.sendMessage(msg);
-				setmanager.setUid(uid);
-				setmanager.setToken(token);
-				
-			}else{
-				Message msg = new Message();
-				msg.what = TOAST;
-				msg.obj = errorMessage;
-				handler.sendMessage(msg);
-			}
-		};
-		public void onRequestSendVerifyCode(int error, String errorMessage) {
-			Log.i("error message ", error + " "+ errorMessage);
-			if(error==0){
-				Message msg = new Message();
-				msg.what = TOAST;
-				msg.obj = "发送成功";
-				handler.sendMessage(msg);
-			}else{
-				Message msg = new Message();
-				msg.what = TOAST;
-				msg.obj = errorMessage;
-				handler.sendMessage(msg);
-			}
-		};
-		public void onSetAirLink(com.xtremeprog.xpgconnect.XPGWifiDevice device) {};
-		public void onUnbindDevice(int error, String errorMessage) {};
-		public void onUpdateProduct(int result) {};
-		public void onUserLogin(int error, String errorMessage, String uid, String token) {};
-	};
+	ProgressDialog dialog;
 	
 	Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -118,12 +66,11 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			
 		};
 	};
-	ProgressDialog dialog;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
-		this.mCenter.getXPGWifiSDK().setListener(listener);
 		setmanager = new SettingManager(this);
 		initView();
 		initListener();
@@ -131,19 +78,15 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initData() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	private void initListener() {
-		// TODO Auto-generated method stub
 		btn_reg.setOnClickListener(this);
 		btn_send_verify_code.setOnClickListener(this);
 		
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
 		btn_reg = (Button)findViewById(R.id.btn_reg);
 		btn_send_verify_code = (Button)findViewById(R.id.btn_send_verify_code);
 		edt_confirm_password = (EditText)findViewById(R.id.edt_con_password);
@@ -155,16 +98,12 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.register, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -177,7 +116,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		if(v == btn_reg){
 			String phone = edt_phone_number.getText().toString();
 			String code = edt_verify_code.getText().toString();
@@ -220,12 +158,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void sendRegUser(final String phone, final String code,final  String password) {
-		// TODO Auto-generated method stub
-		mCenter.getXPGWifiSDK().RegisterPhoneUser(phone, password, code);
+		mCenter.cRegisterPhoneUser(phone, code, password);
 	}
 
 	private void sendVerifyCode(final String phone) {
-		// TODO Auto-generated method stub
 		this.btn_send_verify_code.setEnabled(false);
 		secondleft = 60;
 		timer = new Timer();
@@ -238,6 +174,39 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			}
 		}, 1000, 1000);
 		
-		mCenter.getXPGWifiSDK().RequestSendVerifyCode(phone);
+		mCenter.cRequestSendVerifyCode(phone);
 	}
+	@Override
+	public void onRegisterUser(int error, String errorMessage, String uid, String token) {
+		Log.i("error message uid token", error + " " +errorMessage +" " +uid+ " "+token);
+		if(!uid.equals("")&&!token.equals("")){
+			Message msg = new Message();
+			msg.what = REG_SUCCESS;
+			msg.obj = "注册成功";
+			handler.sendMessage(msg);
+			setmanager.setUid(uid);
+			setmanager.setToken(token);
+			
+		}else{
+			Message msg = new Message();
+			msg.what = TOAST;
+			msg.obj = errorMessage;
+			handler.sendMessage(msg);
+		}
+	};
+	@Override
+	public void onRequestSendVerifyCode(int error, String errorMessage) {
+		Log.i("error message ", error + " "+ errorMessage);
+		if(error==0){
+			Message msg = new Message();
+			msg.what = TOAST;
+			msg.obj = "发送成功";
+			handler.sendMessage(msg);
+		}else{
+			Message msg = new Message();
+			msg.what = TOAST;
+			msg.obj = errorMessage;
+			handler.sendMessage(msg);
+		}
+	};
 }

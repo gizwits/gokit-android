@@ -113,7 +113,7 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 			dialog.show();
 			String password = edt_psw.getText().toString().trim();
 			//发送airlink广播，把需要连接的wifi的ssid和password发给模块。
-			mCenter.getXPGWifiSDK().SetAirLink(wifi, password);
+			mCenter.cSetAirLink(wifi, password);
 		}
 	}
 	

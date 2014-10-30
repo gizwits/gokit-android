@@ -1,28 +1,19 @@
 package com.xpg.gokit.activity;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.xpg.ui.QElement;
 import com.xpg.gokit.R;
-import com.xpg.gokit.R.id;
-import com.xpg.gokit.R.layout;
-import com.xpg.gokit.R.menu;
 import com.xpg.gokit.utils.Base64;
 import com.xpg.gokit.utils.ByteUtils;
 import com.xpg.gokit.utils.CRCUtils;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
-import com.xtremeprog.xpgconnect.XPGWifiReceiveInfo;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,36 +80,6 @@ public class QMultilineActivity extends BaseActivity {
 		public void onDisconnected(){
 		}
 	};
-	XPGWifiSDKListener gccDelegate = new XPGWifiSDKListener() {
-		public void onDiscovered(int result,XPGWifiDeviceList devices) {
-			Log.d("Main", "Device count:" + devices.GetCount());
-			
-		};
-		public void onChangeUserEmail(int error, String errorMessage) {};
-		public void onChangeUserPassword(int error, String errorMessage) {};
-		public void onChangeUserPhone(int error, String errorMessage) {};
-		public void onTransUser(int error, String errorMessage) {};
-		public void onUserLogout(int error, String errorMessage) {};
-		public void onRequestSendVerifyCode(int error, String errorMessage) {};
-		public void onBindDevice(int error, String errorMessage) {};
-		public void onRegisterUser(int error, String errorMessage, String uid, String token) {};
-		public void onUnbindDevice(int error, String errorMessage) {};
-		public void onUserLogin(int error, String errorMessage, String uid, String token) {};
-		public void onGetDeviceInfo(int error, String errorMessage, String productKey, String did, String mac, String passCode, String host, int port, int isOnline) {};
-		public void onUpdateProduct(int result) {
-//			if(result== 0){
-//				Message msg = new Message();
-//				msg.what = UPDATE_UI;
-//				handler.sendMessage(msg);
-//			}
-		};
-		public long onCalculateCRC(byte[] data) {
-			return CRCUtils.CalculateCRC(xpgWifiDevice.GetProductKey(),data);
-		};
-		public void onGetSSIDList(com.xtremeprog.xpgconnect.XPGWifiSSIDList list, int result) {};
-		public void onSetAirLink(XPGWifiDevice device) {};
-		
-	};
 	Handler handler = new Handler(){
 		public void handleMessage(Message msg) {
 //			switch(msg.what){
@@ -148,7 +109,6 @@ public class QMultilineActivity extends BaseActivity {
 		action = it.getStringExtra("action");
 		maxLength = it.getIntExtra("maxLength", 0);
 		xpgWifiDevice = BaseActivity.findDeviceByMac(mac,did);
-		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 		if(xpgWifiDevice!=null){
 			try{
 			String str = xpgWifiDevice.GetUI();
@@ -258,4 +218,12 @@ public class QMultilineActivity extends BaseActivity {
 		}
 		
 	}
+	public void onDiscovered(int result,XPGWifiDeviceList devices) {
+		Log.d("Main", "Device count:" + devices.GetCount());
+		
+	};
+	public long onCalculateCRC(byte[] data) {
+		return CRCUtils.CalculateCRC(xpgWifiDevice.GetProductKey(),data);
+	};
+	
 }

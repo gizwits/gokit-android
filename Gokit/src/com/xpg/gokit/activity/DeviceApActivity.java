@@ -77,7 +77,7 @@ public class DeviceApActivity extends BaseActivity implements OnItemClickListene
 			@Override
 			public void set(String ssid, String psw) {
 				// TODO Auto-generated method stub
-				mCenter.getXPGWifiSDK().SetSSID(ssid, psw);
+				mCenter.cSetSSID(ssid, psw);
 				
 				Toast.makeText(DeviceApActivity.this, "配置成功", Toast.LENGTH_SHORT).show();
 			}

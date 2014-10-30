@@ -17,14 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xpg.gokit.bean.ControlDevice;
-import com.xpg.gokit.setting.SettingManager;
 import com.xpg.gokit.utils.CRCUtils;
 import com.xpg.gokit.R;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
 import com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 
 public class NewDeviceControlActivity extends BaseActivity implements  OnClickListener {
 	protected static final int LOG = 0;
@@ -85,7 +83,7 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 					dialog.show();
 					xpgdevice.BindDevice(hideuid, hidetoken);
 				}else{
-					mCenter.getXPGWifiSDK().RegisterAnonymousUser(setmanager.getPhoneId());
+					mCenter.cRegisterAnonymousUser();
 				}
 				
 				break;
@@ -186,51 +184,6 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 		
 		
 	};
-	XPGWifiSDKListener gccDelegate = new XPGWifiSDKListener() {
-		public void onDiscovered(int result,XPGWifiDeviceList devices) {
-			Log.d("Main", "Device count:" + devices.GetCount());
-		};
-		
-		public long onCalculateCRC(byte[] data) {
-			return CRCUtils.CalculateCRC(xpgdevice.GetProductKey(),data);
-		};
-		public void onChangeUserEmail(int error, String errorMessage) {};
-		public void onChangeUserPassword(int error, String errorMessage) {};
-		public void onChangeUserPhone(int error, String errorMessage) {};
-		public void onUserLogout(int error, String errorMessage) {};
-		public void onTransUser(int error, String errorMessage) {};
-		public void onRequestSendVerifyCode(int error, String errorMessage) {};
-		public void onGetDeviceInfo(int error, String errorMessage, String productKey, String did, String mac, String passCode, String host, int port, int isOnline) {};
-		public void onBindDevice(int error, String errorMessage) {
-			Log.i("error", errorMessage);
-			dialog.dismiss();
-			if(error==0){
-				handler.sendEmptyMessage(BAND_SUCCESS);
-			}else{
-				Message msg = new Message();
-				msg.what = BAND_FAIL;
-				msg.obj = errorMessage;
-				handler.sendMessage(msg);
-			}
-		};
-		public void onRegisterUser(int error, String errorMessage, String uid, String token) {
-			if(error==0&&!uid.equals("")&&!token.equals("")){
-				setmanager.setHideUid(uid);
-				setmanager.setHideToken(token);
-			}else{
-				Message msg = new Message();
-				msg.what = TOAST;
-				msg.obj = "网络较差，请检查网络连接";
-				handler.sendMessage(msg);
-			}
-			
-		};
-		public void onUnbindDevice(int error, String errorMessage) {};
-		public void onUserLogin(int error, String errorMessage, String uid, String token) {};
-		public void onSetAirLink(XPGWifiDevice device) {};
-		public void onUpdateProduct(int result) {};
-		public void onGetSSIDList(com.xtremeprog.xpgconnect.XPGWifiSSIDList list, int result) {};
-	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -247,16 +200,15 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 			String hideuid = setmanager.getHideUid();
 			String hidetoken = setmanager.getHideToken();
 			if(!uid.equals("")&&!token.equals("")){
-				this.mCenter.getXPGWifiSDK().BindDevice(uid, token, did, passcode);
+				mCenter.cBindDevice(uid, token, did, passcode);
 			}else if(!hideuid.equals("")&&!hidetoken.equals("")){
-				this.mCenter.getXPGWifiSDK().BindDevice(hideuid, hidetoken, did, passcode);
+				mCenter.cBindDevice(hideuid, hidetoken, did, passcode);
 			}
 		}else{
 			controlDevice = (ControlDevice)it.getSerializableExtra("device");
 			
 			xpgdevice = BaseActivity.findDeviceByMac(controlDevice.getMac(),controlDevice.getDid());
 		}
-		mCenter.getXPGWifiSDK().setListener(gccDelegate);
 		initView();
 		initData();
 		initListener();
@@ -284,7 +236,6 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 	}
 	public void onResume(){
 		super.onResume();
-		this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 		if(xpgdevice!=null){
 			this.xpgdevice.setListener(deviceDelegate);
 		}
@@ -355,7 +306,7 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 			}
 		}else{
 			dialog.show();
-			mCenter.getXPGWifiSDK().BindDevice(uid, token, did, passcode);
+			mCenter.cBindDevice(uid, token, did, passcode);
 		}
 		}else if(!hideuid.equals("")&&!hidetoken.equals("")){
 			if(xpgdevice!=null){
@@ -367,11 +318,11 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 				}
 			}else{
 				dialog.show();
-				mCenter.getXPGWifiSDK().BindDevice(hideuid, hidetoken, did, passcode);
+				mCenter.cBindDevice(hideuid, hidetoken, did, passcode);
 			}
 		}
 		else{
-			mCenter.getXPGWifiSDK().RegisterAnonymousUser(setmanager.getPhoneId());
+			mCenter.cRegisterAnonymousUser();
 		}
 	}
 	@Override
@@ -392,7 +343,39 @@ public class NewDeviceControlActivity extends BaseActivity implements  OnClickLi
 			xpgdevice.Disconnect();
 		}
 	}
+	public void onDiscovered(int result,XPGWifiDeviceList devices) {
+		Log.d("Main", "Device count:" + devices.GetCount());
+	};
 	
+	public long onCalculateCRC(byte[] data) {
+		return CRCUtils.CalculateCRC(xpgdevice.GetProductKey(),data);
+	};
+	@Override
+	public void onBindDevice(int error, String errorMessage) {
+		Log.i("error", errorMessage);
+		dialog.dismiss();
+		if(error==0){
+			handler.sendEmptyMessage(BAND_SUCCESS);
+		}else{
+			Message msg = new Message();
+			msg.what = BAND_FAIL;
+			msg.obj = errorMessage;
+			handler.sendMessage(msg);
+		}
+	};
+	@Override
+	public void onRegisterUser(int error, String errorMessage, String uid, String token) {
+		if(error==0&&!uid.equals("")&&!token.equals("")){
+			setmanager.setHideUid(uid);
+			setmanager.setHideToken(token);
+		}else{
+			Message msg = new Message();
+			msg.what = TOAST;
+			msg.obj = "网络较差，请检查网络连接";
+			handler.sendMessage(msg);
+		}
+		
+	};
 
 
 

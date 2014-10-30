@@ -3,17 +3,20 @@ package com.xpg.gokit.sdk;
 import android.content.Context;
 
 import com.xpg.gokit.BuildConfig;
+import com.xpg.gokit.setting.SettingManager;
 import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiLogLevel;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
+
 /**
  * 信息管理器
+ * 
  * @author Lien Li
  * */
 public class MessageCenter {
 	private static XPGWifiSDK xpgWifiGCC;
 	private static MessageCenter mCenter;
-//	private static SettingManager setmManager;
+	private SettingManager mSettingManager;
 
 	private MessageCenter(Context c) {
 		if (mCenter == null) {
@@ -21,22 +24,16 @@ public class MessageCenter {
 		}
 	}
 
+	public static MessageCenter getInstance(Context c) {
+		if (mCenter == null) {
+			mCenter = new MessageCenter(c);
+		}
+		return mCenter;
+	}
+
 	private void init(Context c) {
-
-//		setmManager = new SettingManager(c);
+		mSettingManager = new SettingManager(c);
 		XPGWifiConfig.sharedInstance().SetDebug(BuildConfig.DEBUG);
-//		String file[] = c.getFilesDir().list();
-
-		// try {
-		// String tt =
-		// FileUitls.readFileAsText(c.getFilesDir()+"/XPGWifiConfig.json");
-		// Log.i("info", tt);
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		//
-		// XPGWifiConfig.sharedInstance().SetConfigureFile(c.getFilesDir()+"/XPGWifiConfig.json");
 		XPGWifiConfig.sharedInstance().SetProductPath(
 				c.getFilesDir() + "/Devices");
 		// 切换为Debug服务器
@@ -49,16 +46,80 @@ public class MessageCenter {
 		XPGWifiSDK.SetPrintDataLevel(true);
 	}
 
-	public static MessageCenter getInstance(Context c) {
-		if (mCenter != null) {
-			return mCenter;
-		}
-		mCenter = new MessageCenter(c);
-		return mCenter;
-	}
-
 	public XPGWifiSDK getXPGWifiSDK() {
 		return xpgWifiGCC;
+	}
+
+	/**
+	 * 注册账号
+	 * */
+	public void cRegisterPhoneUser(String phone, String code, String password) {
+		xpgWifiGCC.RegisterPhoneUser(phone, password, code);
+	}
+
+	/**
+	 * 注册匿名账号
+	 * */
+	public void cRegisterAnonymousUser() {
+		xpgWifiGCC.RegisterAnonymousUser(mSettingManager.getPhoneId());
+	}
+
+	/**
+	 * 账号注销
+	 * */
+	public void cLogout() {
+		xpgWifiGCC.UserLogout(mSettingManager.getUid());
+		xpgWifiGCC.UserLogout(mSettingManager.getHideUid());
+		mSettingManager.clean();
+	}
+
+	/**
+	 * 账号登陆
+	 * */
+	public void cLogin(String name, String psw) {
+		xpgWifiGCC.UserLogin(name, psw);
+	}
+
+	/**
+	 * 忘记密码
+	 * */
+	public void cChangeUserPasswordWithCode(String phone, String code,
+			String password) {
+		xpgWifiGCC.changeUserPasswordWithCode(phone, code, password);
+	}
+
+	/**
+	 * 请求向手机发送验证码
+	 * */
+	public void cRequestSendVerifyCode(String phone) {
+		xpgWifiGCC.RequestSendVerifyCode(phone);
+	}
+
+	/**
+	 * 发送airlink广播，把需要连接的wifi的ssid和password发给模块。
+	 * */
+	public void cSetAirLink(String wifi, String password) {
+		xpgWifiGCC.SetAirLink(wifi, password);
+	}
+
+	/**
+	 * 设置SSID
+	 * */
+	public void cSetSSID(String ssid, String psw) {
+		xpgWifiGCC.SetSSID(ssid, psw);
+	}
+
+	/**
+	 * 绑定后刷新设备列表
+	 * */
+	public void cGetBoundDevices(String uid, String token) {
+		xpgWifiGCC.GetBoundDevices(uid, token);
+	}
+	/**
+	 * 绑定设备
+	 * */
+	public void cBindDevice(String uid, String token,String did,String passcode) {
+		xpgWifiGCC.BindDevice(uid, token, did, passcode);
 	}
 
 }

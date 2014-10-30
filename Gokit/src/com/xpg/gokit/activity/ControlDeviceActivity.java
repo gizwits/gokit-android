@@ -314,11 +314,12 @@ public class ControlDeviceActivity extends BaseActivity implements ValueChangeLi
 	private void initData() throws JSONException {
 		// TODO Auto-generated method stub
 		String str = xpgWifiDevice.GetUI();
-		
+		Log.e("str", str);
 		if(str==null||str.equals("")){
 			Toast.makeText(this, "不支持该设备", Toast.LENGTH_SHORT).show();
 		}
 		JSONObject uiJsonObject = new JSONObject(str);
+		Log.e("uiJsonObject", uiJsonObject.toString());
 		JSONObject jsonObject = uiJsonObject.has("object")?uiJsonObject.getJSONObject("object"):null;
 		title = uiJsonObject.has("title")?uiJsonObject.getString("title"):"";
 		showEditButton = (jsonObject!=null&&jsonObject.has("showEditButton"))?jsonObject.getBoolean("showEditButton"):false;

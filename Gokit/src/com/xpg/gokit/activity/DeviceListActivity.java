@@ -118,12 +118,11 @@ public class DeviceListActivity extends BaseActivity implements
 		String hideuid = setmanager.getHideUid();
 		String hidetoken = setmanager.getHideToken();
 		if (!uid.equals("") && !token.equals("")) {
-			mCenter.getXPGWifiSDK().GetBoundDevices(uid, token);
+			mCenter.cGetBoundDevices(uid, token);
 		} else if (!hideuid.equals("") && !hidetoken.equals("")) {
-			mCenter.getXPGWifiSDK().GetBoundDevices(hideuid, hidetoken);
+			mCenter.cGetBoundDevices(hideuid, hidetoken);
 		} else {
-			mCenter.getXPGWifiSDK().RegisterAnonymousUser(
-					setmanager.getPhoneId());
+			mCenter.cRegisterAnonymousUser();
 		}
 	};
 
@@ -279,9 +278,7 @@ public class DeviceListActivity extends BaseActivity implements
 			startActivity(it);
 			break;
 		case R.id.action_logout:
-			this.mCenter.getXPGWifiSDK().UserLogout(setmanager.getUid());
-			this.mCenter.getXPGWifiSDK().UserLogout(setmanager.getHideUid());
-			setmanager.clean();
+			mCenter.cLogout();
 			break;
 
 		default:
@@ -475,13 +472,12 @@ public class DeviceListActivity extends BaseActivity implements
 		String hidetoken = setmanager.getHideToken();
 		if (!uid.equals("") && !token.equals("")) {
 			//绑定后刷新设备列表
-			this.mCenter.getXPGWifiSDK().GetBoundDevices(uid, token);
+			mCenter.cGetBoundDevices(uid, token);
 		} else if (!hideuid.equals("") && !hidetoken.equals("")) {
 			//绑定后刷新设备列表
-			this.mCenter.getXPGWifiSDK().GetBoundDevices(hideuid, hidetoken);
+			mCenter.cGetBoundDevices(hideuid, hidetoken);
 		} else {
-			this.mCenter.getXPGWifiSDK().RegisterAnonymousUser(
-					setmanager.getPhoneId());
+			mCenter.cRegisterAnonymousUser();
 		}
 
 		isGettingDevice = false;

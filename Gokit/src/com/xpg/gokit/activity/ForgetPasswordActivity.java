@@ -76,48 +76,10 @@ public class ForgetPasswordActivity extends BaseActivity implements OnClickListe
 	};
 	private ProgressDialog dialog;
 	
-	XPGWifiSDKListener listener = new XPGWifiSDKListener(){
-		public void onBindDevice(int error, String errorMessage) {};
-//		public long onCalculateCRC(byte[] data) {};
-		public void onDiscovered(int result, com.xtremeprog.xpgconnect.XPGWifiDeviceList devices) {};
-		public void onGetSSIDList(com.xtremeprog.xpgconnect.XPGWifiSSIDList list, int result) {};
-		
-		public void onRegisterUser(int error, String errorMessage, String uid, String token) {
-			Log.i("error message uid token", error + " " +errorMessage +" " +uid+ " "+token);
-		};
-		public void onRequestSendVerifyCode(int error, String errorMessage) {
-			
-			Log.i("error message ", error + " "+ errorMessage);
-			if(error==0){
-				handler.sendEmptyMessage(CODE_SUCCESS);
-			}else{
-				handler.sendEmptyMessage(CODE_FAIL);
-			}
-		};
-		public void onChangeUserEmail(int error, String errorMessage) {};
-		public void onChangeUserPassword(int error, String errorMessage) {
-			if(error == 0){
-				handler.sendEmptyMessage(SUCCESS);
-			}else{
-				handler.sendEmptyMessage(FAIL);
-			}
-		};
-		public void onChangeUserPhone(int error, String errorMessage) {};
-		public void onTransUser(int error, String errorMessage) {};
-		public void onUserLogout(int error, String errorMessage) {};
-		public void onGetDeviceInfo(int error, String errorMessage, String productKey, String did, String mac, String passCode, String host, int port, int isOnline) {};
-		
-		public void onSetAirLink(com.xtremeprog.xpgconnect.XPGWifiDevice device) {};
-		public void onUnbindDevice(int error, String errorMessage) {};
-		public void onUpdateProduct(int result) {};
-		
-		public void onUserLogin(int error, String errorMessage, String uid, String token) {};
-	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_forget_password);
-		this.mCenter.getXPGWifiSDK().setListener(listener);
 		initView();
 		initListener();
 		
@@ -201,13 +163,11 @@ public class ForgetPasswordActivity extends BaseActivity implements OnClickListe
 	}
 
 	private void sendRetUser(final String phone, final String code,final  String password) {
-		// TODO Auto-generated method stub
 		dialog.show();
-		mCenter.getXPGWifiSDK().changeUserPasswordWithCode(phone, code, password);
+		mCenter.cChangeUserPasswordWithCode(phone, code, password);
 	}
 
 	private void sendVerifyCode(final String phone) {
-		// TODO Auto-generated method stub
 		this.btn_send_verify_code.setEnabled(false);
 		secode_left = 60;
 		timer = new Timer();
@@ -220,6 +180,28 @@ public class ForgetPasswordActivity extends BaseActivity implements OnClickListe
 			}
 		}, 1000, 1000);
 		dialog.show();
-		mCenter.getXPGWifiSDK().RequestSendVerifyCode(phone);
+		mCenter.cRequestSendVerifyCode(phone);
 	}
+	@Override
+	public void onRegisterUser(int error, String errorMessage, String uid, String token) {
+		Log.i("error message uid token", error + " " +errorMessage +" " +uid+ " "+token);
+	};
+	@Override
+	public void onRequestSendVerifyCode(int error, String errorMessage) {
+		
+		Log.i("error message ", error + " "+ errorMessage);
+		if(error==0){
+			handler.sendEmptyMessage(CODE_SUCCESS);
+		}else{
+			handler.sendEmptyMessage(CODE_FAIL);
+		}
+	};
+	@Override
+	public void onChangeUserPassword(int error, String errorMessage) {
+		if(error == 0){
+			handler.sendEmptyMessage(SUCCESS);
+		}else{
+			handler.sendEmptyMessage(FAIL);
+		}
+	};
 }

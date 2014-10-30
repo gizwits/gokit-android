@@ -4,16 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xpg.gokit.R;
-import com.xpg.gokit.R.id;
-import com.xpg.gokit.R.layout;
-import com.xpg.gokit.R.menu;
 import com.xpg.gokit.adapter.LogListAdapter;
 import com.xpg.gokit.bean.DeviceLog;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,25 +49,6 @@ public class DeviceLogActivity extends BaseActivity {
 		};
 		public void onQueryHardwareInfo(int error, com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct pInfo) {};
 		public void onSetSwitcher(int result) {};
-	};
-	XPGWifiSDKListener sdklistener = new XPGWifiSDKListener(){
-//		public long onCalculateCRC(byte[] data) {};
-		public void onBindDevice(int error, String errorMessage) {};
-		public void onRegisterUser(int error, String errorMessage, String uid, String token) {};
-		public void onUnbindDevice(int error, String errorMessage) {};
-		public void onUserLogin(int error, String errorMessage, String uid, String token) {};
-		public void onDiscovered(int result, com.xtremeprog.xpgconnect.XPGWifiDeviceList devices) {};
-		public void onGetSSIDList(com.xtremeprog.xpgconnect.XPGWifiSSIDList list, int result) {};
-		public void onSetAirLink(com.xtremeprog.xpgconnect.XPGWifiDevice device) {};
-		public void onUpdateProduct(int result) {};
-		
-		public void onChangeUserEmail(int error, String errorMessage) {};
-		public void onChangeUserPassword(int error, String errorMessage) {};
-		public void onChangeUserPhone(int error, String errorMessage) {};
-		public void onTransUser(int error, String errorMessage) {};
-		public void onUserLogout(int error, String errorMessage) {};
-		public void onGetDeviceInfo(int error, String errorMessage, String productKey, String did, String mac, String passCode, String host, int port, int isOnline) {};
-		public void onRequestSendVerifyCode(int error, String errorMessage) {};
 	};
 	XPGWifiDevice xpgWifiDevice;
 	Handler handler = new Handler(){
@@ -118,7 +94,6 @@ public class DeviceLogActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		String mac  = getIntent().getStringExtra("mac");
 		String did = getIntent().getStringExtra("did");
-		mCenter.getXPGWifiSDK().setListener(sdklistener);
 		xpgWifiDevice = BaseActivity.findDeviceByMac(mac,did);
 		if(xpgWifiDevice!=null){
 			xpgWifiDevice.setListener(devcelistener);
