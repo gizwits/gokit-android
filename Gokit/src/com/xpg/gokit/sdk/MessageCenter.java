@@ -1,10 +1,14 @@
 package com.xpg.gokit.sdk;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 
 import com.xpg.gokit.BuildConfig;
 import com.xpg.gokit.setting.SettingManager;
 import com.xtremeprog.xpgconnect.XPGWifiConfig;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiLogLevel;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
@@ -49,7 +53,11 @@ public class MessageCenter {
 	public XPGWifiSDK getXPGWifiSDK() {
 		return xpgWifiGCC;
 	}
-
+//=================================================================
+//	  
+//	 关于账号的指令
+//	  
+//=================================================================
 	/**
 	 * 注册账号
 	 * */
@@ -120,6 +128,46 @@ public class MessageCenter {
 	 * */
 	public void cBindDevice(String uid, String token,String did,String passcode) {
 		xpgWifiGCC.BindDevice(uid, token, did, passcode);
+	}
+
+	
+//=================================================================
+//	  
+//	  关于控制设备的指令
+//	  
+//=================================================================
+	
+	/**
+	 * 发送数据点
+	 * */
+	public void cWrite(XPGWifiDevice xpgWifiDevice,JSONObject jsonsend) {
+		xpgWifiDevice.write(jsonsend.toString());
+	}
+	/**
+	 * 获取设备状态
+	 * */
+	public void cGetStatus(XPGWifiDevice xpgWifiDevice) throws JSONException{
+		JSONObject json = new JSONObject();
+		json.put("cmd", 2);
+		xpgWifiDevice.write(json.toString());
+	}
+	/**
+	 * 断开连接
+	 * */
+	public void cDisconnect(XPGWifiDevice xpgWifiDevice) {
+		xpgWifiDevice.Disconnect();
+	}
+	/**
+	 * 获取Passcode
+	 * */
+	public String cGetPasscode(XPGWifiDevice xpgWifiDevice) {
+		return xpgWifiDevice.GetPasscode();
+	}
+	/**
+	 * 解除绑定
+	 * */
+	public void cUnbindDevice(XPGWifiDevice xpgWifiDevice,String uid,String token) {
+		xpgWifiDevice.UnbindDevice(uid, token);
 	}
 
 }
