@@ -551,8 +551,6 @@ public class ControlDeviceActivity extends BaseActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-
 		getMenuInflater().inflate(R.menu.control_device, menu);
 
 		return true;
@@ -588,14 +586,6 @@ public class ControlDeviceActivity extends BaseActivity implements
 		case android.R.id.home:
 			xpgWifiDevice.Disconnect();
 			finish();
-			break;
-		// 日志
-		case R.id.action_hard_ware_info:
-			Intent it = new Intent();
-			it.setClass(this, DeviceLogActivity.class);
-			it.putExtra("mac", xpgWifiDevice.GetMacAddress());
-			it.putExtra("did", xpgWifiDevice.GetDid());
-			startActivity(it);
 			break;
 		// 获取设备状态
 		case R.id.action_device_status:

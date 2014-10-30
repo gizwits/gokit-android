@@ -215,11 +215,24 @@ public class BaseActivity extends Activity {
 	protected void onChangeUserPhone(int error, String errorMessage) {
 	};
 
+	/**
+	 * 修改用户名密码回调接口
+	 * 
+	 * @param error
+	 *            结果代码
+	 * @param errorMessage
+	 *            结果信息
+	 * */
 	protected void onChangeUserPassword(int error, String errorMessage) {
 	};
 
 	/**
-	 * 手机验证码已经发送 if error == 0
+	 * 发送验证码结果回调接口
+	 * 
+	 * @param error
+	 *            结果代码
+	 * @param errorMessage
+	 *            结果信息
 	 * */
 	protected void onRequestSendVerifyCode(int error, String errorMessage) {
 	};
@@ -235,14 +248,18 @@ public class BaseActivity extends Activity {
 
 	protected void onSDKBindDevice(int error, String errorMessage) {
 	};
-
+	
 	/**
-	 * 注册账号回调该函数。
+	 * 用户注册结果回调接口
 	 * 
 	 * @param error
+	 *            注册结果码
 	 * @param errorMessage
+	 *            注册结果信息
 	 * @param uid
+	 *            用户id
 	 * @param token
+	 *            用户令牌
 	 * */
 	protected void onRegisterUser(int error, String errorMessage, String uid,
 			String token) {
@@ -251,6 +268,18 @@ public class BaseActivity extends Activity {
 	protected void onSDKUnbindDevice(int error, String errorMessage) {
 	};
 
+	/**
+	 * 用户登陆结果回调接口
+	 * 
+	 * @param error
+	 *            登陆结果码
+	 * @param errorMessage
+	 *            登陆结果信息
+	 * @param uid
+	 *            用户id
+	 * @param token
+	 *            用户令牌
+	 * */
 	protected void onUserLogin(int error, String errorMessage, String uid,
 			String token) {
 	};

@@ -72,11 +72,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.xpg.gokit.activity.BindDeviceActivity"
-            android:label="@string/title_activity_bind_device"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.xpg.gokit.activity.DeviceApActivity"
             android:label="@string/title_activity_device_ap" >
         </activity>
@@ -85,35 +80,15 @@
             android:label="@string/title_activity_ned_device_control"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.umeng.fb.ConversationActivity" />
-        <activity android:name="com.umeng.fb.ContactActivity" />
 
         <!-- Fb Activitys End -->
 
 
-        <!-- Update Activitys Start -->
-        <activity
-            android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
 
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
-        </service>
 
         <activity
             android:name="com.xpg.ui.QTestActivity"
             android:label="@string/title_activity_qtest" >
-        </activity>
-        <activity
-            android:name="com.xpg.gokit.activity.DeviceLogActivity"
-            android:label="@string/title_activity_device_log"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.xpg.zxing.CaptureActivity"
-            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name="com.xpg.gokit.activity.RegisterActivity"
@@ -126,10 +101,6 @@
         <activity
             android:name="com.xpg.gokit.activity.QMultilineActivity"
             android:label="@string/title_activity_qmultiline" >
-        </activity>
-        <activity
-            android:name="com.xpg.gokit.activity.SettingActivity"
-            android:label="@string/title_activity_setting" >
         </activity>
     </application>
 

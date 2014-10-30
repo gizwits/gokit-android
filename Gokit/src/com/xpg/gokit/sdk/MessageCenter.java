@@ -60,6 +60,12 @@ public class MessageCenter {
 //=================================================================
 	/**
 	 * 注册账号
+	 * @param phone
+	 *            注册手机号
+	 * @param code
+	 *            验证码
+	 * @param password
+	 *            注册密码
 	 * */
 	public void cRegisterPhoneUser(String phone, String code, String password) {
 		xpgWifiGCC.RegisterPhoneUser(phone, password, code);
@@ -83,6 +89,10 @@ public class MessageCenter {
 
 	/**
 	 * 账号登陆
+	 * @param name
+	 *            用户名
+	 * @param psw
+	 *            密码
 	 * */
 	public void cLogin(String name, String psw) {
 		xpgWifiGCC.UserLogin(name, psw);
