@@ -100,6 +100,12 @@ public class MessageCenter {
 
 	/**
 	 * 忘记密码
+	 * @param phone
+	 *            手机号
+	 * @param code
+	 *            验证码
+	 * @param password
+	 *            密码
 	 * */
 	public void cChangeUserPasswordWithCode(String phone, String code,
 			String password) {
@@ -108,6 +114,8 @@ public class MessageCenter {
 
 	/**
 	 * 请求向手机发送验证码
+	 *  @param phone
+	 *            手机号
 	 * */
 	public void cRequestSendVerifyCode(String phone) {
 		xpgWifiGCC.RequestSendVerifyCode(phone);
@@ -115,6 +123,10 @@ public class MessageCenter {
 
 	/**
 	 * 发送airlink广播，把需要连接的wifi的ssid和password发给模块。
+	 * @param wifi
+	 *         wifi名字
+	 * @param password
+	 *         wifi密码
 	 * */
 	public void cSetAirLink(String wifi, String password) {
 		xpgWifiGCC.SetAirLink(wifi, password);
@@ -129,12 +141,26 @@ public class MessageCenter {
 
 	/**
 	 * 绑定后刷新设备列表
+	 * @param uid
+	 *         用户名
+	 * @param token
+	 *         密码
 	 * */
 	public void cGetBoundDevices(String uid, String token) {
 		xpgWifiGCC.GetBoundDevices(uid, token);
 	}
 	/**
 	 * 绑定设备
+	 * 
+	 * @param uid
+	 *         用户名
+	 * @param token
+	 *         密码
+	 * @param did
+	 *         did
+	 * @param passcode
+	 *         passcode
+	 * 
 	 * */
 	public void cBindDevice(String uid, String token,String did,String passcode) {
 		xpgWifiGCC.BindDevice(uid, token, did, passcode);
