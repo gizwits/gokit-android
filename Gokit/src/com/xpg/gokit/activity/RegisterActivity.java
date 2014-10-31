@@ -148,7 +148,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			String phone = edt_phone_number.getText().toString();
 			phone = phone.trim();
 			if (phone.length() == 11) {
-				sendVerifyCode(phone);
+				mCenter.cRequestSendVerifyCode(phone);
 				dialog.show();
 			} else {
 				Toast.makeText(this, "电话号码格式不正确", Toast.LENGTH_SHORT).show();
@@ -161,27 +161,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		mCenter.cRegisterPhoneUser(phone, code, password);
 	}
 
-	/**
-	 * 发送短信验证码
-	 * 
-	 * @param phone
-	 *            注册手机号
-	 * */
-	private void sendVerifyCode(final String phone) {
-		this.btn_send_verify_code.setEnabled(false);
-		secondleft = 60;
-		timer = new Timer();
-		timer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				handler.sendEmptyMessage(TIMER);
-			}
-		}, 1000, 1000);
-		
-		mCenter.cRequestSendVerifyCode(phone);
-
-	}
 
 	protected void onRegisterUser(int error, String errorMessage, String uid,
 			String token) {
