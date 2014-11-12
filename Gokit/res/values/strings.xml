@@ -18,6 +18,6 @@
     <string name="title_activity_forget_password">忘记密码</string>
     <string name="title_activity_qmultiline"></string>
     <string name="title_activity_setting">设置</string>
-	
+	<string name="title_activity_control_gokit">设备控制</string>
     <string name="checking_network">查找网络</string>
 </resources>

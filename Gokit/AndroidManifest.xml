@@ -41,7 +41,7 @@
             android:name="com.xpg.gokit.activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
-            <intent-filter>
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -101,6 +101,11 @@
         <activity
             android:name="com.xpg.gokit.activity.QMultilineActivity"
             android:label="@string/title_activity_qmultiline" >
+        </activity>
+        <activity
+            android:name="com.xpg.gokit.activity.GokitControlActivity"
+            android:label="@string/title_activity_control_gokit" >
+             
         </activity>
     </application>
 

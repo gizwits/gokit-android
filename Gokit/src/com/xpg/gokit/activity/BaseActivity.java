@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.xpg.gokit.sdk.MessageCenter;
 import com.xpg.gokit.setting.SettingManager;
+import com.xpg.gokit.utils.CRCUtils;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
@@ -24,7 +25,7 @@ public class BaseActivity extends Activity {
 	protected MessageCenter mCenter;
 	protected SettingManager setmanager;
 
-	private XPGWifiDeviceListener deviceListener = new XPGWifiDeviceListener() {
+	protected XPGWifiDeviceListener deviceListener = new XPGWifiDeviceListener() {
 		public void onBindDevice(int error, String errorMessage) {
 			BaseActivity.this.onSDKBindDevice(error, errorMessage);
 		};
@@ -43,11 +44,6 @@ public class BaseActivity extends Activity {
 
 		public void onLogin(int result) {
 			BaseActivity.this.onLogin(result);
-		};
-
-		public void onQueryHardwareInfo(int error,
-				com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct pInfo) {
-			BaseActivity.this.onQueryHardwareInfo(error, pInfo);
 		};
 
 		public void onReceiveAlertsAndFaultsInfo(
@@ -78,11 +74,6 @@ public class BaseActivity extends Activity {
 
 		public void onSetSwitcher(int result) {
 			BaseActivity.this.onSetSwitcher(result);
-		};
-
-		public void onDeviceLog(short nLevel, String tag, String source,
-				String content) {
-			BaseActivity.this.onDeviceLog(nLevel, tag, source, content);
 		};
 
 		public void onLoginMQTT(int result) {
@@ -149,9 +140,11 @@ public class BaseActivity extends Activity {
 		public void onUpdateProduct(int result) {
 			BaseActivity.this.onUpdateProduct(result);
 		};
-
+		
+	    
 		@Override
 		public void onSetAirLink(XPGWifiDevice device) {
+			Log.e("airlink", "success");
 			BaseActivity.this.onSetAirLink(device);
 		}
 
@@ -307,6 +300,8 @@ public class BaseActivity extends Activity {
 
 	public void onUpdateUI() {
 	};
+	
+	
 
 	/**
 	 * socket 连接失败
@@ -359,9 +354,6 @@ public class BaseActivity extends Activity {
 	public void onSetSwitcher(int result) {
 	};
 
-	public void onDeviceLog(short nLevel, String tag, String source,
-			String content) {
-	};
 
 	/**
 	 * 大循环授权成功如果 result == 0, 失败如果 result == 2

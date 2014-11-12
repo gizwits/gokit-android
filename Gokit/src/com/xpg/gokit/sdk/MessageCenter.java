@@ -41,10 +41,13 @@ public class MessageCenter {
 		XPGWifiConfig.sharedInstance().SetProductPath(
 				c.getFilesDir() + "/Devices");
 		// 切换为Debug服务器
-		XPGWifiConfig.sharedInstance().EnableProductFilter(false);
 		xpgWifiGCC = XPGWifiSDK.sharedInstance();
+//		xpgWifiGCC.SetAppID("42a7563f305342ae805cbb21d968a0ce");
+		XPGWifiConfig.sharedInstance().EnableProductFilter(true);
+	    XPGWifiConfig.sharedInstance().RegisterProductKey("6f3074fe43894547a4f1314bd7e3ae0b");
 		XPGWifiConfig.sharedInstance().SetSwitchService(false);
 		xpgWifiGCC.SetAppID("7ac10dec7dba436785ac23949536a6eb");
+		
 
 		XPGWifiSDK.SetLogLevel(XPGWifiLogLevel.XPGWifiLogLevelAll);
 		XPGWifiSDK.SetPrintDataLevel(true);
@@ -174,7 +177,7 @@ public class MessageCenter {
 //=================================================================
 	
 	/**
-	 * 发送数据点
+	 * 发送指令
 	 * */
 	public void cWrite(XPGWifiDevice xpgWifiDevice,JSONObject jsonsend) {
 		xpgWifiDevice.write(jsonsend.toString());

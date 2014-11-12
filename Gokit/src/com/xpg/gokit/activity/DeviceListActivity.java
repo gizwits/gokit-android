@@ -165,7 +165,7 @@ public class DeviceListActivity extends BaseActivity implements
 		this.actionBar.setHomeButtonEnabled(true);
 		this.actionBar.setIcon(R.drawable.reflash_bt);
 
-		Log.i("androidid", setmanager.getPhoneId());
+//		Log.i("androidid", setmanager.getPhoneId());
 		// this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
 
 		// mCenter.getXPGWifiSDK().RegisterAnonymousUser(setmanager.getPhoneId());
@@ -387,6 +387,7 @@ public class DeviceListActivity extends BaseActivity implements
 		if (!device.isTitle()) {
 			xpgWifiDevice = BaseActivity.findDeviceByMac(device.getMac(),
 					device.getDid());
+			xpgWifiDevice.setListener(deviceListener);
 			if (xpgWifiDevice != null) {
 				File file = new File(this.getFilesDir() + "/Devices/"
 						+ xpgWifiDevice.GetProductKey() + ".json");
@@ -489,7 +490,7 @@ public class DeviceListActivity extends BaseActivity implements
 		if (result == 0) {
 			handler.sendEmptyMessage(LOGINSUCCESS);
 			Intent it = new Intent();
-			it.setClass(DeviceListActivity.this, ControlDeviceActivity.class);
+			it.setClass(DeviceListActivity.this, GokitControlActivity.class);
 			it.putExtra("device", device);
 			it.putExtra("islocal", device.getIp() == null
 					|| !device.getIp().equals(""));
@@ -506,7 +507,7 @@ public class DeviceListActivity extends BaseActivity implements
 			handler.sendEmptyMessage(LOGINSUCCESS);
 			Intent it = new Intent();
 
-			it.setClass(DeviceListActivity.this, ControlDeviceActivity.class);
+			it.setClass(DeviceListActivity.this, GokitControlActivity.class);
 			it.putExtra("device", device);
 			it.putExtra("islocal", device.getIp() == null
 					|| !device.getIp().equals(""));

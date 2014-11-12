@@ -2,19 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    <LinearLayout 
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dip"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <EditText
             android:id="@+id/edt_phone"
-            android:hint="手机号码："
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="手机号码："
             android:inputType="phone" >
-
         </EditText>
 
         <RelativeLayout
@@ -22,41 +22,37 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip" >
 
-             <EditText
-                 android:id="@+id/edt_code"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerVertical="true"
-                 android:hint="手机验证码" >
-	
-	        </EditText>
+            <EditText
+                android:id="@+id/edt_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="手机验证码" >
+            </EditText>
 
-             <Button
-                 android:id="@+id/btn_send_verify_code"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentRight="true"
-                 android:layout_centerVertical="true"
-                 android:text="获取验证码" />
-
+            <Button
+                android:id="@+id/btn_send_verify_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="获取验证码" />
         </RelativeLayout>
 
-       
-
         <EditText
-            android:hint="密码："
-            android:layout_marginTop="10dip" 
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:hint="密码："
             android:inputType="textPassword" />
 
         <EditText
-            android:hint="确认密码："
-            android:layout_marginTop="10dip" 
             android:id="@+id/edt_con_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:hint="确认密码："
             android:inputType="textPassword" />
 
         <Button
@@ -65,8 +61,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:text="注册" />
-        
     </LinearLayout>
-
 
 </RelativeLayout>
