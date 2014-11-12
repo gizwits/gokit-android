@@ -16,7 +16,11 @@ import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
 import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 import com.xtremeprog.xpgconnect.XPGWifiSSIDList;
-
+/**
+ * 所有activity的基类。该基类实现了XPGWifiDeviceListener和XPGWifiSDKListener两个监听器，并提供全局的回调方法。
+ * 
+ * @author Lien Li
+ * */
 public class BaseActivity extends Activity {
 	protected ActionBar actionBar;
 	protected static XPGWifiDeviceList xpgwifidevicelist;
@@ -136,11 +140,6 @@ public class BaseActivity extends Activity {
 				String token) {
 			BaseActivity.this.onUserLogin(error, errorMessage, uid, token);
 		};
-
-		public void onUpdateProduct(int result) {
-			BaseActivity.this.onUpdateProduct(result);
-		};
-		
 	    
 		@Override
 		public void onSetAirLink(XPGWifiDevice device) {

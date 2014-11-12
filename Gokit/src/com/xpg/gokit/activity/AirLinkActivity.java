@@ -17,7 +17,8 @@ import com.xpg.gokit.R;
 import com.xpg.gokit.utils.NetUtils;
 import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 /**
- * airlink 配置类，发送airlink广播.
+ * airlink 配置类<P>
+ * 发送airlink广播.使用设备之前，需要先把设备接入网络，该activity演示app通过airlink的方式使模块连上路由器。
  * @author Lien Li
  * */
 public class AirLinkActivity extends BaseActivity implements OnClickListener {

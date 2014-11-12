@@ -18,8 +18,13 @@ import com.xpg.gokit.R;
 import com.xpg.gokit.utils.NetUtils;
 
 /**
- * 初始进入界面,检查网络是否可用,可以的话跳转到获取列表界面
- * <p>如果连上了GAgent热点，则进入softap界面
+ * 初始进入界面
+ * <P>
+ * 检查网络是否可用,如果连上的是路由器或移动网络，跳转到获取设备列表页面；
+ * <P>
+ * 如果连接的是模块的热点(GAgent)，跳转到softap配置页面；
+ * <P>
+ * 如果没有连上网络 ，则弹出提示。
  * 
  * @author Lien Li
  * 
@@ -63,9 +68,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		btn_retry.setOnClickListener(this);
 	}
-	
+
 	/**
-	 * 检查网络是否可用，判断是用手机网络还是WIFI网络
+	 * 检查网络是否可用，判断是用手机网络还是WIFI网络或者模块热点
 	 * */
 	private void checkNetType() {
 		int type = NetUtils.getConnectedType(this);
@@ -74,19 +79,19 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			case ConnectivityManager.TYPE_WIFI:
 				Log.i("wifi", "wifi");
 				String ssid = NetUtils.getCurentWifiSSID(this);
-				if (ssid.contains("XPG-GAgent")) {
+				if (ssid.contains("XPG-GAgent")) {//连上了GAgent模块的热点，跳转到配置页面
 					Intent it = new Intent();
 					it.setClass(this, DeviceApActivity.class);
 					startActivity(it);
 					return;
 				} else {
-					Intent it = new Intent();
+					Intent it = new Intent();//连上了路由器，跳转到获取设备列表页面
 					it.setClass(this, DeviceListActivity.class);
 					startActivity(it);
 				}
 
 				break;
-			case ConnectivityManager.TYPE_MOBILE:
+			case ConnectivityManager.TYPE_MOBILE://连上了移动网络，跳转到获取设备列表页面
 				Log.i("mobile", "mobile");
 				Intent it = new Intent();
 				it.setClass(this, DeviceListActivity.class);
