@@ -49,11 +49,11 @@
         android:orientation="vertical" >
 		<RelativeLayout 
 		    android:layout_width="match_parent"
-		    android:layout_height="100dip">
+		    android:layout_height="200dip">
 	        <MultiAutoCompleteTextView
 	            android:id="@+id/edt_receive_device_msg"
 	            android:layout_width="match_parent"
-	            android:layout_height="100dip"
+	            android:layout_height="200dip"
 	            android:ems="10"
 	            android:text=""
 	            android:minLines="6" >

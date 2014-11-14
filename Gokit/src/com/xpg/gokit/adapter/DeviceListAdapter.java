@@ -23,25 +23,21 @@ public class DeviceListAdapter extends BaseAdapter {
 	}
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return devicelist.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		View v = LayoutInflater.from(context).inflate(R.layout.item_device, null);
 		RelativeLayout rl_device = (RelativeLayout)v.findViewById(R.id.rl_device);
 		RelativeLayout rl_title = (RelativeLayout)v.findViewById(R.id.rl_title);

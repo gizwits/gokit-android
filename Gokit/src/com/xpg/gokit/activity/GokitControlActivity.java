@@ -35,7 +35,8 @@ import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiReceiveInfo;
 
 /**
- * gokit控制界面
+ * gokit控制界面<P>
+ * 该Activity演示如何收发控制指令，断开连接，解绑设备
  * 
  * @author Lien Li
  * */
@@ -47,11 +48,13 @@ public class GokitControlActivity extends BaseActivity {
 	protected static final int UPDATE_UI = 2;
 	protected static final int UNBAND_FAIL = 3;
 	protected static final int DISCONNECT = 4;
-	protected static final int LOGIN = 5;
-	/************************************************************
+
+	/*
+	 * ===========================================================
 	 * 以下key值对应http://site.gizwits.com/v2/datapoint?product_key={productKey}
 	 * 中显示的数据点名称，sdk通过该名称作为json的key值来收发指令，demo中使用的key都是对应机智云实验室的微信宠物屋项目所用数据点
-	 ************************************************************/
+	 * ===========================================================
+	 */
 	/** led红灯开关 0=关 1=开 */
 	private static final String KEY_RED_SWITCH = "attr0";
 	/** 指定led颜色值 0=自定义 1=黄色 2=紫色 3=粉色 */
@@ -89,29 +92,17 @@ public class GokitControlActivity extends BaseActivity {
 
 	ControlDevice controlDevice;
 	XPGWifiDevice xpgWifiDevice;
-	private boolean isLocal = true;
 	SettingManager settingManager;
 	Boolean isInitFinish = true;
 	String title = "";
 	private HashMap<String, Object> deviceStatu;
 
-	// TextView tv_title;
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 
 			switch (msg.what) {
-			case LOGIN:
-				Log.i("connected", "connected");
-				if (xpgWifiDevice.IsLAN()) {
-					xpgWifiDevice
-							.Login("", mCenter.cGetPasscode(xpgWifiDevice));
-				} else {
-					String username = settingManager.getUserName();
-					String password = settingManager.getPassword();
-					xpgWifiDevice.Login(username, password);
-				}
-				break;
+
 			case DISCONNECT:
 				Toast.makeText(GokitControlActivity.this, "设备已断开",
 						Toast.LENGTH_SHORT).show();
@@ -178,7 +169,6 @@ public class GokitControlActivity extends BaseActivity {
 
 		}
 	};
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +186,6 @@ public class GokitControlActivity extends BaseActivity {
 		if (xpgWifiDevice != null) {
 			xpgWifiDevice.setListener(deviceListener);
 		}
-		isLocal = getIntent().getBooleanExtra("islocal", true);
 		actionBar.setTitle(controlDevice.getName());
 		if (!xpgWifiDevice.IsOnline()) {
 			new AlertDialog.Builder(this).setTitle("警告")
@@ -232,37 +221,6 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onUpdateUI() {
-		Message msg = new Message();
-		msg.what = UPDATE_UI;
-		handler.sendMessage(msg);
-	}
-
-	@Override
-	public void onLogin(int result) {
-		if (result == 0) {
-			Message msg = new Message();
-			msg.what = TOAST;
-			msg.obj = "小循环登陆成功";
-			handler.sendMessage(msg);
-
-			isInitFinish = true;
-		}
-	}
-
-	@Override
-	public void onLoginMQTT(int result) {
-		if (result == 0) {
-			Message msg = new Message();
-			msg.what = TOAST;
-			msg.obj = "大循环登陆成功";
-			handler.sendMessage(msg);
-
-			isInitFinish = true;
-		}
-	}
-
-	@Override
 	public boolean onReceiveData(String data) {
 		Log.i("info", data);
 		// isInitFinish = false;
@@ -275,22 +233,15 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onConnected() {
-
-		handler.sendEmptyMessage(LOGIN);
-	}
-
-	@Override
 	public void onDisconnected() {
 		Message msg = new Message();
 		msg.what = DISCONNECT;
 		handler.sendMessage(msg);
 	}
 
-	
-    /**
-     * 初始化控件
-     * */ 
+	/**
+	 * 初始化控件
+	 * */
 	private void initViews() {
 		swRed = (Switch) findViewById(R.id.sw_red);
 		swInfrared = (Switch) findViewById(R.id.sw_infrared);
@@ -307,7 +258,7 @@ public class GokitControlActivity extends BaseActivity {
 		sbSpeed = (SeekBar) findViewById(R.id.sb_speed);
 
 	}
-   
+
 	/**
 	 * 初始化监听器
 	 * */
@@ -467,18 +418,6 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onUnbindDevice(int error, String errorMessage) {
-		if (error == 0) {
-			mCenter.cDisconnect(xpgWifiDevice);
-			finish();
-		} else {
-			Message msg = new Message();
-			msg.what = UNBAND_FAIL;
-			handler.sendMessage(msg);
-		}
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.control_device, menu);
 
@@ -542,7 +481,7 @@ public class GokitControlActivity extends BaseActivity {
 		super.onBackPressed();
 
 	}
-	
+
 	/**
 	 * 
 	 * 

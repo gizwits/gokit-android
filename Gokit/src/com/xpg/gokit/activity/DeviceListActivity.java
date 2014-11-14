@@ -31,8 +31,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xpg.gokit.R;
 import com.xpg.gokit.adapter.DeviceListAdapter;
 import com.xpg.gokit.bean.ControlDevice;
-import com.xpg.gokit.setting.SettingManager;
-import com.xpg.gokit.utils.CRCUtils;
 import com.xpg.gokit.utils.NetUtils;
 import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
@@ -46,9 +44,13 @@ import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
  */
 public class DeviceListActivity extends BaseActivity implements
 		OnItemClickListener, OnItemLongClickListener {
+	/** 新设备 */
 	protected static final int NEW_DEVICE = 0;
+	/** 登陆成功 */
 	protected static final int LOGINSUCCESS = 1;
+	/** 登陆失败 */
 	protected static final int LOGINFAIL = 2;
+	
 	protected static final int CONNECTEDFAIL = 3;
 	protected static final int LOG = 4;
 	private static final int REFLASH = 5;
@@ -144,10 +146,6 @@ public class DeviceListActivity extends BaseActivity implements
 		}
 	};
 
-	public long onCalculateCRC(byte[] data) {
-		return CRCUtils.CalculateCRC(xpgWifiDevice.GetProductKey(), data);
-	};
-
 	private void storeDeviceList(XPGWifiDeviceList devices) {
 		BaseActivity.deviceslist = new ArrayList<XPGWifiDevice>();
 		for (int i = 0; i < devices.GetCount(); i++) {
@@ -160,16 +158,10 @@ public class DeviceListActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_device_list);
-		 //使左上角图标显示并且可以按
+		// 使左上角图标显示并且可以按
 		this.actionBar.setDisplayShowHomeEnabled(true);
 		this.actionBar.setHomeButtonEnabled(true);
 		this.actionBar.setIcon(R.drawable.reflash_bt);
-
-//		Log.i("androidid", setmanager.getPhoneId());
-		// this.mCenter.getXPGWifiSDK().setListener(gccDelegate);
-
-		// mCenter.getXPGWifiSDK().RegisterAnonymousUser(setmanager.getPhoneId());
-
 		initView();
 		initData();
 		initListener();
@@ -353,8 +345,6 @@ public class DeviceListActivity extends BaseActivity implements
 		getDeviceList();
 	}
 
-
-
 	private void EmptyData() {
 		devicelist = new ArrayList<ControlDevice>();
 	}
@@ -401,23 +391,15 @@ public class DeviceListActivity extends BaseActivity implements
 			}
 			if (!device.isNew()) {
 				if (xpgWifiDevice != null) {
-					// xpgWifiDevice.setListener(deviceDelegate);
 					dialog.show();
 					if (xpgWifiDevice.IsLAN()) {
 
-						// if(!xpgWifiDevice.ConnectToLAN()){
-						// xpgWifiDevice.Disconnect();
 						xpgWifiDevice.ConnectToLAN();
-						// }
 
 					} else {
 						if (xpgWifiDevice.GetDid() != null
 								&& !xpgWifiDevice.GetDid().equals("")) {
-
-							// if(!xpgWifiDevice.ConnectToMQTT()){
-							// xpgWifiDevice.Disconnect();
 							xpgWifiDevice.ConnectToMQTT();
-							// }
 						} else {
 							Toast.makeText(this, "设备Did 为空,查询设备是否连网",
 									Toast.LENGTH_SHORT).show();
@@ -428,21 +410,14 @@ public class DeviceListActivity extends BaseActivity implements
 			} else {
 				if (xpgWifiDevice != null) {
 
-					// xpgWifiDevice.setListener(deviceDelegate);
 					dialog.show();
 					if (xpgWifiDevice.IsLAN()) {
-						// if(!xpgWifiDevice.ConnectToLAN()){
-						// xpgWifiDevice.Disconnect();
 						xpgWifiDevice.ConnectToLAN();
-						// }
 
 					} else {
 						if (xpgWifiDevice.GetDid() != null
 								&& !xpgWifiDevice.GetDid().equals("")) {
-							// if(!xpgWifiDevice.ConnectToMQTT()){
-							// xpgWifiDevice.Disconnect();
 							xpgWifiDevice.ConnectToMQTT();
-							// }
 						} else {
 							Toast.makeText(this, "设备Did 为空,查询设备是否连网",
 									Toast.LENGTH_SHORT).show();
@@ -472,10 +447,10 @@ public class DeviceListActivity extends BaseActivity implements
 		String hideuid = setmanager.getHideUid();
 		String hidetoken = setmanager.getHideToken();
 		if (!uid.equals("") && !token.equals("")) {
-			//绑定后刷新设备列表
+			// 绑定后刷新设备列表
 			mCenter.cGetBoundDevices(uid, token);
 		} else if (!hideuid.equals("") && !hidetoken.equals("")) {
-			//绑定后刷新设备列表
+			// 绑定后刷新设备列表
 			mCenter.cGetBoundDevices(hideuid, hidetoken);
 		} else {
 			mCenter.cRegisterAnonymousUser();
@@ -551,10 +526,9 @@ public class DeviceListActivity extends BaseActivity implements
 		Log.i("conn fail", "conn fail");
 		handler.sendEmptyMessage(CONNECTEDFAIL);
 	};
+
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
-		// notfinish = false;
 	}
 }

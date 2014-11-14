@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
 		rl_loading = (RelativeLayout) findViewById(R.id.rl_laoding);
 		rl_net_unable = (RelativeLayout) findViewById(R.id.rl_net_unable);
 		btn_retry = (Button) findViewById(R.id.btn_retry);
@@ -65,7 +64,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initListener() {
-		// TODO Auto-generated method stub
 		btn_retry.setOnClickListener(this);
 	}
 
@@ -149,7 +147,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		if (v == btn_retry) {
 			showRecheckType();
 		}

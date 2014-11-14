@@ -10,12 +10,13 @@ import android.util.Log;
 
 import com.xpg.gokit.sdk.MessageCenter;
 import com.xpg.gokit.setting.SettingManager;
-import com.xpg.gokit.utils.CRCUtils;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 import com.xtremeprog.xpgconnect.XPGWifiDeviceListener;
+import com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct;
 import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
 import com.xtremeprog.xpgconnect.XPGWifiSSIDList;
+
 /**
  * 所有activity的基类。该基类实现了XPGWifiDeviceListener和XPGWifiSDKListener两个监听器，并提供全局的回调方法。
  * 
@@ -28,19 +29,20 @@ public class BaseActivity extends Activity {
 	static boolean isInit = false;
 	protected MessageCenter mCenter;
 	protected SettingManager setmanager;
-
+	/**
+	 * XPGWifiDeviceListener
+	 * <P>
+	 * 设备属性监听器。 设备连接断开、获取绑定参数、获取设备信息、控制和接受设备信息相关
+	 * */
 	protected XPGWifiDeviceListener deviceListener = new XPGWifiDeviceListener() {
 		public void onBindDevice(int error, String errorMessage) {
-			BaseActivity.this.onSDKBindDevice(error, errorMessage);
+			BaseActivity.this.onBindDevice(error, errorMessage);
 		};
 
 		public void onUnbindDevice(int error, String errorMessage) {
 			BaseActivity.this.onUnbindDevice(error, errorMessage);
 		};
 
-		public void onUpdateUI() {
-			BaseActivity.this.onUpdateUI();
-		};
 
 		public void onConnectFailed() {
 			BaseActivity.this.onConnectFailed();
@@ -76,33 +78,27 @@ public class BaseActivity extends Activity {
 			BaseActivity.this.onConnected();
 		}
 
-		public void onSetSwitcher(int result) {
-			BaseActivity.this.onSetSwitcher(result);
-		};
 
 		public void onLoginMQTT(int result) {
 			BaseActivity.this.onLoginMQTT(result);
 		}
-	};
 
+		@Override
+		public void onQueryHardwareInfo(int error,
+				XPGWifiQueryHardwareInfoStruct pInfo) {
+			BaseActivity.this.onQueryHardwareInfo(error, pInfo);
+		}
+		
+		
+	};
+	/**
+	 * XPGWifiSDKListener
+	 * <P>
+	 * sdk监听器。 配置设备上线、注册登录用户、搜索发现设备、用户绑定和解绑设备相关
+	 * */
 	private XPGWifiSDKListener sdkListener = new XPGWifiSDKListener() {
 
-		public void onChangeUserEmail(int error, String errorMessage) {
-			BaseActivity.this.onChangeUserEmail(error, errorMessage);
-		};
-
-		public void onUserLogout(int error, String errorMessage) {
-			BaseActivity.this.onUserLogout(error, errorMessage);
-		};
-
-		public void onTransUser(int error, String errorMessage) {
-			BaseActivity.this.onTransUser(error, errorMessage);
-		};
-
-		public void onChangeUserPhone(int error, String errorMessage) {
-			BaseActivity.this.onChangeUserPhone(error, errorMessage);
-		};
-
+		
 		public void onChangeUserPassword(int error, String errorMessage) {
 			BaseActivity.this.onChangeUserPassword(error, errorMessage);
 		};
@@ -123,24 +119,18 @@ public class BaseActivity extends Activity {
 					did, mac, passCode, host, port, isOnline);
 		};
 
-		public void onBindDevice(int error, String errorMessage) {
-			BaseActivity.this.onBindDevice(error, errorMessage);
-		};
 
 		public void onRegisterUser(int error, String errorMessage, String uid,
 				String token) {
 			BaseActivity.this.onRegisterUser(error, errorMessage, uid, token);
 		};
 
-		public void onUnbindDevice(int error, String errorMessage) {
-			BaseActivity.this.onSDKUnbindDevice(error, errorMessage);
-		};
 
 		public void onUserLogin(int error, String errorMessage, String uid,
 				String token) {
 			BaseActivity.this.onUserLogin(error, errorMessage, uid, token);
 		};
-	    
+
 		@Override
 		public void onSetAirLink(XPGWifiDevice device) {
 			Log.e("airlink", "success");
@@ -195,17 +185,7 @@ public class BaseActivity extends Activity {
 
 	}
 
-	protected void onChangeUserEmail(int error, String errorMessage) {
-	};
 
-	protected void onUserLogout(int error, String errorMessage) {
-	};
-
-	protected void onTransUser(int error, String errorMessage) {
-	};
-
-	protected void onChangeUserPhone(int error, String errorMessage) {
-	};
 
 	/**
 	 * 修改用户名密码回调接口
@@ -238,9 +218,7 @@ public class BaseActivity extends Activity {
 			String host, int port, int isOnline) {
 	};
 
-	protected void onSDKBindDevice(int error, String errorMessage) {
-	};
-	
+
 	/**
 	 * 用户注册结果回调接口
 	 * 
@@ -257,8 +235,6 @@ public class BaseActivity extends Activity {
 			String token) {
 	};
 
-	protected void onSDKUnbindDevice(int error, String errorMessage) {
-	};
 
 	/**
 	 * 用户登陆结果回调接口
@@ -290,17 +266,23 @@ public class BaseActivity extends Activity {
 
 	protected void onGetSSIDList(XPGWifiSSIDList list, int result) {
 	};
-
+	
+	/**
+	 * 绑定设备结果回调
+	 * @param error 错误码
+	 * @param errorMessage 错误信息
+	 * */
 	public void onBindDevice(int error, String errorMessage) {
 	};
 
+	/**
+	 * 解绑设备结果回调
+	 * @param error 错误码
+	 * @param errorMessage 错误信息
+	 * */
 	public void onUnbindDevice(int error, String errorMessage) {
 	};
 
-	public void onUpdateUI() {
-	};
-	
-	
 
 	/**
 	 * socket 连接失败
@@ -309,22 +291,33 @@ public class BaseActivity extends Activity {
 	};
 
 	/**
-	 * 小循环授权成功如果 result == 0, 失败如果 result == 2
+	 * 小循环授权登陆设备
+	 * @param result 返回结果 0＝成功 2=失败
 	 * */
 	public void onLogin(int result) {
 	};
-
+	
+	/**
+	 * 获取模块和mcu协议版本等属性
+	 * */
 	public void onQueryHardwareInfo(int error,
 			com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct pInfo) {
 	};
-
+    
+	/**
+	 * 设备报警回调
+	 * */
 	public void onReceiveAlertsAndFaultsInfo(
 			com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo alerts,
 			com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo faults) {
 	};
 
+	/**
+	 * 设备上下线通知
+	 * */
 	public void onDeviceOnline(boolean isOnline) {
 	};
+
 	/**
 	 * 获取Passcode
 	 * */
@@ -350,12 +343,10 @@ public class BaseActivity extends Activity {
 	public void onConnected() {
 	}
 
-	public void onSetSwitcher(int result) {
-	};
-
 
 	/**
-	 * 大循环授权成功如果 result == 0, 失败如果 result == 2
+	 * 大循环授权登陆结果
+	 * @param result 结果码
 	 * */
 	public void onLoginMQTT(int result) {
 	}

@@ -37,32 +37,25 @@ public class MessageCenter {
 
 	private void init(Context c) {
 		mSettingManager = new SettingManager(c);
-		XPGWifiConfig.sharedInstance().SetDebug(BuildConfig.DEBUG);
-		XPGWifiConfig.sharedInstance().SetProductPath(
-				c.getFilesDir() + "/Devices");
-		// 切换为Debug服务器
+		
 		xpgWifiGCC = XPGWifiSDK.sharedInstance();
-//		xpgWifiGCC.SetAppID("42a7563f305342ae805cbb21d968a0ce");
-		XPGWifiConfig.sharedInstance().EnableProductFilter(true);
-	    XPGWifiConfig.sharedInstance().RegisterProductKey("6f3074fe43894547a4f1314bd7e3ae0b");
-		XPGWifiConfig.sharedInstance().SetSwitchService(false);
-		xpgWifiGCC.SetAppID("7ac10dec7dba436785ac23949536a6eb");
 		
 
-		XPGWifiSDK.SetLogLevel(XPGWifiLogLevel.XPGWifiLogLevelAll);
-		XPGWifiSDK.SetPrintDataLevel(true);
+		
 	}
 
 	public XPGWifiSDK getXPGWifiSDK() {
 		return xpgWifiGCC;
 	}
-//=================================================================
-//	  
-//	 关于账号的指令
-//	  
-//=================================================================
+
+	// =================================================================
+	//
+	// 关于账号的指令
+	//
+	// =================================================================
 	/**
 	 * 注册账号
+	 * 
 	 * @param phone
 	 *            注册手机号
 	 * @param code
@@ -92,6 +85,7 @@ public class MessageCenter {
 
 	/**
 	 * 账号登陆
+	 * 
 	 * @param name
 	 *            用户名
 	 * @param psw
@@ -103,6 +97,7 @@ public class MessageCenter {
 
 	/**
 	 * 忘记密码
+	 * 
 	 * @param phone
 	 *            手机号
 	 * @param code
@@ -117,7 +112,8 @@ public class MessageCenter {
 
 	/**
 	 * 请求向手机发送验证码
-	 *  @param phone
+	 * 
+	 * @param phone
 	 *            手机号
 	 * */
 	public void cRequestSendVerifyCode(String phone) {
@@ -126,10 +122,11 @@ public class MessageCenter {
 
 	/**
 	 * 发送airlink广播，把需要连接的wifi的ssid和password发给模块。
+	 * 
 	 * @param wifi
-	 *         wifi名字
+	 *            wifi名字
 	 * @param password
-	 *         wifi密码
+	 *            wifi密码
 	 * */
 	public void cSetAirLink(String wifi, String password) {
 		xpgWifiGCC.SetAirLink(wifi, password);
@@ -144,68 +141,75 @@ public class MessageCenter {
 
 	/**
 	 * 绑定后刷新设备列表
+	 * 
 	 * @param uid
-	 *         用户名
+	 *            用户名
 	 * @param token
-	 *         密码
+	 *            密码
 	 * */
 	public void cGetBoundDevices(String uid, String token) {
 		xpgWifiGCC.GetBoundDevices(uid, token);
 	}
+
 	/**
 	 * 绑定设备
 	 * 
 	 * @param uid
-	 *         用户名
+	 *            用户名
 	 * @param token
-	 *         密码
+	 *            密码
 	 * @param did
-	 *         did
+	 *            did
 	 * @param passcode
-	 *         passcode
+	 *            passcode
 	 * 
 	 * */
-	public void cBindDevice(String uid, String token,String did,String passcode) {
+	public void cBindDevice(String uid, String token, String did,
+			String passcode) {
 		xpgWifiGCC.BindDevice(uid, token, did, passcode);
 	}
 
-	
-//=================================================================
-//	  
-//	  关于控制设备的指令
-//	  
-//=================================================================
-	
+	// =================================================================
+	//
+	// 关于控制设备的指令
+	//
+	// =================================================================
+
 	/**
 	 * 发送指令
 	 * */
-	public void cWrite(XPGWifiDevice xpgWifiDevice,JSONObject jsonsend) {
+	public void cWrite(XPGWifiDevice xpgWifiDevice, JSONObject jsonsend) {
 		xpgWifiDevice.write(jsonsend.toString());
 	}
+
 	/**
 	 * 获取设备状态
 	 * */
-	public void cGetStatus(XPGWifiDevice xpgWifiDevice) throws JSONException{
+	public void cGetStatus(XPGWifiDevice xpgWifiDevice) throws JSONException {
 		JSONObject json = new JSONObject();
 		json.put("cmd", 2);
 		xpgWifiDevice.write(json.toString());
 	}
+
 	/**
 	 * 断开连接
 	 * */
 	public void cDisconnect(XPGWifiDevice xpgWifiDevice) {
 		xpgWifiDevice.Disconnect();
 	}
+
 	/**
 	 * 获取Passcode
 	 * */
 	public String cGetPasscode(XPGWifiDevice xpgWifiDevice) {
 		return xpgWifiDevice.GetPasscode();
 	}
+
 	/**
 	 * 解除绑定
 	 * */
-	public void cUnbindDevice(XPGWifiDevice xpgWifiDevice,String uid,String token) {
+	public void cUnbindDevice(XPGWifiDevice xpgWifiDevice, String uid,
+			String token) {
 		xpgWifiDevice.UnbindDevice(uid, token);
 	}
 

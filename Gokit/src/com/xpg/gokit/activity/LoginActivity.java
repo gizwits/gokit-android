@@ -73,7 +73,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		// setManager = new SettingManager(this);
 		initView();
-		initListener();
+		initEvents();
 
 	}
 
@@ -83,14 +83,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		btn_back = (Button) findViewById(R.id.btn_back);
 		btn_login = (Button) findViewById(R.id.btn_login);
 		tv_forget = (TextView) findViewById(R.id.tv_foget);
-		// edt_pwd.setText("123456");
-		// edt_account.setText("mkzhang");
 
 		dialog = new ProgressDialog(this);
 
 	}
 
-	private void initListener() {
+	private void initEvents() {
 		btn_back.setOnClickListener(this);
 		btn_login.setOnClickListener(this);
 		tv_forget.setOnClickListener(this);
@@ -143,8 +141,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		if (v == btn_login) {
 			final String psw = edt_pwd.getText().toString().trim();
 			final String name = edt_account.getText().toString().trim();
-			// setManager.setPassword(psw);
-			// setManager.setUserName(name);
 			mCenter.cLogin(name, psw);
 			dialog.show();
 		}
@@ -159,7 +155,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onUserLogin(int error, String errorMessage, String uid,
 			String token) {
-		if (!uid.equals("") && !token.equals("")) {//登陆成功
+		if (uid!=null&&token!=null&&!uid.equals("") && !token.equals("")) {//登陆成功
 			setManager.setUid(uid);
 			setManager.setToken(token);
 			Message msg = new Message();

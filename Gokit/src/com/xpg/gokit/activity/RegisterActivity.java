@@ -20,7 +20,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * 注册界面
+ * 注册界面<P>
+ * 该activity演示用户如何注册机智云账号以及发送手机验证码。
  * 
  * @author Lien Li
  * */
@@ -76,10 +77,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_register);
 		setmanager = new SettingManager(this);
 		initView();
-		initListener();
+		initEvents();
 	}
 
-	private void initListener() {
+	private void initEvents() {
 		btn_reg.setOnClickListener(this);
 		btn_send_verify_code.setOnClickListener(this);
 
@@ -148,6 +149,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			String phone = edt_phone_number.getText().toString();
 			phone = phone.trim();
 			if (phone.length() == 11) {
+				//发送手机验证码
 				mCenter.cRequestSendVerifyCode(phone);
 				dialog.show();
 			} else {
@@ -161,7 +163,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		mCenter.cRegisterPhoneUser(phone, code, password);
 	}
 
-
+    @Override
 	protected void onRegisterUser(int error, String errorMessage, String uid,
 			String token) {
 		Log.i("error message uid token", error + " " + errorMessage + " " + uid
@@ -181,7 +183,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			handler.sendMessage(msg);
 		}
 	};
-
+	
+	@Override
 	protected void onRequestSendVerifyCode(int error, String errorMessage) {
 		Log.i("error message ", error + " " + errorMessage);
 		if (error == 0) {//发送成功

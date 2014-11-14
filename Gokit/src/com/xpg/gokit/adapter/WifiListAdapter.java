@@ -21,25 +21,21 @@ public class WifiListAdapter extends BaseAdapter {
 	}
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return list.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		ScanResult sr = list.get(position);
 		View v = LayoutInflater.from(context).inflate(R.layout.item_wifi_list, null);
 	

@@ -62,11 +62,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.xpg.gokit.activity.ControlDeviceActivity"
-            android:label="@string/title_activity_control_device"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.xpg.gokit.activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" >
@@ -83,13 +78,6 @@
 
         <!-- Fb Activitys End -->
 
-
-
-
-        <activity
-            android:name="com.xpg.ui.QTestActivity"
-            android:label="@string/title_activity_qtest" >
-        </activity>
         <activity
             android:name="com.xpg.gokit.activity.RegisterActivity"
             android:label="@string/title_activity_register" >
@@ -98,10 +86,7 @@
             android:name="com.xpg.gokit.activity.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password" >
         </activity>
-        <activity
-            android:name="com.xpg.gokit.activity.QMultilineActivity"
-            android:label="@string/title_activity_qmultiline" >
-        </activity>
+
         <activity
             android:name="com.xpg.gokit.activity.GokitControlActivity"
             android:label="@string/title_activity_control_gokit" >
