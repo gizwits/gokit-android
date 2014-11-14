@@ -85,6 +85,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tv_forget = (TextView) findViewById(R.id.tv_foget);
 
 		dialog = new ProgressDialog(this);
+		dialog.setMessage("登录中，请稍候...");
 
 	}
 

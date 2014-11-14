@@ -242,6 +242,7 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		btn_get_psc = (Button) findViewById(R.id.btn_get_psc);
 		edt_receive_device_msg = (MultiAutoCompleteTextView) findViewById(R.id.edt_receive_device_msg);
 		dialog = new ProgressDialog(this);
+		dialog.setMessage("绑定中，请稍候...");
 		View v = getLayoutInflater().inflate(R.layout.menu_new, null);
 		rl_login_band = (RelativeLayout) v.findViewById(R.id.rl_login_band);
 		rl_login_band.setOnClickListener(this);

@@ -315,6 +315,7 @@ public class DeviceListActivity extends BaseActivity implements
 	private void initView() {
 		lv_device_list = (ListView) findViewById(R.id.lv_device_list);
 		dialog = new ProgressDialog(this);
+		dialog.setMessage("刷新列表中，请稍候...");
 	}
 
 	private void initListener() {

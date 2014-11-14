@@ -92,6 +92,7 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 		btn_set = (Button) findViewById(R.id.btn_set);
 		btn_back = (Button) findViewById(R.id.btn_back);
 		dialog = new ProgressDialog(this);
+		dialog.setMessage("配置中，请稍候...");
 	}
 	//初始化变量
 	private void initData() {

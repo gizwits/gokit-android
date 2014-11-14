@@ -94,6 +94,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		edt_verify_code = (EditText)findViewById(R.id.edt_code);
 		edt_phone_number = (EditText)findViewById(R.id.edt_phone);
 		dialog = new ProgressDialog(this);
+		dialog.setMessage("处理中，请稍候...");
 
 	}
 
