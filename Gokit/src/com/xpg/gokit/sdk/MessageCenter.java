@@ -68,7 +68,8 @@ public class MessageCenter {
 	}
 
 	/**
-	 * 注册匿名账号
+	 * 匿名登录<P>
+	 * 如果一开始不需要直接注册账号，则需要进行匿名登录
 	 * */
 	public void cRegisterAnonymousUser() {
 		xpgWifiGCC.RegisterAnonymousUser(mSettingManager.getPhoneId());
@@ -140,7 +141,7 @@ public class MessageCenter {
 	}
 
 	/**
-	 * 绑定后刷新设备列表
+	 * 绑定后刷新设备列表，该方法会同时获取本地设备以及远程设备列表
 	 * 
 	 * @param uid
 	 *            用户名

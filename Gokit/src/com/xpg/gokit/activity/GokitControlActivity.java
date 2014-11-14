@@ -456,10 +456,6 @@ public class GokitControlActivity extends BaseActivity {
 			}
 
 			break;
-		case android.R.id.home:
-			xpgWifiDevice.Disconnect();
-			finish();
-			break;
 		// 获取设备状态
 		case R.id.action_device_status:
 			try {

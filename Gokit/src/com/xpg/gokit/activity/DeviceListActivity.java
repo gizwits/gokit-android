@@ -38,6 +38,8 @@ import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
 
 /**
  * 设备列表界面
+ * <P>
+ * 该Activity演示如何获取设备列表，登陆大小循环，控制设备流程
  * 
  * @author Lien Li
  * 
@@ -50,7 +52,7 @@ public class DeviceListActivity extends BaseActivity implements
 	protected static final int LOGINSUCCESS = 1;
 	/** 登陆失败 */
 	protected static final int LOGINFAIL = 2;
-	
+
 	protected static final int CONNECTEDFAIL = 3;
 	protected static final int LOG = 4;
 	private static final int REFLASH = 5;
@@ -61,7 +63,6 @@ public class DeviceListActivity extends BaseActivity implements
 	private XPGWifiDevice xpgWifiDevice;
 	ControlDevice device;
 	ProgressDialog dialog;
-	private Timer timer;
 	Boolean isGettingDevice = false;
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -128,6 +129,7 @@ public class DeviceListActivity extends BaseActivity implements
 		}
 	};
 
+	@Override
 	public void onUserLogin(int error, String errorMessage, String uid,
 			String token) {
 		if (uid != null && token != null && !uid.equals("")
@@ -283,66 +285,15 @@ public class DeviceListActivity extends BaseActivity implements
 	public void onPause() {
 		super.onPause();
 
-		timer.cancel();
-		timer = null;
-
 	}
 
 	public void onResume() {
 		super.onResume();
 
-		if (timer == null) {
-			timer = new Timer();
-			timer.schedule(new TimerTask() {
-
-				@Override
-				public void run() {
-					final String product_key = setmanager
-							.getDownLoadProduct_key();
-					if (product_key != null) {
-						AsyncHttpClient client = new AsyncHttpClient();
-
-						// http://site.gizwits.com/v2/datapoint?product_key=be606a7b34d441b59d7eba2c080ff805&format=json
-						client.get("http://" + servername
-								+ "/v2/datapoint?product_key=" + product_key
-								+ "&format=json",
-								new JsonHttpResponseHandler() {
-									@Override
-									public void onSuccess(int arg0,
-											JSONObject json) {
-										File file = new File(
-												DeviceListActivity.this
-														.getFilesDir()
-														+ "/Devices/"
-														+ product_key + ".json");
-										try {
-											BufferedWriter writer = new BufferedWriter(
-													new FileWriter(file));
-											writer.write(json.toString());
-											writer.close();
-											XPGWifiConfig
-													.sharedInstance()
-													.SetProductPath(
-															DeviceListActivity.this
-																	.getFilesDir()
-																	+ "/Devices");
-											Log.i("filesuccess",
-													file.toString());
-										} catch (IOException e) {
-											e.printStackTrace();
-										}
-									}
-								});
-
-					}
-				}
-			}, 1000, 1000);
-		}
-
+		getDeviceList();
 		if (dialog.isShowing()) {
 			dialog.cancel();
 		}
-		getDeviceList();
 	}
 
 	private void EmptyData() {
@@ -436,6 +387,9 @@ public class DeviceListActivity extends BaseActivity implements
 		return true;
 	}
 
+	/**
+	 * 获取设备列表
+	 * */
 	private void getDeviceList() {
 		if (isGettingDevice)
 			return;
@@ -453,6 +407,7 @@ public class DeviceListActivity extends BaseActivity implements
 			// 绑定后刷新设备列表
 			mCenter.cGetBoundDevices(hideuid, hidetoken);
 		} else {
+			// 匿名登录,回调onUserLogin
 			mCenter.cRegisterAnonymousUser();
 		}
 
@@ -460,7 +415,7 @@ public class DeviceListActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void onLogin(int result) {
+	public void onLogin(int result) {//小循环登录设备成功，进入控制界面
 		Log.d("wifi", "onLogin:" + result);
 		if (result == 0) {
 			handler.sendEmptyMessage(LOGINSUCCESS);
@@ -478,7 +433,7 @@ public class DeviceListActivity extends BaseActivity implements
 	@Override
 	public void onLoginMQTT(int result) {
 		Log.d("wifi", "onLoginCloud:" + result);
-		if (result == 0) {
+		if (result == 0) {//大循环登录设备成功，进入控制界面
 			handler.sendEmptyMessage(LOGINSUCCESS);
 			Intent it = new Intent();
 
@@ -496,11 +451,12 @@ public class DeviceListActivity extends BaseActivity implements
 	@Override
 	public void onConnected() {
 		Log.i("connected", "connected");
-		if (xpgWifiDevice.IsLAN()) {
+		if (xpgWifiDevice.IsLAN()) {// 小循环连接成功
 			if (xpgWifiDevice.GetPasscode() != null
-					&& !xpgWifiDevice.GetPasscode().equals("")) {
-				xpgWifiDevice.Login("", xpgWifiDevice.GetPasscode());
+					&& !xpgWifiDevice.GetPasscode().equals("")) {// 判断是否能获取设备的passcode
+				xpgWifiDevice.Login("", xpgWifiDevice.GetPasscode());// 使用设备passcode登录设备，进行控制
 			} else {
+				// 获取不了设备的passcode，判断为新设备，进入设备绑定流程	
 				Intent it = new Intent();
 				it.setClass(DeviceListActivity.this,
 						NewDeviceControlActivity.class);
@@ -513,8 +469,10 @@ public class DeviceListActivity extends BaseActivity implements
 			String hideuid = setmanager.getHideUid();
 			String hidetoken = setmanager.getHideToken();
 			if (!uid.equals("") && !token.equals("")) {
+				// 登录设备
 				xpgWifiDevice.Login(uid, token);
 			} else if (!hideuid.equals("") && !hidetoken.equals("")) {
+				// 登录设备
 				xpgWifiDevice.Login(hideuid, hidetoken);
 			}
 
@@ -531,4 +489,5 @@ public class DeviceListActivity extends BaseActivity implements
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+
 }
