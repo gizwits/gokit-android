@@ -1,3 +1,20 @@
+/**
+ * Project Name:Gokit
+ * File Name:NetUtils.java
+ * Package Name:com.xpg.gokit.utils
+ * Date:2014-11-18 10:06:37
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.utils;
 
 import java.util.List;
@@ -10,19 +27,22 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 /**
- * 网络工具类
+ * 网络工具类.
+ *
+ * @author Sunny Ding
  * 
- *@author Sunny Ding
- * 
- * **/
+ * *
+ */
 public class NetUtils {
+	
 	/**
-	  * 判断当前手机是否连上Wifi
-	  * 
-	  * @param context 上下文
-	  * @return boolean 是否连上网络
-	  * 
-	  * **/
+	 * 判断当前手机是否连上Wifi.
+	 *
+	 * @param context 上下文
+	 * @return boolean 是否连上网络
+	 * 
+	 * *
+	 */
 	 static public boolean isWifiConnected(Context context) {  
 		      if (context != null) {  
 		          ConnectivityManager mConnectivityManager = (ConnectivityManager) context  
@@ -39,13 +59,15 @@ public class NetUtils {
 		     }  
 		     return false;  
 		 }  
-	 /**
-	  * 判断当前手机的网络是否可用
-	  * 
-	  * @param context 上下文
-	  * @return boolean 是否连上网络
-	  * 
-	  * **/
+	 
+ 	/**
+ 	 * 判断当前手机的网络是否可用.
+ 	 *
+ 	 * @param context 上下文
+ 	 * @return boolean 是否连上网络
+ 	 * 
+ 	 * *
+ 	 */
 	 static public boolean isMobileConnected(Context context) {  
 		      if (context != null) {  
 		          ConnectivityManager mConnectivityManager = (ConnectivityManager) context  
@@ -62,13 +84,15 @@ public class NetUtils {
 		     }  
 		     return false;  
 		 } 
-	 /**
-	  * 判断当前网络是手机网络还是WIFI
-	  * 
-	  * @param context 上下文
-	  * @return ConnectedType 数据类型
-	  * 
-	  * **/
+	 
+ 	/**
+ 	 * 判断当前网络是手机网络还是WIFI.
+ 	 *
+ 	 * @param context 上下文
+ 	 * @return ConnectedType 数据类型
+ 	 * 
+ 	 * *
+ 	 */
 	 public static int getConnectedType(Context context) {  
 		      if (context != null) {  
 		          ConnectivityManager mConnectivityManager = (ConnectivityManager) context  
@@ -82,13 +106,15 @@ public class NetUtils {
 		      }  
 		     return -1;  
 		 }
-	 /**
-	  * 获取当前WIFI的SSID
-	  * 
-	  * @param context 上下文
-	  * @return ssid 
-	  * 
-	  * **/
+	 
+ 	/**
+ 	 * 获取当前WIFI的SSID.
+ 	 *
+ 	 * @param context 上下文
+ 	 * @return ssid
+ 	 * 
+ 	 * *
+ 	 */
 	 public static String getCurentWifiSSID(Context context){
 		 String ssid = "";
 		 if(context!=null){
@@ -104,11 +130,11 @@ public class NetUtils {
 	 }
 	 
 	 /**
-		 * 用来获得手机扫描到的所有wifi的信息
-		 * 
-		 * @param c 上下文
-		 * 
-		 * */
+ 	 * 用来获得手机扫描到的所有wifi的信息.
+ 	 *
+ 	 * @param c 上下文
+ 	 * @return the current wifi scan result
+ 	 */
 		static public List<ScanResult> getCurrentWifiScanResult(Context c ){
 			WifiManager wifiManager = (WifiManager)c.getSystemService(Context.WIFI_SERVICE);
 			wifiManager.startScan();

@@ -1,3 +1,20 @@
+/**
+ * Project Name:Gokit
+ * File Name:DeviceApActivity.java
+ * Package Name:com.xpg.gokit.activity
+ * Date:2014-11-18 10:04:11
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.activity;
 
 import java.util.List;
@@ -23,19 +40,31 @@ import com.xpg.gokit.dialog.listener.SetWifiListener;
 import com.xpg.gokit.utils.NetUtils;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
+// TODO: Auto-generated Javadoc
 /**
  * softap模式配置类
  * <P>
  * 如果使用airlink模式配置不了模块，可以使用替代方案softap模式配置模块。该模式下，模块作为一个热点，app连接该热点，
- * 并调用相关的接口把需要连接的路由器ssid和密码写入模块。该Activity演示如何使用softap模式配置模块。
+ * 并调用相关的接口把需要连接的路由器ssid和密码写入模块。该Activity演示如何使用softap模式配置模块。.
+ * 
  * @author Lien Li
- * */
+ */
 public class DeviceApActivity extends BaseActivity implements
 		OnItemClickListener {
+
+	/** The lv_wifi_list. */
 	ListView lv_wifi_list;
+
+	/** wifi热点扫描结果 */
 	List<ScanResult> rs;
+
+	/** wifi热点列表数据适配器 */
 	WifiListAdapter adapter;
+
+	/** 设定wifi对话框 */
 	SetWifiDialog dialog;
+
+	/** 网络状态广播接受器 */
 	ConnecteChangeBroadcast mChangeBroadcast = new ConnecteChangeBroadcast();
 
 	@Override
@@ -50,12 +79,18 @@ public class DeviceApActivity extends BaseActivity implements
 
 	}
 
+	/**
+	 * Inits the view.
+	 */
 	private void initView() {
 		lv_wifi_list = (ListView) findViewById(R.id.lv_wifi_list);
 	}
 
+	/**
+	 * Inits the data.
+	 */
 	private void initData() {
-		//获取当前手机范围内的wifi列表
+		// 获取当前手机范围内的wifi列表
 		rs = NetUtils.getCurrentWifiScanResult(this);
 		adapter = new WifiListAdapter(this, rs);
 		lv_wifi_list.setAdapter(adapter);
@@ -74,6 +109,9 @@ public class DeviceApActivity extends BaseActivity implements
 
 	}
 
+	/**
+	 * Inits the listener.
+	 */
 	private void initListener() {
 		lv_wifi_list.setOnItemClickListener(this);
 	}
@@ -94,10 +132,10 @@ public class DeviceApActivity extends BaseActivity implements
 		});
 		dialog.show();
 	}
-    
+
 	/**
-	 * 广播监听器，监听wifi连上的广播
-	 * */
+	 * 广播监听器，监听wifi连上的广播.
+	 */
 	public class ConnecteChangeBroadcast extends BroadcastReceiver {
 
 		@Override

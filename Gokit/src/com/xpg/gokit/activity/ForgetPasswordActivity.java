@@ -1,19 +1,28 @@
+/**
+ * Project Name:Gokit
+ * File Name:ForgetPasswordActivity.java
+ * Package Name:com.xpg.gokit.activity
+ * Date:2014-11-18 10:04:44
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.activity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.xpg.gokit.R;
-import com.xpg.gokit.R.id;
-import com.xpg.gokit.R.layout;
-import com.xpg.gokit.R.menu;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,33 +32,60 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.xpg.gokit.R;
+
+// TODO: Auto-generated Javadoc
 /**
- * 忘记密码界面
- * 
+ * 忘记密码界面.
+ *
  * @author Lien Li
- * */
+ */
 public class ForgetPasswordActivity extends BaseActivity implements
 		OnClickListener {
-	/** 倒计时计数器 */
+	
+	/**  倒计时计数器. */
 	protected static final int TIMER = 0;
-	/** 修改成功 */
+	
+	/**  修改成功. */
 	protected static final int SUCCESS = 1;
-	/** 修改失败 */
+	
+	/**  修改失败. */
 	protected static final int FAIL = 2;
 
+	/** The Constant CODE_FINISH. */
 	protected static final int CODE_FINISH = 3;
-	/** 验证码发送成功 */
+	
+	/**  验证码发送成功. */
 	protected static final int CODE_SUCCESS = 4;
-	/** 验证码发送失败 */
+	
+	/**  验证码发送失败. */
 	protected static final int CODE_FAIL = 5;
+	
+	/** The edt_password. */
 	EditText edt_password;
+	
+	/** The edt_confirm_password. */
 	EditText edt_confirm_password;
+	
+	/** The edt_verify_code. */
 	EditText edt_verify_code;
+	
+	/** The btn_send_verify_code. */
 	Button btn_send_verify_code;
+	
+	/** The edt_phone_number. */
 	EditText edt_phone_number;
+	
+	/** The btn_reset. */
 	Button btn_reset;
+	
+	/** The secode_left. */
 	int secode_left = 60;
+	
+	/** The timer. */
 	Timer timer;
+	
+	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -87,6 +123,8 @@ public class ForgetPasswordActivity extends BaseActivity implements
 			}
 		};
 	};
+	
+	/** The dialog. */
 	private ProgressDialog dialog;
 
 	@Override
@@ -118,12 +156,18 @@ public class ForgetPasswordActivity extends BaseActivity implements
 
 	}
 
+	/**
+	 * Inits the listener.
+	 */
 	private void initListener() {
 		btn_reset.setOnClickListener(this);
 		btn_send_verify_code.setOnClickListener(this);
 
 	}
 
+	/**
+	 * Inits the view.
+	 */
 	private void initView() {
 		btn_reset = (Button) findViewById(R.id.btn_reset);
 		btn_send_verify_code = (Button) findViewById(R.id.btn_send_verify_code);
@@ -194,15 +238,12 @@ public class ForgetPasswordActivity extends BaseActivity implements
 
 
 	/**
-	 * 重置用户密码
-	 * 
-	 * @param phone
-	 *            已注册手机号码
-	 * @param code
-	 *            验证码
-	 * @param password
-	 *            新密码
-	 * */
+	 * 重置用户密码.
+	 *
+	 * @param phone            已注册手机号码
+	 * @param code            验证码
+	 * @param password            新密码
+	 */
 	private void sendRetUser(final String phone, final String code,
 			final String password) {
 		dialog.show();
@@ -210,11 +251,10 @@ public class ForgetPasswordActivity extends BaseActivity implements
 	}
 
 	/**
-	 * 发送手机验证码
-	 * 
-	 * @param phone
-	 *            已注册手机号码
-	 * */
+	 * 发送手机验证码.
+	 *
+	 * @param phone            已注册手机号码
+	 */
 	private void sendVerifyCode(final String phone) {
 		this.btn_send_verify_code.setEnabled(false);
 		secode_left = 60;

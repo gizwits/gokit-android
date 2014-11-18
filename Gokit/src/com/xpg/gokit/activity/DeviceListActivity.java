@@ -1,15 +1,25 @@
+/**
+ * Project Name:Gokit
+ * File Name:DeviceApActivity.java
+ * Package Name:com.xpg.gokit.activity
+ * Date:2014-11-18 10:04:11
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.activity;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,8 +36,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.xpg.gokit.R;
 import com.xpg.gokit.adapter.DeviceListAdapter;
 import com.xpg.gokit.bean.ControlDevice;
@@ -416,7 +424,7 @@ public class DeviceListActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void onLogin(int result) {//小循环登录设备成功，进入控制界面
+	public void onLogin(int result) {// 小循环登录设备成功，进入控制界面
 		Log.d("wifi", "onLogin:" + result);
 		if (result == 0) {
 			handler.sendEmptyMessage(LOGINSUCCESS);
@@ -434,7 +442,7 @@ public class DeviceListActivity extends BaseActivity implements
 	@Override
 	public void onLoginMQTT(int result) {
 		Log.d("wifi", "onLoginCloud:" + result);
-		if (result == 0) {//大循环登录设备成功，进入控制界面
+		if (result == 0) {// 大循环登录设备成功，进入控制界面
 			handler.sendEmptyMessage(LOGINSUCCESS);
 			Intent it = new Intent();
 
@@ -457,7 +465,7 @@ public class DeviceListActivity extends BaseActivity implements
 					&& !xpgWifiDevice.GetPasscode().equals("")) {// 判断是否能获取设备的passcode
 				xpgWifiDevice.Login("", xpgWifiDevice.GetPasscode());// 使用设备passcode登录设备，进行控制
 			} else {
-				// 获取不了设备的passcode，判断为新设备，进入设备绑定流程	
+				// 获取不了设备的passcode，判断为新设备，进入设备绑定流程
 				Intent it = new Intent();
 				it.setClass(DeviceListActivity.this,
 						NewDeviceControlActivity.class);

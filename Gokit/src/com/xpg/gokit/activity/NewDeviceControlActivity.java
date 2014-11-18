@@ -1,3 +1,20 @@
+/**
+ * Project Name:Gokit
+ * File Name:NewDeviceControlActivity.java
+ * Package Name:com.xpg.gokit.activity
+ * Date:2014-11-18 10:05:02
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.activity;
 
 import android.app.ProgressDialog;
@@ -25,32 +42,71 @@ import com.xtremeprog.xpgconnect.XPGWifiQueryHardwareInfoStruct;
 /**
  * 新设备绑定界面
  * <P>
- * 该Activity演示如何绑定设备，完成设备的绑定后，才能控制设备。
+ * 该Activity演示如何绑定设备，完成设备的绑定后，才能控制设备。.
  * 
  * @author Lien Li
- * */
+ */
 public class NewDeviceControlActivity extends BaseActivity implements
 		OnClickListener {
+
+	/** The Constant LOG. */
 	protected static final int LOG = 0;
+
+	/** The Constant TOAST. */
 	protected static final int TOAST = 1;
+
+	/** The Constant PASSCODE. */
 	protected static final int PASSCODE = 2;
+
+	/** The Constant BAND_SUCCESS. */
 	protected static final int BAND_SUCCESS = 3;
+
+	/** The Constant BAND_FAIL. */
 	protected static final int BAND_FAIL = 4;
+
+	/** The Constant HARD_INFO. */
 	protected static final int HARD_INFO = 5;
+
+	/** The edt_receive_device_msg. */
 	private MultiAutoCompleteTextView edt_receive_device_msg;
+
+	/** The control device. */
 	ControlDevice controlDevice;
+
+	/** The btn_menu. */
 	Button btn_menu;
+
+	/** The btn_back. */
 	Button btn_back;
+
+	/** The btn_get_psc. */
 	Button btn_get_psc;
 
+	/** The tv_title. */
 	TextView tv_title;
+
+	/** The rl_login_band. */
 	private RelativeLayout rl_login_band;
+
+	/** The rl_content. */
 	RelativeLayout rl_content;
+
+	/** The xpgdevice. */
 	XPGWifiDevice xpgdevice;
+
+	/** The produck_key. */
 	String produck_key = "";// = it.getStringExtra("product_key");
+
+	/** The passcode. */
 	String passcode = "";// = it.getStringExtra("passcode");
+
+	/** The did. */
 	String did = "";// = it.getStringExtra("did");
+
+	/** The dialog. */
 	ProgressDialog dialog;
+
+	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -115,6 +171,9 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		}
 	};
 
+	/*
+	 * 设备登录成功回调
+	 */
 	@Override
 	public void onLogin(int result) {
 		Log.i("result", result + "");
@@ -126,6 +185,9 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		}
 	};
 
+	/*
+	 * 设备绑定成功回调
+	 */
 	@Override
 	public void onBindDevice(int error, String errorMessage) {
 		Log.i("error", errorMessage);
@@ -140,6 +202,9 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		}
 	};
 
+	/*
+	 * 获取模块和mcu协议版本等属性.
+	 */
 	@Override
 	public void onQueryHardwareInfo(int error,
 			XPGWifiQueryHardwareInfoStruct pInfo) {
@@ -162,6 +227,9 @@ public class NewDeviceControlActivity extends BaseActivity implements
 
 	};
 
+	/*
+	 *获取Passcode
+	 */
 	@Override
 	public void onGetPasscode(int result) {
 		if (result == 0) {
@@ -172,12 +240,18 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		}
 	}
 
+	/*
+	 * 收到设备数据.
+	 */
 	@Override
 	public boolean onReceiveData(String data) {
 		Log.i("data", data);
 		return true;
 	};
 
+	/*
+	 *socket 连接成功.
+	 */
 	@Override
 	public void onConnected() {
 		Log.i("connected", "connected");
@@ -188,6 +262,9 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		xpgdevice.GetHardwareInfo();
 	}
 
+	/*
+	 * socket 连接被断开.
+	 */
 	@Override
 	public void onDisconnected() {
 		Log.i("disconnected", "disconnected");
@@ -235,6 +312,9 @@ public class NewDeviceControlActivity extends BaseActivity implements
 
 	}
 
+	/**
+	 * Inits the view.
+	 */
 	private void initView() {
 		tv_title = (TextView) findViewById(R.id.tv_title);
 		btn_menu = (Button) findViewById(R.id.btn_menu);
@@ -256,11 +336,17 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		}
 	}
 
+	/**
+	 * Inits the data.
+	 */
 	private void initData() {
 		tv_title.setText("未知设备");
 		edt_receive_device_msg.setText(passcode);
 	}
 
+	/**
+	 * Inits the listener.
+	 */
 	private void initListener() {
 		btn_menu.setOnClickListener(this);
 		btn_get_psc.setOnClickListener(this);
@@ -293,6 +379,9 @@ public class NewDeviceControlActivity extends BaseActivity implements
 		return true;
 	}
 
+	/**
+	 * Bind device.
+	 */
 	private void bindDevice() {
 		final String uid = setmanager.getUid();
 		final String token = setmanager.getToken();
@@ -347,11 +436,15 @@ public class NewDeviceControlActivity extends BaseActivity implements
 			xpgdevice.Disconnect();
 		}
 	}
+
 	@Override
 	public void onDiscovered(int result, XPGWifiDeviceList devices) {
 		Log.d("Main", "Device count:" + devices.GetCount());
 	};
 
+	/*
+	 * 用户注册结果回调接口.
+	 */
 	@Override
 	public void onRegisterUser(int error, String errorMessage, String uid,
 			String token) {

@@ -1,3 +1,20 @@
+/**
+ * Project Name:Gokit
+ * File Name:LoginActivity.java
+ * Package Name:com.xpg.gokit.activity
+ * Date:2014-11-18 10:05:08
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.activity;
 
 import android.app.ProgressDialog;
@@ -18,27 +35,49 @@ import com.xpg.gokit.R;
 import com.xpg.gokit.setting.SettingManager;
 
 /**
- * 登陆账号界面
- * 
+ * 登陆账号界面.
+ *
  * @author Lien Li
- * */
+ */
 public class LoginActivity extends BaseActivity implements OnClickListener {
+	
+	/** The Constant TOAST. */
 	protected static final int TOAST = 0;
+	
+	/** The Constant LOGIN_SUCCESS. */
 	protected static final int LOGIN_SUCCESS = 1;
+	
+	/** The Constant LOGIN_FAIL. */
 	protected static final int LOGIN_FAIL = 2;
+	
+	/** The Constant REQUEST_CODE. */
 	private static final int REQUEST_CODE = 0;
 
 
+	/** The btn_back. */
 	Button btn_back;
+	
+	/** The btn_login. */
 	Button btn_login;
+	
+	/** The edt_account. */
 	EditText edt_account;
+	
+	/** The edt_pwd. */
 	EditText edt_pwd;
+	
+	/** The set manager. */
 	SettingManager setManager;
+	
+	/** The dialog. */
 	ProgressDialog dialog;
+	
+	/** The tv_forget. */
 	TextView tv_forget;
 
 	
 
+	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -77,6 +116,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
+	/**
+	 * Inits the view.
+	 */
 	private void initView() {
 		edt_account = (EditText) findViewById(R.id.edt_account);
 		edt_pwd = (EditText) findViewById(R.id.edt_psw);
@@ -89,6 +131,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
+	/**
+	 * Inits the events.
+	 */
 	private void initEvents() {
 		btn_back.setOnClickListener(this);
 		btn_login.setOnClickListener(this);
@@ -153,6 +198,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	
+	/* 
+	 * 登录成功回调
+	 */
 	@Override
 	protected void onUserLogin(int error, String errorMessage, String uid,
 			String token) {

@@ -1,3 +1,20 @@
+/**
+ * Project Name:Gokit
+ * File Name:RegisterActivity.java
+ * Package Name:com.xpg.gokit.activity
+ * Date:2014-11-18 10:04:59
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.activity;
 
 import java.util.Timer;
@@ -20,27 +37,55 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * 注册界面<P>
- * 该activity演示用户如何注册机智云账号以及发送手机验证码。
+ * 注册界面
+ * <P>
+ * 该activity演示用户如何注册机智云账号以及发送手机验证码。.
  * 
  * @author Lien Li
- * */
+ */
 public class RegisterActivity extends BaseActivity implements OnClickListener {
+
+	/** The Constant TOAST. */
 	protected static final int TOAST = 0;
+
+	/** The Constant REG_SUCCESS. */
 	protected static final int REG_SUCCESS = 1;
+
+	/** The Constant TIMER. */
 	protected static final int TIMER = 2;
+
+	/** The edt_password. */
 	EditText edt_password;
+
+	/** The edt_confirm_password. */
 	EditText edt_confirm_password;
+
+	/** The edt_verify_code. */
 	EditText edt_verify_code;
+
+	/** The btn_send_verify_code. */
 	Button btn_send_verify_code;
+
+	/** The edt_phone_number. */
 	EditText edt_phone_number;
+
+	/** The btn_reg. */
 	Button btn_reg;
+
+	/** The setmanager. */
 	SettingManager setmanager;
+
+	/** The secondleft. */
 	int secondleft = 60;
-	Timer timer ;
+
+	/** The timer. */
+	Timer timer;
+
+	/** The dialog. */
 	ProgressDialog dialog;
-	
-	Handler handler = new Handler(){
+
+	/** The handler. */
+	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case TOAST:
@@ -71,6 +116,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 		};
 	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,19 +126,25 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		initEvents();
 	}
 
+	/**
+	 * Inits the events.
+	 */
 	private void initEvents() {
 		btn_reg.setOnClickListener(this);
 		btn_send_verify_code.setOnClickListener(this);
 
 	}
 
+	/**
+	 * Inits the view.
+	 */
 	private void initView() {
-		btn_reg = (Button)findViewById(R.id.btn_reg);
-		btn_send_verify_code = (Button)findViewById(R.id.btn_send_verify_code);
-		edt_confirm_password = (EditText)findViewById(R.id.edt_con_password);
-		edt_password = (EditText)findViewById(R.id.edt_password);
-		edt_verify_code = (EditText)findViewById(R.id.edt_code);
-		edt_phone_number = (EditText)findViewById(R.id.edt_phone);
+		btn_reg = (Button) findViewById(R.id.btn_reg);
+		btn_send_verify_code = (Button) findViewById(R.id.btn_send_verify_code);
+		edt_confirm_password = (EditText) findViewById(R.id.edt_con_password);
+		edt_password = (EditText) findViewById(R.id.edt_password);
+		edt_verify_code = (EditText) findViewById(R.id.edt_code);
+		edt_phone_number = (EditText) findViewById(R.id.edt_phone);
 		dialog = new ProgressDialog(this);
 		dialog.setMessage("处理中，请稍候...");
 
@@ -118,7 +170,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if(v == btn_reg){
+		if (v == btn_reg) {
 			String phone = edt_phone_number.getText().toString();
 			String code = edt_verify_code.getText().toString();
 			String password = edt_password.getText().toString();
@@ -150,7 +202,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			String phone = edt_phone_number.getText().toString();
 			phone = phone.trim();
 			if (phone.length() == 11) {
-				//发送手机验证码
+				// 发送手机验证码
 				mCenter.cRequestSendVerifyCode(phone);
 				dialog.show();
 			} else {
@@ -160,16 +212,30 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	private void sendRegUser(final String phone, final String code,final  String password) {
+	/**
+	 * Send reg user.
+	 * 
+	 * @param phone
+	 *            the phone
+	 * @param code
+	 *            the code
+	 * @param password
+	 *            the password
+	 */
+	private void sendRegUser(final String phone, final String code,
+			final String password) {
 		mCenter.cRegisterPhoneUser(phone, code, password);
 	}
 
-    @Override
+	/*
+	 * 用户注册结果回调接口.
+	 */
+	@Override
 	protected void onRegisterUser(int error, String errorMessage, String uid,
 			String token) {
 		Log.i("error message uid token", error + " " + errorMessage + " " + uid
 				+ " " + token);
-		if (!uid.equals("") && !token.equals("")) {//注册成功
+		if (!uid.equals("") && !token.equals("")) {// 注册成功
 			Message msg = new Message();
 			msg.what = REG_SUCCESS;
 			msg.obj = "注册成功";
@@ -177,23 +243,26 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			setmanager.setUid(uid);
 			setmanager.setToken(token);
 
-		} else {//注册失败
+		} else {// 注册失败
 			Message msg = new Message();
 			msg.what = TOAST;
 			msg.obj = errorMessage;
 			handler.sendMessage(msg);
 		}
 	};
-	
+
+	/*
+	 * 发送验证码结果回调接口.
+	 */
 	@Override
 	protected void onRequestSendVerifyCode(int error, String errorMessage) {
 		Log.i("error message ", error + " " + errorMessage);
-		if (error == 0) {//发送成功
+		if (error == 0) {// 发送成功
 			Message msg = new Message();
 			msg.what = TOAST;
 			msg.obj = "发送成功";
 			handler.sendMessage(msg);
-		} else {//发送失败
+		} else {// 发送失败
 			Message msg = new Message();
 			msg.what = TOAST;
 			msg.obj = errorMessage;

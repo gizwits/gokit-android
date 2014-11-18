@@ -1,3 +1,20 @@
+/**
+ * Project Name:Gokit
+ * File Name:GokitControlActivity.java
+ * Package Name:com.xpg.gokit.activity
+ * Date:2014-11-18 10:05:13
+ * Copyright (c) 2014~2015 Xtreme Programming Group, Inc.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 package com.xpg.gokit.activity;
 
 import java.util.ArrayList;
@@ -35,18 +52,33 @@ import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiReceiveInfo;
 
 /**
- * gokit控制界面<P>
- * 该Activity演示如何收发控制指令，断开连接，解绑设备
+ * gokit控制界面
+ * <P>
+ * 该Activity演示如何收发控制指令，断开连接，解绑设备.
  * 
  * @author Lien Li
- * */
+ */
 public class GokitControlActivity extends BaseActivity {
+
+	/** The Constant LOG. */
 	protected static final int LOG = 6;
+
+	/** The Constant RESP. */
 	protected static final int RESP = 7;
+
+	/** The Constant TOAST. */
 	protected static final int TOAST = 0;
+
+	/** The Constant SETNULL. */
 	protected static final int SETNULL = 1;
+
+	/** The Constant UPDATE_UI. */
 	protected static final int UPDATE_UI = 2;
+
+	/** The Constant UNBAND_FAIL. */
 	protected static final int UNBAND_FAIL = 3;
+
+	/** The Constant DISCONNECT. */
 	protected static final int DISCONNECT = 4;
 
 	/*
@@ -55,48 +87,94 @@ public class GokitControlActivity extends BaseActivity {
 	 * 中显示的数据点名称，sdk通过该名称作为json的key值来收发指令，demo中使用的key都是对应机智云实验室的微信宠物屋项目所用数据点
 	 * ===========================================================
 	 */
-	/** led红灯开关 0=关 1=开 */
+	/** led红灯开关 0=关 1=开. */
 	private static final String KEY_RED_SWITCH = "attr0";
-	/** 指定led颜色值 0=自定义 1=黄色 2=紫色 3=粉色 */
+
+	/** 指定led颜色值 0=自定义 1=黄色 2=紫色 3=粉色. */
 	private static final String KEY_LIGHT_COLOR = "attr1";
-	/** led灯红色值 0-254 */
+
+	/** led灯红色值 0-254. */
 	private static final String KEY_LIGHT_RED = "attr2";
-	/** led灯绿色值 0-254 */
+
+	/** led灯绿色值 0-254. */
 	private static final String KEY_LIGHT_GREEN = "attr3";
-	/** led灯蓝色值 0-254 */
+
+	/** led灯蓝色值 0-254. */
 	private static final String KEY_LIGHT_BLUE = "attr4";
-	/** 电机转速 －5～－1 电机负转 0 停止 1～5 电机正转 */
+
+	/** 电机转速 －5～－1 电机负转 0 停止 1～5 电机正转. */
 	private static final String KEY_SPEED = "attr5";
-	/** 红外探测 0无障碍 1有障碍 */
+
+	/** 红外探测 0无障碍 1有障碍. */
 	private static final String KEY_INFRARED = "attr6";
-	/** 环境温度 */
+
+	/** 环境温度. */
 	private static final String KEY_TEMPLATE = "attr7";
-	/** 环境湿度 */
+
+	/** 环境湿度. */
 	private static final String KEY_HUMIDITY = "attr8";
-	/** 实体字段名，代表对应的项目 */
+
+	/** 实体字段名，代表对应的项目. */
 	private static final String KEY_ACTION = "entity0";
 
+	/** The sw red. */
 	private Switch swRed;
+
+	/** The sw infrared. */
 	private Switch swInfrared;
+
+	/** The sp color. */
 	private Spinner spColor;
+
+	/** The tv red. */
 	private TextView tvRed;
+
+	/** The tv green. */
 	private TextView tvGreen;
+
+	/** The tv blue. */
 	private TextView tvBlue;
+
+	/** The tv speed. */
 	private TextView tvSpeed;
+
+	/** The tv template. */
 	private TextView tvTemplate;
+
+	/** The tv humidity. */
 	private TextView tvHumidity;
+
+	/** The sb red. */
 	private SeekBar sbRed;
+
+	/** The sb green. */
 	private SeekBar sbGreen;
+
+	/** The sb blue. */
 	private SeekBar sbBlue;
+
+	/** The sb speed. */
 	private SeekBar sbSpeed;
 
+	/** The control device. */
 	ControlDevice controlDevice;
+
+	/** The xpg wifi device. */
 	XPGWifiDevice xpgWifiDevice;
+
+	/** The setting manager. */
 	SettingManager settingManager;
+
+	/** The is init finish. */
 	Boolean isInitFinish = true;
+
+	/** The title. */
 	String title = "";
+
+	/** The device statu. */
 	private HashMap<String, Object> deviceStatu;
 
+	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -240,8 +318,8 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	/**
-	 * 初始化控件
-	 * */
+	 * 初始化控件.
+	 */
 	private void initViews() {
 		swRed = (Switch) findViewById(R.id.sw_red);
 		swInfrared = (Switch) findViewById(R.id.sw_infrared);
@@ -260,8 +338,8 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	/**
-	 * 初始化监听器
-	 * */
+	 * 初始化监听器.
+	 */
 	private void initEvents() {
 		swRed.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -479,9 +557,13 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	/**
+	 * Show data in ui.
 	 * 
-	 * 
-	 * */
+	 * @param data
+	 *            the data
+	 * @throws JSONException
+	 *             the JSON exception
+	 */
 	private void showDataInUI(String data) throws JSONException {
 		Log.i("revjson", data);
 		JSONObject receive = new JSONObject(data);
@@ -512,13 +594,15 @@ public class GokitControlActivity extends BaseActivity {
 	 * <p>
 	 * 例如 {"entity0":{"attr2":74},"cmd":1}
 	 * 其中entity0为gokit所代表的实体key，attr2代表led灯红色值，cmd为1时代表写入
-	 * 。以上命令代表改变gokit的led灯红色值为74
+	 * 。以上命令代表改变gokit的led灯红色值为74.
 	 * 
 	 * @param key
 	 *            数据点对应的的json的key
 	 * @param value
 	 *            需要改变的值
-	 * */
+	 * @throws JSONException
+	 *             the JSON exception
+	 */
 	private void sendJson(String key, Object value) throws JSONException {
 		final JSONObject jsonsend = new JSONObject();
 		JSONObject jsonparam = new JSONObject();
