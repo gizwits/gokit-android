@@ -81,6 +81,9 @@ public class GokitControlActivity extends BaseActivity {
 	/** The Constant DISCONNECT. */
 	protected static final int DISCONNECT = 4;
 
+	/** The Constant UNBIND_SUCCEED. */
+	protected static final int UNBIND_SUCCEED = 5;
+
 	/*
 	 * ===========================================================
 	 * 以下key值对应http://site.gizwits.com/v2/datapoint?product_key={productKey}
@@ -174,6 +177,9 @@ public class GokitControlActivity extends BaseActivity {
 	/** The device statu. */
 	private HashMap<String, Object> deviceStatu;
 
+	/** The unbind statu. */
+	private boolean isUnbind = false;
+
 	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -188,6 +194,10 @@ public class GokitControlActivity extends BaseActivity {
 				break;
 			case UNBAND_FAIL:
 				Toast.makeText(GokitControlActivity.this, "解绑失败",
+						Toast.LENGTH_SHORT).show();
+				break;
+			case UNBIND_SUCCEED:
+				Toast.makeText(GokitControlActivity.this, "解绑成功",
 						Toast.LENGTH_SHORT).show();
 				break;
 			case UPDATE_UI:
@@ -312,9 +322,12 @@ public class GokitControlActivity extends BaseActivity {
 
 	@Override
 	public void onDisconnected() {
-		Message msg = new Message();
-		msg.what = DISCONNECT;
-		handler.sendMessage(msg);
+		if (!isUnbind) {
+			Message msg = new Message();
+			msg.what = DISCONNECT;
+			handler.sendMessage(msg);
+		}
+		isUnbind = false;
 	}
 
 	/**
@@ -616,6 +629,10 @@ public class GokitControlActivity extends BaseActivity {
 	@Override
 	public void onUnbindDevice(int error, String errorMessage) {
 		if (error == 0) {
+			Message msg = new Message();
+			msg.what = UNBIND_SUCCEED;
+			handler.sendMessage(msg);
+			isUnbind = true;
 			xpgWifiDevice.Disconnect();
 			finish();
 		} else {
