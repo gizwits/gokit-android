@@ -150,6 +150,7 @@ public class BaseActivity extends Activity {
 
 		@Override
 		public void onDiscovered(int result, XPGWifiDeviceList devices) {
+			Log.d("onDiscovered23", "Device count:" + devices.GetCount());
 			BaseActivity.this.onDiscovered(result, devices);
 		}
 

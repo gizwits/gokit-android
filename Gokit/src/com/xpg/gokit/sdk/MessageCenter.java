@@ -198,6 +198,10 @@ public class MessageCenter {
 			String passcode) {
 		xpgWifiGCC.BindDevice(uid, token, did, passcode);
 	}
+	
+	public void cDiscoverDevice(){
+		xpgWifiGCC.DiscoverDevices();
+	}
 
 	// =================================================================
 	//

@@ -613,4 +613,16 @@ public class GokitControlActivity extends BaseActivity {
 		mCenter.cWrite(xpgWifiDevice, jsonsend);
 	}
 
+	@Override
+	public void onUnbindDevice(int error, String errorMessage) {
+		if (error == 0) {
+			xpgWifiDevice.Disconnect();
+			finish();
+		} else {
+			Message msg = new Message();
+			msg.what = UNBAND_FAIL;
+			handler.sendMessage(msg);
+		}
+	}
+
 }

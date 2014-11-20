@@ -116,7 +116,7 @@ public class DeviceListActivity extends BaseActivity implements
 	};
 
 	protected void onDiscovered(int result, XPGWifiDeviceList devices) {
-		Log.d("c", "Device count:" + devices.GetCount());
+		Log.d("onDiscovered", "Device count:" + devices.GetCount());
 		storeDeviceList(devices);
 		Message msg = new Message();
 		msg.what = NEW_DEVICE;
@@ -227,7 +227,6 @@ public class DeviceListActivity extends BaseActivity implements
 
 		adapter = new DeviceListAdapter(this, devicelist);
 		lv_device_list.setAdapter(adapter);
-
 	}
 
 	@Override
@@ -297,7 +296,7 @@ public class DeviceListActivity extends BaseActivity implements
 
 	public void onResume() {
 		super.onResume();
-
+		UpdateUI();
 		getDeviceList();
 		if (dialog.isShowing()) {
 			dialog.cancel();
