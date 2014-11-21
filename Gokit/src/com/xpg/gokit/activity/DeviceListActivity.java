@@ -79,6 +79,7 @@ public class DeviceListActivity extends BaseActivity implements
 				if (!isGettingDevice) {
 					initEmptyData();
 					getDeviceList();
+					UpdateUI();
 				}
 				break;
 			case NEW_DEVICE:
@@ -183,8 +184,8 @@ public class DeviceListActivity extends BaseActivity implements
 		for (int i = 0; i < BaseActivity.deviceslist.size(); i++) {
 
 			XPGWifiDevice device = BaseActivity.deviceslist.get(i);
-			XPGWifiConfig.sharedInstance().DownloadProduct(
-					device.GetProductKey());
+//			XPGWifiConfig.sharedInstance().DownloadProduct(
+//					device.GetProductKey());
 			// setmanager.DownLoadProduct_key(device.GetProductKey());
 
 			if (device.IsOnline() && device.GetPasscode() != null

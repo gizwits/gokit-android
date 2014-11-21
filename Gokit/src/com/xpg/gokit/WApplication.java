@@ -17,8 +17,11 @@
  */
 package com.xpg.gokit;
 
+import java.io.IOException;
+
 import android.app.Application;
 
+import com.xpg.gokit.utils.AssertsUtils;
 import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiLogLevel;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
@@ -34,6 +37,13 @@ public class WApplication extends Application {
 	 */
 	public void onCreate() {
 		super.onCreate();
+		
+		try {
+			//复制assert文件夹中的json文件到设备安装目录。json文件是解析数据点必备的文件，sdk根据该文件，把二进制数据转换为json字段并返回。
+			AssertsUtils.copyAllAssertToCacheFolder(this.getApplicationContext());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		// 设定AppID，参数为机智云官网中查看产品信息得到的AppID
 		XPGWifiConfig.sharedInstance().SetAppID(
 				"42a7563f305342ae805cbb21d968a0ce");
@@ -51,5 +61,7 @@ public class WApplication extends Application {
 		XPGWifiSDK.SetLogLevel(XPGWifiLogLevel.XPGWifiLogLevelAll);
 		// 设定是否在后台输出收发包二进制数据
 		XPGWifiSDK.SetPrintDataLevel(true);
+		
+		
 	}
 }

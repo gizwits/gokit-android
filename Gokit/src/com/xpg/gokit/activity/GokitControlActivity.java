@@ -219,7 +219,6 @@ public class GokitControlActivity extends BaseActivity {
 						.get(KEY_LIGHT_RED)));
 				sbSpeed.setProgress(5 + Integer.parseInt((String) deviceStatu
 						.get(KEY_SPEED)));
-
 				break;
 			case SETNULL:
 				if (xpgWifiDevice != null) {
