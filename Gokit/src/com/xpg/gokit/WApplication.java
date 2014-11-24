@@ -62,6 +62,5 @@ public class WApplication extends Application {
 		// 设定是否在后台输出收发包二进制数据
 		XPGWifiSDK.SetPrintDataLevel(true);
 		
-		
 	}
 }

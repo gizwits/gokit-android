@@ -66,8 +66,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	/** The edt_pwd. */
 	EditText edt_pwd;
 	
-	/** The set manager. */
-	SettingManager setManager;
 	
 	/** The dialog. */
 	ProgressDialog dialog;
@@ -204,9 +202,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onUserLogin(int error, String errorMessage, String uid,
 			String token) {
-		if (uid!=null&&token!=null&&!uid.equals("") && !token.equals("")) {//登陆成功
-			setManager.setUid(uid);
-			setManager.setToken(token);
+		if (!uid.isEmpty()&&!token.isEmpty()) {//登陆成功
+			setmanager.setUid(uid);
+			setmanager.setToken(token);
 			Message msg = new Message();
 			msg.what = LOGIN_SUCCESS;
 			msg.obj = "登录成功";
@@ -219,6 +217,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 
 	};
+	
+	/**
+	 * 判断字符串是否为空
+	 * 
+	 * @param str
+	 *            传入的字符串
+	 * @return boolean true or false
+	 * */
+	public static boolean isNumEmpty(String str) {
+		if (str == null || str == "" || str.trim().equals(""))
+			return true;
+		return false;
+	}
 	
 
 }

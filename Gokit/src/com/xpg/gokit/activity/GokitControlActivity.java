@@ -165,8 +165,6 @@ public class GokitControlActivity extends BaseActivity {
 	/** The xpg wifi device. */
 	XPGWifiDevice xpgWifiDevice;
 
-	/** The setting manager. */
-	SettingManager settingManager;
 
 	/** The is init finish. */
 	Boolean isInitFinish = true;
@@ -265,7 +263,6 @@ public class GokitControlActivity extends BaseActivity {
 		initEvents();
 		deviceStatu = new HashMap<String, Object>();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		settingManager = new SettingManager(this);
 		controlDevice = (ControlDevice) getIntent().getSerializableExtra(
 				"device");
 		xpgWifiDevice = BaseActivity.findDeviceByMac(controlDevice.getMac(),
@@ -530,12 +527,10 @@ public class GokitControlActivity extends BaseActivity {
 			break;
 		// 解除绑定
 		case R.id.action_unbind:
-			// xpgWifiDevice.UnBindFromService(settingManager.getUserName(),
-			// settingManager.getPassword());
-			String uid = settingManager.getUid();
-			String token = settingManager.getToken();
-			String hideuid = settingManager.getHideUid();
-			String hidetoken = settingManager.getHideToken();
+			String uid = setmanager.getUid();
+			String token = setmanager.getToken();
+			String hideuid = setmanager.getHideUid();
+			String hidetoken = setmanager.getHideToken();
 			if (!uid.equals("") && !token.equals("")) {
 				mCenter.cUnbindDevice(xpgWifiDevice, uid, token);
 			} else if (!hideuid.equals("") && !hidetoken.equals("")) {

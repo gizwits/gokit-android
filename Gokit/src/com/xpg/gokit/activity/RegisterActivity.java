@@ -72,8 +72,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	/** The btn_reg. */
 	Button btn_reg;
 
-	/** The setmanager. */
-	SettingManager setmanager;
 
 	/** The secondleft. */
 	int secondleft = 60;
@@ -121,7 +119,6 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
-		setmanager = new SettingManager(this);
 		initView();
 		initEvents();
 	}
