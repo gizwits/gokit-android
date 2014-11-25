@@ -54,6 +54,8 @@ import com.xtremeprog.xpgconnect.XPGWifiDeviceList;
  */
 public class DeviceListActivity extends BaseActivity implements
 		OnItemClickListener, OnItemLongClickListener {
+	private final static String TAG = "DeviceListActivity";
+	
 	/** 新设备 */
 	protected static final int NEW_DEVICE = 0;
 	/** 登陆成功 */
@@ -77,7 +79,7 @@ public class DeviceListActivity extends BaseActivity implements
 			switch (msg.what) {
 			case REFLASH:
 				if (!isGettingDevice) {
-					initEmptyData();
+					initData();
 					getDeviceList();
 					UpdateUI();
 				}
@@ -184,9 +186,6 @@ public class DeviceListActivity extends BaseActivity implements
 		for (int i = 0; i < BaseActivity.deviceslist.size(); i++) {
 
 			XPGWifiDevice device = BaseActivity.deviceslist.get(i);
-//			XPGWifiConfig.sharedInstance().DownloadProduct(
-//					device.GetProductKey());
-			// setmanager.DownLoadProduct_key(device.GetProductKey());
 
 			if (device.IsOnline() && device.GetPasscode() != null
 					&& !device.GetPasscode().equals("")) {
@@ -297,8 +296,9 @@ public class DeviceListActivity extends BaseActivity implements
 
 	public void onResume() {
 		super.onResume();
-		UpdateUI();
+		initData();
 		getDeviceList();
+		UpdateUI();
 		if (dialog.isShowing()) {
 			dialog.cancel();
 		}
@@ -306,12 +306,6 @@ public class DeviceListActivity extends BaseActivity implements
 
 	private void EmptyData() {
 		devicelist = new ArrayList<ControlDevice>();
-	}
-
-	private void initEmptyData() {
-		devicelist = new ArrayList<ControlDevice>();
-		adapter = new DeviceListAdapter(this, devicelist);
-		lv_device_list.setAdapter(adapter);
 	}
 
 	private void initData() {

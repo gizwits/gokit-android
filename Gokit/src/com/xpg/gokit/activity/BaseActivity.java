@@ -194,7 +194,6 @@ public class BaseActivity extends Activity {
 		actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		mCenter = MessageCenter.getInstance(this.getApplicationContext());
-		mCenter.getXPGWifiSDK().setListener(sdkListener);
 	}
 
 	/**
@@ -227,7 +226,7 @@ public class BaseActivity extends Activity {
 
 	public void onResume() {
 		super.onResume();
-
+		mCenter.getXPGWifiSDK().setListener(sdkListener);
 	}
 
 	public void onPause() {
