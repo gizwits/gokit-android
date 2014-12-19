@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xpg.gokit.R;
-import com.xpg.gokit.setting.SettingManager;
 
 /**
  * 登陆账号界面.
@@ -200,8 +199,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 * 登录成功回调
 	 */
 	@Override
-	protected void onUserLogin(int error, String errorMessage, String uid,
-			String token) {
+	protected void didUserLogin(int error, String errorMessage, String uid, String token) {
 		if (!uid.isEmpty()&&!token.isEmpty()) {//登陆成功
 			setmanager.setUid(uid);
 			setmanager.setToken(token);

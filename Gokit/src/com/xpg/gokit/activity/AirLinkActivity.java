@@ -32,7 +32,7 @@ import android.widget.Toast;
 
 import com.xpg.gokit.R;
 import com.xpg.gokit.utils.NetUtils;
-import com.xtremeprog.xpgconnect.XPGWifiSDKListener;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 
 /**
  * airlink 配置类
@@ -170,14 +170,13 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 	 * 配置成功回调
 	 * 
 	 * @see
-	 * com.xpg.gokit.activity.BaseActivity#onSetAirLink(com.xtremeprog.xpgconnect
-	 * .XPGWifiDevice)
+	 * com.xpg.gokit.activity.BaseActivity#didSetDeviceWifi(int error, XPGWifiDevice device)
 	 */
-	@Override
-	protected void onSetAirLink(com.xtremeprog.xpgconnect.XPGWifiDevice device) {
+	protected void didSetDeviceWifi(int error, XPGWifiDevice device) {
 		// 通过airlink配置模块成功连上路由器后，回调该函数。
-		Log.i("air link device", "" + device.GetMacAddress() + " ");
+		Log.i("air link device", "" + device.getMacAddress() + " ");
 		handler.sendEmptyMessage(SUCCESS);
-	};
+	}
+	
 
 }

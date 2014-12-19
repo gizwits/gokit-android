@@ -83,7 +83,7 @@ public class DeviceListAdapter extends BaseAdapter {
 		ControlDevice cdevice = devicelist.get(position);
 		if (!cdevice.isTitle()) {
 
-			if (cdevice.isNew()) {// 设备未绑定
+			if (!cdevice.isBind()) {// 设备未绑定
 				tv_info.setText(cdevice.getMac());
 				tv_name.setText((cdevice.getName().equals("") ? "未知设备"
 						: cdevice.getName()));

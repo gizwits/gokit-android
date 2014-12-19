@@ -43,8 +43,8 @@ public class ControlDevice implements Serializable {
 	/** 设备名字. */
 	private String name;
 	
-	/** 是否没有passcode. */
-	private boolean isNew;
+	/** 是否已绑定. */
+	private boolean isBind;
 	
 	/** 设备did. */
 	private String did;
@@ -77,24 +77,21 @@ public class ControlDevice implements Serializable {
 	 *
 	 * @param name the name
 	 * @param device the device
+	 * @param uid user ID
 	 */
-	public ControlDevice(String name,XPGWifiDevice device){
+	public ControlDevice(XPGWifiDevice device, boolean isBind){
 		if(device!=null){
-			this.mac = device.GetMacAddress();			
-			this.did = device.GetDid();
-			this.productKey = device.GetProductKey();
+			this.mac = device.getMacAddress();			
+			this.did = device.getDid();
+			this.productKey = device.getProductKey();
 			isOnline = true;
-			this.isOnline = device.IsOnline();
-			this.ip = device.GetIPAddress();
-			this.passcode = device.GetPasscode();
-			Log.i("passcode", passcode);
-			if(passcode!=null&&!passcode.equals("")){
-				this.isNew = false;
-			}else{
-				this.isNew = true;
-			}
+			this.isOnline = device.isOnline();
+			this.ip = device.getIPAddress();
+			this.passcode = device.getPasscode();
+			Log.i("passcode", device.getMacAddress() + ":" + passcode);
+			this.isBind = isBind;
+			this.name = device.getProductName();
 		}
-		this.name = device.GetProductName();
 	}
 
 
@@ -135,21 +132,21 @@ public class ControlDevice implements Serializable {
 	}
 
 	/**
-	 * Checks if is new.
+	 * Checks if is bound.
 	 *
-	 * @return true, if is new
+	 * @return true, if is bound
 	 */
-	public boolean isNew() {
-		return isNew;
+	public boolean isBind() {
+		return isBind;
 	}
 	
 	/**
-	 * Sets the new.
+	 * Sets the bind.
 	 *
-	 * @param isNew the new new
+	 * @param isBind the isBind
 	 */
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
+	public void setNew(boolean isBind) {
+		this.isBind = isBind;
 	}
 	
 	/**

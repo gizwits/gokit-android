@@ -18,10 +18,8 @@
 package com.xpg.gokit.activity;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import com.xpg.gokit.R;
-import com.xpg.gokit.setting.SettingManager;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -228,8 +226,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	 * 用户注册结果回调接口.
 	 */
 	@Override
-	protected void onRegisterUser(int error, String errorMessage, String uid,
-			String token) {
+	protected void didRegisterUser(int error, String errorMessage, String uid, String token) {
 		Log.i("error message uid token", error + " " + errorMessage + " " + uid
 				+ " " + token);
 		if (!uid.equals("") && !token.equals("")) {// 注册成功
@@ -252,7 +249,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	 * 发送验证码结果回调接口.
 	 */
 	@Override
-	protected void onRequestSendVerifyCode(int error, String errorMessage) {
+	protected void didRequestSendVerifyCode(int error, String errorMessage) {
 		Log.i("error message ", error + " " + errorMessage);
 		if (error == 0) {// 发送成功
 			Message msg = new Message();

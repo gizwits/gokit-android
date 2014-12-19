@@ -17,10 +17,8 @@
  */
 package com.xpg.gokit.activity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,10 +44,7 @@ import android.widget.Toast;
 
 import com.xpg.gokit.R;
 import com.xpg.gokit.bean.ControlDevice;
-import com.xpg.gokit.setting.SettingManager;
-import com.xtremeprog.xpgconnect.Vector_XPGWifiReceiveInfo;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
-import com.xtremeprog.xpgconnect.XPGWifiReceiveInfo;
 
 /**
  * gokit控制界面
@@ -59,12 +54,6 @@ import com.xtremeprog.xpgconnect.XPGWifiReceiveInfo;
  * @author Lien Li
  */
 public class GokitControlActivity extends BaseActivity {
-
-	/** The Constant LOG. */
-	protected static final int LOG = 6;
-
-	/** The Constant RESP. */
-	protected static final int RESP = 7;
 
 	/** The Constant TOAST. */
 	protected static final int TOAST = 0;
@@ -83,6 +72,15 @@ public class GokitControlActivity extends BaseActivity {
 
 	/** The Constant UNBIND_SUCCEED. */
 	protected static final int UNBIND_SUCCEED = 5;
+	
+	/** The Constant LOG. */
+	protected static final int LOG = 6;
+
+	/** The Constant RESP. */
+	protected static final int RESP = 7;
+	
+	/** The Constant HARDWARE. */
+	protected static final int HARDWARE = 8;
 
 	/*
 	 * ===========================================================
@@ -235,20 +233,25 @@ public class GokitControlActivity extends BaseActivity {
 
 				break;
 			case LOG:
-				List<XPGWifiReceiveInfo> recinfo = (List<XPGWifiReceiveInfo>) msg.obj;
 				StringBuilder sb = new StringBuilder();
-				for (int i = 0; i < recinfo.size(); i++) {
-					sb.append(recinfo.get(i).getName() + " "
-							+ recinfo.get(i).getValue() + "\r\n");
+				JSONObject jsonObject;
+				try {
+					jsonObject = new JSONObject((String)msg.obj);
+					for (int i = 0; i < jsonObject.length(); i++) {
+						sb.append(jsonObject.names().getString(i) + " " + jsonObject.getInt(jsonObject.names().getString(i)) + "\r\n");
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-				Toast.makeText(GokitControlActivity.this, sb.toString(),
-						Toast.LENGTH_SHORT).show();
-
+				Toast.makeText(GokitControlActivity.this, sb.toString(), Toast.LENGTH_SHORT).show();
 				break;
 			case TOAST:
 				String info = msg.obj + "";
 				Toast.makeText(GokitControlActivity.this, info,
 						Toast.LENGTH_SHORT).show();
+				break;
+			case HARDWARE:
+				showHardwareInfo((String)msg.obj);
 				break;
 			}
 
@@ -271,7 +274,7 @@ public class GokitControlActivity extends BaseActivity {
 			xpgWifiDevice.setListener(deviceListener);
 		}
 		actionBar.setTitle(controlDevice.getName());
-		if (!xpgWifiDevice.IsOnline()) {
+		if (!xpgWifiDevice.isOnline()) {
 			new AlertDialog.Builder(this).setTitle("警告")
 					.setMessage("设备不在线，不可以做控制，但可以断开或解除绑定")
 					.setPositiveButton("OK", null).show();
@@ -279,32 +282,51 @@ public class GokitControlActivity extends BaseActivity {
 		actionBar.setTitle(title);
 	}
 
-	@Override
-	public void onReceiveAlertsAndFaultsInfo(Vector_XPGWifiReceiveInfo alerts,
-			Vector_XPGWifiReceiveInfo faults) {
-		List<XPGWifiReceiveInfo> rinfo = new ArrayList<XPGWifiReceiveInfo>();
-		for (int i = 0; i < faults.size(); i++) {
-			XPGWifiReceiveInfo info = new XPGWifiReceiveInfo();
-			Log.i(faults.get(i).getName(), faults.get(i).getValue() + "");
-			info.setName(faults.get(i).getName());
-			info.setValue(faults.get(i).getValue());
-			rinfo.add(info);
-		}
-		for (int i = 0; i < alerts.size(); i++) {
-			XPGWifiReceiveInfo info = new XPGWifiReceiveInfo();
-			info.setName(alerts.get(i).getName());
-			info.setValue(alerts.get(i).getValue());
-			Log.i(alerts.get(i).getName(), alerts.get(i).getValue() + "");
-			rinfo.add(info);
-		}
-		Message msg = new Message();
-		msg.what = LOG;
-		msg.obj = rinfo;
-
-		handler.sendMessage(msg);
+	final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+	public static String bytesToHex(byte[] bytes) {
+	    char[] hexChars = new char[bytes.length * 3];
+	    for ( int j = 0; j < bytes.length; j++ ) {
+	        int v = bytes[j] & 0xFF;
+	        hexChars[j * 3] = hexArray[v >>> 4];
+	        hexChars[j * 3 + 1] = hexArray[v & 0x0F];
+	        hexChars[j * 3 + 2] = ' ';
+	    }
+	    return new String(hexChars);
 	}
 
 	@Override
+	public boolean didReceiveData(XPGWifiDevice device, java.util.concurrent.ConcurrentHashMap<String,Object> dataMap, int result) {
+		if (dataMap.get("data") != null) {
+			Log.i("info", (String)dataMap.get("data"));
+			Message msg = new Message();
+			msg.obj = dataMap.get("data");
+			msg.what = RESP;
+			handler.sendMessage(msg);
+		}
+		
+		if (dataMap.get("alters") != null) {
+			Log.i("info", (String)dataMap.get("alters"));
+			Message msg = new Message();
+			msg.obj = dataMap.get("alters");
+			msg.what = LOG;
+			handler.sendMessage(msg);
+		}
+		
+		if (dataMap.get("faults") != null) {
+			Log.i("info", (String)dataMap.get("faults"));
+			Message msg = new Message();
+			msg.obj = dataMap.get("faults");
+			msg.what = LOG;
+			handler.sendMessage(msg);
+		}
+		
+		if (dataMap.get("binary") != null) {
+			Log.i("info", "Binary data:" + bytesToHex((byte[])dataMap.get("binary")));
+		}
+
+		return true;
+	};
+	
 	public boolean onReceiveData(String data) {
 		Log.i("info", data);
 		// isInitFinish = false;
@@ -317,7 +339,7 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onDisconnected() {
+	public void didDisconnected(XPGWifiDevice device) {
 		if (!isUnbind) {
 			Message msg = new Message();
 			msg.what = DISCONNECT;
@@ -325,6 +347,28 @@ public class GokitControlActivity extends BaseActivity {
 		}
 		isUnbind = false;
 	}
+	
+	@Override
+	public void didQueryHardwareInfo(XPGWifiDevice device, int result, java.util.concurrent.ConcurrentHashMap<String,String> hardwareInfo) {
+		StringBuilder sb = new StringBuilder();
+		if (0 == result) {
+			sb.append("Wifi Hardware Version:" + hardwareInfo.get(XPGWifiDevice.XPGWifiDeviceHardwareWifiHardVerKey) + "\r\n");
+			sb.append("Wifi Software Version:" + hardwareInfo.get(XPGWifiDevice.XPGWifiDeviceHardwareWifiSoftVerKey) + "\r\n");
+			sb.append("MCU Hardware Version:" + hardwareInfo.get(XPGWifiDevice.XPGWifiDeviceHardwareMCUHardVerKey) + "\r\n");
+			sb.append("MCU Software Version:" + hardwareInfo.get(XPGWifiDevice.XPGWifiDeviceHardwareMCUSoftVerKey) + "\r\n");
+			sb.append("Firmware Id:" + hardwareInfo.get(XPGWifiDevice.XPGWifiDeviceHardwareFirmwareIdKey) + "\r\n");
+			sb.append("Firmware Version:" + hardwareInfo.get(XPGWifiDevice.XPGWifiDeviceHardwareFirmwareVerKey) + "\r\n");
+			sb.append("Product Key:" + hardwareInfo.get(XPGWifiDevice.XPGWifiDeviceHardwareProductKey) + "\r\n");
+			sb.append("Device id:" + device.getDid()+"\r\n");
+		} else {
+			sb.append("获取失败，错误号：" + result);
+		}
+		
+		Message msg = new Message();
+		msg.what = HARDWARE;
+		msg.obj = sb.toString();
+		handler.sendMessage(msg);
+	};
 
 	/**
 	 * 初始化控件.
@@ -549,6 +593,17 @@ public class GokitControlActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 			break;
+		// 获取设备硬件信息
+		case R.id.action_device_hardwareinfo:
+			if (xpgWifiDevice.isLAN()) {
+				xpgWifiDevice.getHardwareInfo();
+			} else {
+				Message msg = new Message();
+				msg.what = HARDWARE;
+				msg.obj = "远程设备无法获取设备硬件信息，请切换到本地获取";
+				handler.sendMessage(msg);
+			}
+			break;
 
 		default:
 			break;
@@ -558,7 +613,7 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	public void onBackPressed() {
-		xpgWifiDevice.Disconnect();
+		xpgWifiDevice.disconnect();
 		super.onBackPressed();
 
 	}
@@ -595,6 +650,14 @@ public class GokitControlActivity extends BaseActivity {
 		msg.what = UPDATE_UI;
 		handler.sendMessage(msg);
 	}
+	
+	/**
+	 * 展示设备硬件信息
+	 * @param hardwareInfo
+	 */
+	private void showHardwareInfo(String hardwareInfo) {
+		new AlertDialog.Builder(this).setTitle("设备硬件信息").setMessage(hardwareInfo).setPositiveButton("确定", null).show();
+	}
 
 	/**
 	 * 发送指令。格式为json。
@@ -621,13 +684,13 @@ public class GokitControlActivity extends BaseActivity {
 	}
 
 	@Override
-	public void onUnbindDevice(int error, String errorMessage) {
+	public void didUnbindDevice(int error, String errorMessage, String did) {
 		if (error == 0) {
 			Message msg = new Message();
 			msg.what = UNBIND_SUCCEED;
 			handler.sendMessage(msg);
 			isUnbind = true;
-			xpgWifiDevice.Disconnect();
+			xpgWifiDevice.disconnect();
 			finish();
 		} else {
 			Message msg = new Message();

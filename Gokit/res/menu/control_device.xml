@@ -14,5 +14,10 @@
 	    android:orderInCategory="101"
 	    android:showAsAction="never"
 	    android:title="获取设备状态"/>
+	<item
+	    android:id="@+id/action_device_hardwareinfo"
+	    android:orderInCategory="103"
+	    android:showAsAction="never"
+	    android:title="获取硬件信息"/>
 
 </menu>

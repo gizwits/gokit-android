@@ -128,7 +128,7 @@ public class ForgetPasswordActivity extends BaseActivity implements
 	private ProgressDialog dialog;
 
 	@Override
-	protected void onRequestSendVerifyCode(int error, String errorMessage) {
+	protected void didRequestSendVerifyCode(int error, String errorMessage) {
 		Log.i("error message ", error + " " + errorMessage);
 		if (error == 0) {
 			handler.sendEmptyMessage(CODE_SUCCESS);
@@ -138,7 +138,7 @@ public class ForgetPasswordActivity extends BaseActivity implements
 	};
 
 	@Override
-	protected void onChangeUserPassword(int error, String errorMessage) {
+	protected void didChangeUserPassword(int error, String errorMessage) {
 		if (error == 0) {
 			handler.sendEmptyMessage(SUCCESS);
 		} else {

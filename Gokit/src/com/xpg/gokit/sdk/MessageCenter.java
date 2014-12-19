@@ -22,12 +22,10 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.xpg.gokit.BuildConfig;
 import com.xpg.gokit.setting.SettingManager;
-import com.xtremeprog.xpgconnect.XPGWifiConfig;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
-import com.xtremeprog.xpgconnect.XPGWifiLogLevel;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiConfigureMode;
 
 /**
  * 指令管理器.
@@ -105,23 +103,23 @@ public class MessageCenter {
 	 * @param password            注册密码
 	 */
 	public void cRegisterPhoneUser(String phone, String code, String password) {
-		xpgWifiGCC.RegisterPhoneUser(phone, password, code);
+		xpgWifiGCC.registerUserByPhoneAndCode(phone, password, code);
 	}
 
 	/**
 	 * 匿名登录<P>
 	 * 如果一开始不需要直接注册账号，则需要进行匿名登录.
 	 */
-	public void cRegisterAnonymousUser() {
-		xpgWifiGCC.RegisterAnonymousUser(mSettingManager.getPhoneId());
+	public void cUserLoginAnonymous() {
+		xpgWifiGCC.userLoginAnonymous();
 	}
 
 	/**
 	 * 账号注销.
 	 */
 	public void cLogout() {
-		xpgWifiGCC.UserLogout(mSettingManager.getUid());
-		xpgWifiGCC.UserLogout(mSettingManager.getHideUid());
+		xpgWifiGCC.userLogout(mSettingManager.getUid());
+		xpgWifiGCC.userLogout(mSettingManager.getHideUid());
 		mSettingManager.clean();
 	}
 
@@ -132,7 +130,7 @@ public class MessageCenter {
 	 * @param psw            密码
 	 */
 	public void cLogin(String name, String psw) {
-		xpgWifiGCC.UserLogin(name, psw);
+		xpgWifiGCC.userLoginWithUserName(name, psw);
 	}
 
 	/**
@@ -144,7 +142,7 @@ public class MessageCenter {
 	 */
 	public void cChangeUserPasswordWithCode(String phone, String code,
 			String password) {
-		xpgWifiGCC.changeUserPasswordWithCode(phone, code, password);
+		xpgWifiGCC.changeUserPasswordByCode(phone, code, password);
 	}
 
 	/**
@@ -153,7 +151,7 @@ public class MessageCenter {
 	 * @param phone            手机号
 	 */
 	public void cRequestSendVerifyCode(String phone) {
-		xpgWifiGCC.RequestSendVerifyCode(phone);
+		xpgWifiGCC.requestSendVerifyCode(phone);
 	}
 
 	/**
@@ -163,7 +161,7 @@ public class MessageCenter {
 	 * @param password            wifi密码
 	 */
 	public void cSetAirLink(String wifi, String password) {
-		xpgWifiGCC.SetAirLink(wifi, password);
+		xpgWifiGCC.setDeviceWifi(wifi, password, XPGWifiConfigureMode.XPGWifiConfigureModeAirLink, 60);
 	}
 
 	/**
@@ -173,17 +171,19 @@ public class MessageCenter {
 	 * @param psw the psw
 	 */
 	public void cSetSSID(String ssid, String psw) {
-		xpgWifiGCC.SetSSID(ssid, psw);
+		xpgWifiGCC.setDeviceWifi(ssid, psw, XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, 60);
 	}
 
 	/**
-	 * 绑定后刷新设备列表，该方法会同时获取本地设备以及远程设备列表.
+	 * 绑定后刷新设备列表，该方法会同时获取本地设备以及远程设备列表
+	 * 由于该Demo只绘制了微信宠物屋（productKey为6f3074fe43894547a4f1314bd7e3ae0b）的界面
+	 * 故只获取微信宠物屋
 	 *
 	 * @param uid            用户名
 	 * @param token            密码
 	 */
 	public void cGetBoundDevices(String uid, String token) {
-		xpgWifiGCC.GetBoundDevices(uid, token);
+		xpgWifiGCC.getBoundDevices(uid, token, "6f3074fe43894547a4f1314bd7e3ae0b");
 	}
 
 	/**
@@ -196,13 +196,9 @@ public class MessageCenter {
 	 */
 	public void cBindDevice(String uid, String token, String did,
 			String passcode) {
-		xpgWifiGCC.BindDevice(uid, token, did, passcode);
+		xpgWifiGCC.bindDevice(uid, token, did, passcode, null);
 	}
 	
-	public void cDiscoverDevice(){
-		xpgWifiGCC.DiscoverDevices();
-	}
-
 	// =================================================================
 	//
 	// 关于控制设备的指令
@@ -237,7 +233,7 @@ public class MessageCenter {
 	 * @param xpgWifiDevice the xpg wifi device
 	 */
 	public void cDisconnect(XPGWifiDevice xpgWifiDevice) {
-		xpgWifiDevice.Disconnect();
+		xpgWifiDevice.disconnect();
 	}
 
 	/**
@@ -247,7 +243,7 @@ public class MessageCenter {
 	 * @return the string
 	 */
 	public String cGetPasscode(XPGWifiDevice xpgWifiDevice) {
-		return xpgWifiDevice.GetPasscode();
+		return xpgWifiDevice.getPasscode();
 	}
 
 	/**
@@ -259,7 +255,7 @@ public class MessageCenter {
 	 */
 	public void cUnbindDevice(XPGWifiDevice xpgWifiDevice, String uid,
 			String token) {
-		xpgWifiDevice.UnbindDevice(uid, token);
+		xpgWifiGCC.unbindDevice(uid, token, xpgWifiDevice.getDid(), xpgWifiDevice.getPasscode());
 	}
 
 }

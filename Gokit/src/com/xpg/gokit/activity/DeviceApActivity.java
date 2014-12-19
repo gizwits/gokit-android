@@ -75,7 +75,7 @@ public class DeviceApActivity extends BaseActivity implements
 		initData();
 		initListener();
 
-		XPGWifiSDK.sharedInstance().GetSSIDList();
+		XPGWifiSDK.sharedInstance().getSSIDList();
 
 	}
 
