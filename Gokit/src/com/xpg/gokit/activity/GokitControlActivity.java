@@ -629,6 +629,7 @@ public class GokitControlActivity extends BaseActivity {
 	private void showDataInUI(String data) throws JSONException {
 		Log.i("revjson", data);
 		JSONObject receive = new JSONObject(data);
+		@SuppressWarnings("rawtypes")
 		Iterator actions = receive.keys();
 		while (actions.hasNext()) {
 			String action = actions.next().toString();
@@ -638,6 +639,7 @@ public class GokitControlActivity extends BaseActivity {
 				continue;
 			}
 			JSONObject params = receive.getJSONObject(action);
+			@SuppressWarnings("rawtypes")
 			Iterator it_params = params.keys();
 			while (it_params.hasNext()) {
 				String param = it_params.next().toString();
