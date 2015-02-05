@@ -26,6 +26,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.ScanResult;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,6 +40,7 @@ import com.xpg.gokit.adapter.WifiListAdapter;
 import com.xpg.gokit.dialog.SetWifiDialog;
 import com.xpg.gokit.dialog.listener.SetWifiListener;
 import com.xpg.gokit.utils.NetUtils;
+import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
 // TODO: Auto-generated Javadoc
@@ -51,7 +54,7 @@ import com.xtremeprog.xpgconnect.XPGWifiSDK;
  */
 public class DeviceApActivity extends BaseActivity implements
 		OnItemClickListener {
-
+	protected static final int CONFIG_RESULT = 0;
 	/** The lv_wifi_list. */
 	ListView lv_wifi_list;
 
@@ -64,8 +67,19 @@ public class DeviceApActivity extends BaseActivity implements
 	/** 设定wifi对话框 */
 	SetWifiDialog dialog;
 
-	/** 网络状态广播接受器 */
-	ConnecteChangeBroadcast mChangeBroadcast = new ConnecteChangeBroadcast();
+//	/** 网络状态广播接受器 */
+//	ConnecteChangeBroadcast mChangeBroadcast = new ConnecteChangeBroadcast();
+	
+	Handler handler = new Handler(){
+		public void handleMessage(Message msg){
+			switch(msg.what){
+			case CONFIG_RESULT:
+				Toast.makeText(DeviceApActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+				finish();
+				break;
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,14 +112,14 @@ public class DeviceApActivity extends BaseActivity implements
 
 	public void onResume() {
 		super.onResume();
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-		registerReceiver(mChangeBroadcast, filter);
+//		IntentFilter filter = new IntentFilter();
+//		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+//		registerReceiver(mChangeBroadcast, filter);
 	}
 
 	public void onPause() {
 		super.onPause();
-		unregisterReceiver(mChangeBroadcast);
+//		unregisterReceiver(mChangeBroadcast);
 
 	}
 
@@ -126,27 +140,38 @@ public class DeviceApActivity extends BaseActivity implements
 			public void set(String ssid, String psw) {
 				mCenter.cSetSSID(ssid, psw);
 
-				Toast.makeText(DeviceApActivity.this, "配置成功",
-						Toast.LENGTH_SHORT).show();
+				
 			}
 		});
 		dialog.show();
 	}
-
-	/**
-	 * 广播监听器，监听wifi连上的广播.
-	 */
-	public class ConnecteChangeBroadcast extends BroadcastReceiver {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-
-			boolean iswifi = NetUtils.isWifiConnected(context);
-			Log.i("networkchange", "change" + iswifi);
-			if (!iswifi) {
-				finish();
-			}
+	
+	@Override
+	protected void didSetDeviceWifi(int error, XPGWifiDevice device) {
+		Message msg = new Message();
+		msg.what = CONFIG_RESULT;
+		if (0 == error) {
+			msg.obj = "配置成功";
+		} else {
+			msg.obj = "配置失败";
 		}
+		handler.sendMessage(msg);
 	}
+
+//	/**
+//	 * 广播监听器，监听wifi连上的广播.
+//	 */
+//	public class ConnecteChangeBroadcast extends BroadcastReceiver {
+//
+//		@Override
+//		public void onReceive(Context context, Intent intent) {
+//
+//			boolean iswifi = NetUtils.isWifiConnected(context);
+//			Log.i("networkchange", "change" + iswifi);
+//			if (!iswifi) {
+//				finish();
+//			}
+//		}
+//	}
 
 }
