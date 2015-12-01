@@ -45,6 +45,7 @@ import android.widget.Toast;
 import com.xpg.gokit.R;
 import com.xpg.gokit.bean.ControlDevice;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
+import com.xtremeprog.xpgconnect.XPGWifiErrorCode;
 
 /**
  * gokit控制界面
@@ -89,31 +90,31 @@ public class GokitControlActivity extends BaseActivity {
 	 * ===========================================================
 	 */
 	/** led红灯开关 0=关 1=开. */
-	private static final String KEY_RED_SWITCH = "attr0";
+	private static final String KEY_RED_SWITCH = "LED_OnOff";
 
 	/** 指定led颜色值 0=自定义 1=黄色 2=紫色 3=粉色. */
-	private static final String KEY_LIGHT_COLOR = "attr1";
+	private static final String KEY_LIGHT_COLOR = "LED_Color";
 
 	/** led灯红色值 0-254. */
-	private static final String KEY_LIGHT_RED = "attr2";
+	private static final String KEY_LIGHT_RED = "LED_R";
 
 	/** led灯绿色值 0-254. */
-	private static final String KEY_LIGHT_GREEN = "attr3";
+	private static final String KEY_LIGHT_GREEN = "LED_G";
 
 	/** led灯蓝色值 0-254. */
-	private static final String KEY_LIGHT_BLUE = "attr4";
+	private static final String KEY_LIGHT_BLUE = "LED_B";
 
 	/** 电机转速 －5～－1 电机负转 0 停止 1～5 电机正转. */
-	private static final String KEY_SPEED = "attr5";
+	private static final String KEY_SPEED = "Motor_Speed";
 
 	/** 红外探测 0无障碍 1有障碍. */
-	private static final String KEY_INFRARED = "attr6";
+	private static final String KEY_INFRARED = "Infrared";
 
 	/** 环境温度. */
-	private static final String KEY_TEMPLATE = "attr7";
+	private static final String KEY_TEMPLATE = "Temperature";
 
 	/** 环境湿度. */
-	private static final String KEY_HUMIDITY = "attr8";
+	private static final String KEY_HUMIDITY = "Humidity";
 
 	/** 实体字段名，代表对应的项目. */
 	private static final String KEY_ACTION = "entity0";
@@ -207,14 +208,38 @@ public class GokitControlActivity extends BaseActivity {
 						.setText((CharSequence) deviceStatu.get(KEY_TEMPLATE));
 				tvHumidity
 						.setText((CharSequence) deviceStatu.get(KEY_HUMIDITY));
-				sbBlue.setProgress(Integer.parseInt((String) deviceStatu
-						.get(KEY_LIGHT_BLUE)));
-				sbGreen.setProgress(Integer.parseInt((String) deviceStatu
-						.get(KEY_LIGHT_GREEN)));
-				sbRed.setProgress(Integer.parseInt((String) deviceStatu
-						.get(KEY_LIGHT_RED)));
-				sbSpeed.setProgress(5 + Integer.parseInt((String) deviceStatu
-						.get(KEY_SPEED)));
+				
+				if ((String) deviceStatu.get(KEY_LIGHT_BLUE) != null) {
+					sbBlue.setProgress(Integer.parseInt((String) deviceStatu
+							.get(KEY_LIGHT_BLUE)));
+				}
+				else {
+					sbBlue.setProgress(0);
+				}
+				
+				if ((String) deviceStatu.get(KEY_LIGHT_GREEN) != null) {
+					sbGreen.setProgress(Integer.parseInt((String) deviceStatu
+							.get(KEY_LIGHT_GREEN)));
+				}
+				else {
+					sbBlue.setProgress(0);
+				}
+				
+				if ((String) deviceStatu.get(KEY_LIGHT_RED) != null) {
+					sbRed.setProgress(Integer.parseInt((String) deviceStatu
+							.get(KEY_LIGHT_RED)));
+				}
+				else {
+					sbBlue.setProgress(0);
+				}
+				
+				if ((String)deviceStatu.get(KEY_SPEED) != null) {
+					sbSpeed.setProgress(5 + Integer.parseInt((String) deviceStatu
+							.get(KEY_SPEED)));
+				}
+				else {
+					sbSpeed.setProgress(5);
+				}
 				break;
 			case SETNULL:
 				if (xpgWifiDevice != null) {
@@ -296,6 +321,11 @@ public class GokitControlActivity extends BaseActivity {
 
 	@Override
 	public boolean didReceiveData(XPGWifiDevice device, java.util.concurrent.ConcurrentHashMap<String,Object> dataMap, int result) {
+		if (result != 0) {
+			Log.i("info", "didReceiveData: " + result + ". Maybe there is no datapoint file for this productkey " + device.getProductKey());
+			return false;
+		}
+		
 		if (dataMap.get("data") != null) {
 			Log.i("info", (String)dataMap.get("data"));
 			Message msg = new Message();
