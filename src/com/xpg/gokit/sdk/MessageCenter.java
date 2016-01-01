@@ -17,6 +17,8 @@
  */
 package com.xpg.gokit.sdk;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,7 +27,9 @@ import android.content.Context;
 import com.xpg.gokit.setting.SettingManager;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGUserAccountType;
 import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiConfigureMode;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiGAgentType;
 
 /**
  * 指令管理器.
@@ -33,20 +37,21 @@ import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiConfigureMode;
  * @author Lien Li
  */
 public class MessageCenter {
-	
+
 	/** The xpg wifi gcc. */
 	private static XPGWifiSDK xpgWifiGCC;
-	
+
 	/** The m center. */
 	private static MessageCenter mCenter;
-	
+
 	/** The m setting manager. */
 	private SettingManager mSettingManager;
 
 	/**
 	 * Instantiates a new message center.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 */
 	private MessageCenter(Context c) {
 		if (mCenter == null) {
@@ -57,7 +62,8 @@ public class MessageCenter {
 	/**
 	 * Gets the single instance of MessageCenter.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 * @return single instance of MessageCenter
 	 */
 	public static MessageCenter getInstance(Context c) {
@@ -70,15 +76,14 @@ public class MessageCenter {
 	/**
 	 * Inits the.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 */
 	private void init(Context c) {
 		mSettingManager = new SettingManager(c);
-		
-		xpgWifiGCC = XPGWifiSDK.sharedInstance();
-		
 
-		
+		xpgWifiGCC = XPGWifiSDK.sharedInstance();
+
 	}
 
 	/**
@@ -98,16 +103,20 @@ public class MessageCenter {
 	/**
 	 * 注册账号.
 	 *
-	 * @param phone            注册手机号
-	 * @param code            验证码
-	 * @param password            注册密码
+	 * @param phone
+	 *            注册手机号
+	 * @param code
+	 *            验证码
+	 * @param password
+	 *            注册密码
 	 */
 	public void cRegisterPhoneUser(String phone, String code, String password) {
 		xpgWifiGCC.registerUserByPhoneAndCode(phone, password, code);
 	}
 
 	/**
-	 * 匿名登录<P>
+	 * 匿名登录
+	 * <P>
 	 * 如果一开始不需要直接注册账号，则需要进行匿名登录.
 	 */
 	public void cUserLoginAnonymous() {
@@ -126,8 +135,10 @@ public class MessageCenter {
 	/**
 	 * 账号登陆.
 	 *
-	 * @param name            用户名
-	 * @param psw            密码
+	 * @param name
+	 *            用户名
+	 * @param psw
+	 *            密码
 	 */
 	public void cLogin(String name, String psw) {
 		xpgWifiGCC.userLoginWithUserName(name, psw);
@@ -136,42 +147,55 @@ public class MessageCenter {
 	/**
 	 * 忘记密码.
 	 *
-	 * @param phone            手机号
-	 * @param code            验证码
-	 * @param password            密码
+	 * @param phone
+	 *            手机号
+	 * @param code
+	 *            验证码
+	 * @param password
+	 *            密码
 	 */
-	public void cChangeUserPasswordWithCode(String phone, String code,
-			String password) {
+	public void cChangeUserPasswordWithCode(String phone, String code, String password) {
 		xpgWifiGCC.changeUserPasswordByCode(phone, code, password);
 	}
 
 	/**
 	 * 请求向手机发送验证码.
 	 *
-	 * @param phone            手机号
+	 * @param phone
+	 *            手机号
 	 */
-	public void cRequestSendVerifyCode(String phone) {
-		xpgWifiGCC.requestSendVerifyCode(phone);
+	public void cRequestSendVerifyCode(String token, String captchaId, String captchaCode, String phone) {
+		// xpgWifiGCC.requestSendVerifyCode(phone);
+		xpgWifiGCC.requestSendPhoneSMSCode(token, captchaId, captchaCode, phone);
 	}
 
 	/**
 	 * 发送airlink广播，把需要连接的wifi的ssid和password发给模块。.
 	 *
-	 * @param wifi            wifi名字
-	 * @param password            wifi密码
+	 * @param wifi
+	 *            wifi名字
+	 * @param password
+	 *            wifi密码
 	 */
-	public void cSetAirLink(String wifi, String password) {
-		xpgWifiGCC.setDeviceWifi(wifi, password, XPGWifiConfigureMode.XPGWifiConfigureModeAirLink, 60);
+	public void cSetAirLink(String wifi, String password, List<XPGWifiGAgentType> types) {
+		// xpgWifiGCC.setDeviceWifi(wifi, password,
+		// XPGWifiConfigureMode.XPGWifiConfigureModeAirLink, 60);
+
+		xpgWifiGCC.setDeviceWifi(wifi, password, XPGWifiConfigureMode.XPGWifiConfigureModeAirLink, null, 60, types);
 	}
 
 	/**
 	 * 设置SSID.
 	 *
-	 * @param ssid the ssid
-	 * @param psw the psw
+	 * @param ssid
+	 *            the ssid
+	 * @param psw
+	 *            the psw
 	 */
 	public void cSetSSID(String ssid, String psw) {
-		xpgWifiGCC.setDeviceWifi(ssid, psw, XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, 60);
+		// xpgWifiGCC.setDeviceWifi(ssid, psw,
+		// XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, 60);
+		xpgWifiGCC.setDeviceWifi(ssid, psw, XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, ssid, 60, null);
 	}
 
 	/**
@@ -179,8 +203,10 @@ public class MessageCenter {
 	 * 由于该Demo只绘制了微信宠物屋（productKey为6f3074fe43894547a4f1314bd7e3ae0b）的界面
 	 * 故只获取微信宠物屋
 	 *
-	 * @param uid            用户名
-	 * @param token            密码
+	 * @param uid
+	 *            用户名
+	 * @param token
+	 *            密码
 	 */
 	public void cGetBoundDevices(String uid, String token) {
 		xpgWifiGCC.getBoundDevices(uid, token, "6f3074fe43894547a4f1314bd7e3ae0b");
@@ -189,16 +215,19 @@ public class MessageCenter {
 	/**
 	 * 绑定设备.
 	 *
-	 * @param uid            用户名
-	 * @param token            密码
-	 * @param did            did
-	 * @param passcode            passcode
+	 * @param uid
+	 *            用户名
+	 * @param token
+	 *            密码
+	 * @param did
+	 *            did
+	 * @param passcode
+	 *            passcode
 	 */
-	public void cBindDevice(String uid, String token, String did,
-			String passcode) {
+	public void cBindDevice(String uid, String token, String did, String passcode) {
 		xpgWifiGCC.bindDevice(uid, token, did, passcode, null);
 	}
-	
+
 	// =================================================================
 	//
 	// 关于控制设备的指令
@@ -208,8 +237,10 @@ public class MessageCenter {
 	/**
 	 * 发送指令.
 	 *
-	 * @param xpgWifiDevice the xpg wifi device
-	 * @param jsonsend the jsonsend
+	 * @param xpgWifiDevice
+	 *            the xpg wifi device
+	 * @param jsonsend
+	 *            the jsonsend
 	 */
 	public void cWrite(XPGWifiDevice xpgWifiDevice, JSONObject jsonsend) {
 		xpgWifiDevice.write(jsonsend.toString());
@@ -218,8 +249,10 @@ public class MessageCenter {
 	/**
 	 * 获取设备状态.
 	 *
-	 * @param xpgWifiDevice the xpg wifi device
-	 * @throws JSONException the JSON exception
+	 * @param xpgWifiDevice
+	 *            the xpg wifi device
+	 * @throws JSONException
+	 *             the JSON exception
 	 */
 	public void cGetStatus(XPGWifiDevice xpgWifiDevice) throws JSONException {
 		JSONObject json = new JSONObject();
@@ -230,7 +263,8 @@ public class MessageCenter {
 	/**
 	 * 断开连接.
 	 *
-	 * @param xpgWifiDevice the xpg wifi device
+	 * @param xpgWifiDevice
+	 *            the xpg wifi device
 	 */
 	public void cDisconnect(XPGWifiDevice xpgWifiDevice) {
 		xpgWifiDevice.disconnect();
@@ -239,7 +273,8 @@ public class MessageCenter {
 	/**
 	 * 获取Passcode.
 	 *
-	 * @param xpgWifiDevice the xpg wifi device
+	 * @param xpgWifiDevice
+	 *            the xpg wifi device
 	 * @return the string
 	 */
 	public String cGetPasscode(XPGWifiDevice xpgWifiDevice) {
@@ -249,12 +284,14 @@ public class MessageCenter {
 	/**
 	 * 解除绑定.
 	 *
-	 * @param xpgWifiDevice the xpg wifi device
-	 * @param uid the uid
-	 * @param token the token
+	 * @param xpgWifiDevice
+	 *            the xpg wifi device
+	 * @param uid
+	 *            the uid
+	 * @param token
+	 *            the token
 	 */
-	public void cUnbindDevice(XPGWifiDevice xpgWifiDevice, String uid,
-			String token) {
+	public void cUnbindDevice(XPGWifiDevice xpgWifiDevice, String uid, String token) {
 		xpgWifiGCC.unbindDevice(uid, token, xpgWifiDevice.getDid(), xpgWifiDevice.getPasscode());
 	}
 

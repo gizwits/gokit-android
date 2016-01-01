@@ -4,20 +4,40 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dip"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="已发送至手机验证码" />
+
+        <TextView
+            android:id="@+id/tv_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pass_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/edt_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="手机号码："
-            android:inputType="phone" >
-        </EditText>
-
         <RelativeLayout
+            android:id="@+id/verify_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip" >
@@ -27,8 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:hint="手机验证码" >
-            </EditText>
+                android:hint="手机验证码" />
 
             <Button
                 android:id="@+id/btn_send_verify_code"

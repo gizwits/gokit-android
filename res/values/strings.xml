@@ -18,6 +18,11 @@
     <string name="title_activity_forget_password">忘记密码</string>
     <string name="title_activity_qmultiline"></string>
     <string name="title_activity_setting">设置</string>
-	<string name="title_activity_control_gokit">设备控制</string>
+    <string name="title_activity_control_gokit">设备控制</string>
     <string name="checking_network">查找网络</string>
+    <string name="appversion">当前版本：V1.1.0</string>
+    <string name="SDKversion">当前sdk版本：</string>
+    <string name="WIFI_MODE">wifi模块类型</string>
+    <string name="MODE">请选择</string>
+
 </resources>

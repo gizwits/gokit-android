@@ -6,9 +6,9 @@
 
     <RelativeLayout
         android:id="@+id/rl_title"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="50dip" >
+        android:layout_height="50dip"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/btn_menu"
@@ -22,8 +22,8 @@
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/back_bt" />
 
         <TextView
@@ -33,13 +33,15 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/btn_back"
             android:text=""
-            android:textColor="@color/black"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-<RelativeLayout 
-            android:layout_alignParentBottom="true"
-            android:layout_height="1dip"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/black" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:background="@color/gray"></RelativeLayout>
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray" >
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -47,37 +49,35 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_title"
         android:orientation="vertical" >
-		<RelativeLayout 
-		    android:layout_width="match_parent"
-		    android:layout_height="200dip">
-	        <MultiAutoCompleteTextView
-	            android:id="@+id/edt_receive_device_msg"
-	            android:layout_width="match_parent"
-	            android:layout_height="200dip"
-	            android:ems="10"
-	            android:text=""
-	            android:minLines="6" >
-	
-	        </MultiAutoCompleteTextView>
 
-		</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dip" >
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/edt_receive_device_msg"
+                android:layout_width="match_parent"
+                android:layout_height="200dip"
+                android:ems="10"
+                android:minLines="6"
+                android:text="" >
+            </MultiAutoCompleteTextView>
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="发现新设备，请绑定后进行操作"
-            android:textColor="@color/black"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btn_get_psc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="获取passcode" />
-
-        
+            android:text="获取passcode"
+            android:visibility="gone" />
     </LinearLayout>
-    
 
 </RelativeLayout>

@@ -30,58 +30,62 @@ import com.xtremeprog.xpgconnect.XPGWifiDevice;
  */
 @SuppressWarnings("serial")
 public class ControlDevice implements Serializable {
-	
+
 	/** The is online. */
-	private boolean isOnline ;
-	
+	private boolean isOnline;
+
 	/** mac地址. */
 	private String mac;
-	
+
 	/** ip地址. */
 	private String ip;
-	
+
 	/** 设备名字. */
 	private String name;
-	
+
 	/** 是否已绑定. */
 	private boolean isBind;
-	
+
 	/** 设备did. */
 	private String did;
-	
+
 	/** 设备的productKey. */
 	private String productKey;
-	
+
 	/** 设备的passcode. */
 	private String passcode;
-	
+
 	/** The is title. */
 	private boolean isTitle = false;
-	
+
 	/** The title name. */
 	private String titleName = "";
-	
+
 	/**
 	 * Instantiates a new control device.
 	 *
-	 * @param titleName the title name
+	 * @param titleName
+	 *            the title name
 	 */
-	public ControlDevice(String titleName){
+	public ControlDevice(String titleName) {
 		isTitle = true;
 		this.titleName = titleName;
-		
+
 	}
-	
+
 	/**
 	 * 把设备的IP地址，MAC地址等信息从XPGWifiDevice存进这个类.
 	 *
-	 * @param name the name
-	 * @param device the device
-	 * @param uid user ID
+	 * @param name
+	 *            the name
+	 * @param device
+	 *            the device
+	 * @param uid
+	 *            user ID
 	 */
-	public ControlDevice(XPGWifiDevice device, boolean isBind){
-		if(device!=null){
-			this.mac = device.getMacAddress();			
+	public ControlDevice(XPGWifiDevice device, boolean isBind) {
+		if (device != null) {
+			this.mac = device.getMacAddress();
 			this.did = device.getDid();
 			this.productKey = device.getProductKey();
 			isOnline = true;
@@ -93,7 +97,6 @@ public class ControlDevice implements Serializable {
 			this.name = device.getProductName();
 		}
 	}
-
 
 	/**
 	 * Gets the did.
@@ -107,7 +110,8 @@ public class ControlDevice implements Serializable {
 	/**
 	 * Sets the did.
 	 *
-	 * @param did the new did
+	 * @param did
+	 *            the new did
 	 */
 	public void setDid(String did) {
 		this.did = did;
@@ -125,7 +129,8 @@ public class ControlDevice implements Serializable {
 	/**
 	 * Sets the passcode.
 	 *
-	 * @param passcode the new passcode
+	 * @param passcode
+	 *            the new passcode
 	 */
 	public void setPasscode(String passcode) {
 		this.passcode = passcode;
@@ -139,16 +144,17 @@ public class ControlDevice implements Serializable {
 	public boolean isBind() {
 		return isBind;
 	}
-	
+
 	/**
 	 * Sets the bind.
 	 *
-	 * @param isBind the isBind
+	 * @param isBind
+	 *            the isBind
 	 */
 	public void setNew(boolean isBind) {
 		this.isBind = isBind;
 	}
-	
+
 	/**
 	 * Gets the mac.
 	 *
@@ -157,25 +163,26 @@ public class ControlDevice implements Serializable {
 	public String getMac() {
 		return mac;
 	}
-	
+
 	/**
 	 * Sets the mac.
 	 *
-	 * @param mac the new mac
+	 * @param mac
+	 *            the new mac
 	 */
 	public void setMac(String mac) {
 		this.mac = mac;
 	}
-	
+
 	/**
 	 * Gets the product key.
 	 *
 	 * @return the product key
 	 */
-	public String getProductKey(){
+	public String getProductKey() {
 		return productKey;
 	}
-	
+
 	/**
 	 * Gets the ip.
 	 *
@@ -184,16 +191,17 @@ public class ControlDevice implements Serializable {
 	public String getIp() {
 		return ip;
 	}
-	
+
 	/**
 	 * Sets the ip.
 	 *
-	 * @param ip the new ip
+	 * @param ip
+	 *            the new ip
 	 */
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	
+
 	/**
 	 * Gets the name.
 	 *
@@ -202,16 +210,17 @@ public class ControlDevice implements Serializable {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
 	 * Checks if is title.
 	 *
@@ -224,7 +233,8 @@ public class ControlDevice implements Serializable {
 	/**
 	 * Sets the title.
 	 *
-	 * @param isTitle the new title
+	 * @param isTitle
+	 *            the new title
 	 */
 	public void setTitle(boolean isTitle) {
 		this.isTitle = isTitle;
@@ -242,7 +252,8 @@ public class ControlDevice implements Serializable {
 	/**
 	 * Sets the title name.
 	 *
-	 * @param titleName the new title name
+	 * @param titleName
+	 *            the new title name
 	 */
 	public void setTitleName(String titleName) {
 		this.titleName = titleName;
@@ -260,21 +271,21 @@ public class ControlDevice implements Serializable {
 	/**
 	 * Sets the online.
 	 *
-	 * @param isOnline the new online
+	 * @param isOnline
+	 *            the new online
 	 */
 	public void setOnline(boolean isOnline) {
 		this.isOnline = isOnline;
 	}
-	
+
 	/**
 	 * Sets the product key.
 	 *
-	 * @param productKey the new product key
+	 * @param productKey
+	 *            the new product key
 	 */
 	public void setProductKey(String productKey) {
 		this.productKey = productKey;
 	}
 
-
-	
 }

@@ -17,10 +17,14 @@
  */
 package com.xpg.gokit.activity;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.ProgressDialog;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,61 +34,68 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.xpg.gokit.R;
+import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
 // TODO: Auto-generated Javadoc
 /**
  * 忘记密码界面.
- *
+ * 
  * @author Lien Li
  */
-public class ForgetPasswordActivity extends BaseActivity implements
-		OnClickListener {
-	
-	/**  倒计时计数器. */
+public class ForgetPasswordActivity extends BaseActivity implements OnClickListener {
+
+	/** 倒计时计数器. */
 	protected static final int TIMER = 0;
-	
-	/**  修改成功. */
+
+	/** 修改成功. */
 	protected static final int SUCCESS = 1;
-	
-	/**  修改失败. */
+
+	/** 修改失败. */
 	protected static final int FAIL = 2;
 
 	/** The Constant CODE_FINISH. */
 	protected static final int CODE_FINISH = 3;
-	
-	/**  验证码发送成功. */
+
+	/** 验证码发送成功. */
 	protected static final int CODE_SUCCESS = 4;
-	
-	/**  验证码发送失败. */
+
+	/** 验证码发送失败. */
 	protected static final int CODE_FAIL = 5;
-	
+
+	protected static final int CaptchaCode = 6;
+
 	/** The edt_password. */
 	EditText edt_password;
-	
+
 	/** The edt_confirm_password. */
 	EditText edt_confirm_password;
-	
+
 	/** The edt_verify_code. */
 	EditText edt_verify_code;
-	
+
 	/** The btn_send_verify_code. */
 	Button btn_send_verify_code;
-	
+
 	/** The edt_phone_number. */
 	EditText edt_phone_number;
-	
+
 	/** The btn_reset. */
 	Button btn_reset;
-	
+
+	ImageView ivGetCaptchaCode;
+	EditText etInputCaptchaCode;
+	Button btnGetCaptchaCode;
+
 	/** The secode_left. */
 	int secode_left = 60;
-	
+
 	/** The timer. */
 	Timer timer;
-	
+
 	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -101,42 +112,38 @@ public class ForgetPasswordActivity extends BaseActivity implements
 				break;
 			case SUCCESS:
 				dialog.cancel();
-				Toast.makeText(ForgetPasswordActivity.this, "修改成功",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(ForgetPasswordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+				finish();
 				break;
 			case FAIL:
 				dialog.cancel();
-				Toast.makeText(ForgetPasswordActivity.this, "修改失败",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(ForgetPasswordActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
 				break;
 			case CODE_SUCCESS:
 				dialog.cancel();
-				Toast.makeText(ForgetPasswordActivity.this, "发送成功",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(ForgetPasswordActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
 				break;
 			case CODE_FAIL:
 				dialog.cancel();
-				Toast.makeText(ForgetPasswordActivity.this, "发送失败",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(ForgetPasswordActivity.this, "发送失败", Toast.LENGTH_SHORT).show();
+				break;
+			case CaptchaCode:
+				XPGWifiSDK.sharedInstance().getCaptchaCode("dc5b945db45f427c97ec9ae881850623");
 				break;
 
 			}
 		};
 	};
-	
+
 	/** The dialog. */
 	private ProgressDialog dialog;
 
-	@Override
-	protected void didRequestSendVerifyCode(int error, String errorMessage) {
-		Log.i("error message ", error + " " + errorMessage);
-		if (error == 0) {
-			handler.sendEmptyMessage(CODE_SUCCESS);
-		} else {
-			handler.sendEmptyMessage(CODE_FAIL);
-		}
-	};
-
+	/*
+	 * @Override protected void didRequestSendVerifyCode(int error, String
+	 * errorMessage) { Log.i("error message ", error + " " + errorMessage); if
+	 * (error == 0) { handler.sendEmptyMessage(CODE_SUCCESS); } else {
+	 * handler.sendEmptyMessage(CODE_FAIL); } };
+	 */
 	@Override
 	protected void didChangeUserPassword(int error, String errorMessage) {
 		if (error == 0) {
@@ -146,11 +153,11 @@ public class ForgetPasswordActivity extends BaseActivity implements
 		}
 	};
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_forget_password);
+		handler.sendEmptyMessage(CaptchaCode);
 		initView();
 		initListener();
 
@@ -160,6 +167,9 @@ public class ForgetPasswordActivity extends BaseActivity implements
 	 * Inits the listener.
 	 */
 	private void initListener() {
+
+		btnGetCaptchaCode.setOnClickListener(this);
+		//
 		btn_reset.setOnClickListener(this);
 		btn_send_verify_code.setOnClickListener(this);
 
@@ -169,6 +179,9 @@ public class ForgetPasswordActivity extends BaseActivity implements
 	 * Inits the view.
 	 */
 	private void initView() {
+		etInputCaptchaCode = (EditText) findViewById(R.id.etInputCaptchaCode_forget);
+		btnGetCaptchaCode = (Button) findViewById(R.id.btnReGetCaptchaCode_forget);
+		//
 		btn_reset = (Button) findViewById(R.id.btn_reset);
 		btn_send_verify_code = (Button) findViewById(R.id.btn_send_verify_code);
 		edt_confirm_password = (EditText) findViewById(R.id.edt_con_password);
@@ -180,20 +193,14 @@ public class ForgetPasswordActivity extends BaseActivity implements
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.forget_password, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	/*
+	 * @Override public boolean onCreateOptionsMenu(Menu menu) {
+	 * getMenuInflater().inflate(R.menu.forget_password, menu); return true; }
+	 * 
+	 * @Override public boolean onOptionsItemSelected(MenuItem item) { int id =
+	 * item.getItemId(); if (id == R.id.action_settings) { return true; } return
+	 * super.onOptionsItemSelected(item); }
+	 */
 
 	@Override
 	public void onClick(View v) {
@@ -233,30 +240,36 @@ public class ForgetPasswordActivity extends BaseActivity implements
 				Toast.makeText(this, "电话号码格式不正确", Toast.LENGTH_SHORT).show();
 			}
 		}
+		if (v == btnGetCaptchaCode) {
+			handler.sendEmptyMessage(CaptchaCode);
+		}
 
 	}
 
-
 	/**
 	 * 重置用户密码.
-	 *
-	 * @param phone            已注册手机号码
-	 * @param code            验证码
-	 * @param password            新密码
+	 * 
+	 * @param phone
+	 *            已注册手机号码
+	 * @param code
+	 *            验证码
+	 * @param password
+	 *            新密码
 	 */
-	private void sendRetUser(final String phone, final String code,
-			final String password) {
+	private void sendRetUser(final String phone, final String code, final String password) {
 		dialog.show();
 		mCenter.cChangeUserPasswordWithCode(phone, code, password);
 	}
 
 	/**
 	 * 发送手机验证码.
-	 *
-	 * @param phone            已注册手机号码
+	 * 
+	 * @param phone
+	 *            已注册手机号码
 	 */
 	private void sendVerifyCode(final String phone) {
 		this.btn_send_verify_code.setEnabled(false);
+		String CaptchaCode = etInputCaptchaCode.getText().toString();
 		secode_left = 60;
 		timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -267,6 +280,65 @@ public class ForgetPasswordActivity extends BaseActivity implements
 			}
 		}, 1000, 1000);
 		dialog.show();
-		mCenter.cRequestSendVerifyCode(phone);
+		mCenter.cRequestSendVerifyCode(tokenString, captchaidString, CaptchaCode, phone);
+	}
+
+	/**
+	 * 图片验证码回调
+	 */
+	private String tokenString, captchaidString, captcthishaURL_String;
+
+	protected void didGetCaptchaCode(int result, java.lang.String errorMessage, java.lang.String token,
+			java.lang.String captchaId, java.lang.String captcthishaURL) {
+		Log.e("AppTest",
+				"图片验证码回调" + result + ", " + errorMessage + ", " + token + ", " + captchaId + ", " + captcthishaURL);
+		tokenString = token;
+		captchaidString = captchaId;
+		captcthishaURL_String = captcthishaURL;
+		new load_image().execute(captcthishaURL_String);
+	}
+
+	class load_image extends AsyncTask<String, Void, Drawable> {
+
+		/**
+		 * 加载网络图片
+		 * 
+		 * @param url
+		 * @return
+		 */
+		private Drawable LoadImageFromWebOperations(String url) {
+			InputStream is = null;
+			Drawable d = null;
+			try {
+				is = (InputStream) new URL(url).getContent();
+				d = Drawable.createFromStream(is, "src name");
+				return d;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+
+		@Override
+		protected Drawable doInBackground(String... params) {
+			Drawable drawable = LoadImageFromWebOperations(params[0]);
+			return drawable;
+		}
+
+		@Override
+		protected void onPostExecute(Drawable result) {
+			super.onPostExecute(result);
+			ivGetCaptchaCode = (ImageView) findViewById(R.id.ivGetCaptchaCode_forget);
+			ivGetCaptchaCode.setImageDrawable(result);
+		}
+
+	}
+
+	protected void didRequestSendPhoneSMSCode(int result, java.lang.String errorMessage) {
+		Log.e("AppTest", result + ", " + errorMessage);
+		if (result == 0) {
+			handler.sendEmptyMessage(CODE_SUCCESS);
+		} else {
+			handler.sendEmptyMessage(CODE_FAIL);
+		}
 	}
 }

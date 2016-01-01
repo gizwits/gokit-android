@@ -33,24 +33,26 @@ import com.xpg.gokit.R;
  * wifi热点列表数据适配器
  */
 public class WifiListAdapter extends BaseAdapter {
-	
+
 	/** The context. */
 	private Context context;
-	
+
 	/** The list. */
-	private List<ScanResult>list;
-	
+	private List<ScanResult> list;
+
 	/**
 	 * Instantiates a new wifi list adapter.
 	 *
-	 * @param c the c
-	 * @param list the list
+	 * @param c
+	 *            the c
+	 * @param list
+	 *            the list
 	 */
-	public WifiListAdapter(Context c,List<ScanResult>list){
+	public WifiListAdapter(Context c, List<ScanResult> list) {
 		this.context = c;
 		this.list = list;
 	}
-	
+
 	@Override
 	public int getCount() {
 		return list.size();
@@ -70,9 +72,9 @@ public class WifiListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ScanResult sr = list.get(position);
 		View v = LayoutInflater.from(context).inflate(R.layout.item_wifi_list, null);
-	
-		TextView tv_ssid = (TextView)v.findViewById(R.id.tv_ssid);
-		tv_ssid.setText(sr.SSID	);
+
+		TextView tv_ssid = (TextView) v.findViewById(R.id.tv_ssid);
+		tv_ssid.setText(sr.SSID);
 		return v;
 	}
 

@@ -28,22 +28,22 @@ import android.util.Log;
  * @author Sunny Ding
  */
 public class SettingManager {
-	
+
 	/** The spf. */
 	SharedPreferences spf;
-	
+
 	/** The c. */
 	private Context c;
-	
-//=================================================================
-//	  
-//	  SharePreference文件中的变量名字列表
-//	  
-//=================================================================
-	
+
+	// =================================================================
+	//
+	// SharePreference文件中的变量名字列表
+	//
+	// =================================================================
+
 	// Sharepreference文件的名字
 	/** The share preferences. */
-private final String SHARE_PREFERENCES = "set";
+	private final String SHARE_PREFERENCES = "set";
 	// 用户名
 	/** The user name. */
 	private final String USER_NAME = "username";
@@ -59,25 +59,24 @@ private final String SHARE_PREFERENCES = "set";
 	// 密码
 	/** The password. */
 	private final String PASSWORD = "password";
-	//用户名
+	// 用户名
 	/** The token. */
 	private final String TOKEN = "token";
-	//用户ID
+	// 用户ID
 	/** The uid. */
 	private final String UID = "uid";
-	//服务器域名
+	// 服务器域名
 	/** The sever name. */
-	private final String SEVER_NAME="server";
+	private final String SEVER_NAME = "server";
 
-	
-	
 	/** The filter. */
 	static String filter = "=====";
 
 	/**
 	 * Instantiates a new setting manager.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 */
 	public SettingManager(Context c) {
 		this.c = c;
@@ -85,21 +84,20 @@ private final String SHARE_PREFERENCES = "set";
 	}
 
 	/**
-	 * ANDROID_ID是设备第一次启动时产生和存储的64bit的一个数，当设备被恢复出厂设置后该数重置
-	 * ANDROID_ID并不唯一.
+	 * ANDROID_ID是设备第一次启动时产生和存储的64bit的一个数，当设备被恢复出厂设置后该数重置 ANDROID_ID并不唯一.
 	 *
 	 * @return the phone id
 	 */
 	public String getPhoneId() {
-		String android_id = Secure.getString(c.getContentResolver(),
-				Secure.ANDROID_ID);
+		String android_id = Secure.getString(c.getContentResolver(), Secure.ANDROID_ID);
 		return android_id;
 	}
-	
+
 	/**
 	 * set一堆ProductKey在SharePreference的一个变量下.
 	 *
-	 * @param produck_key the produck_key
+	 * @param produck_key
+	 *            the produck_key
 	 */
 	public void DownLoadProduct_key(String produck_key) {
 		String allkeys = spf.getString("keys", "");
@@ -108,13 +106,12 @@ private final String SHARE_PREFERENCES = "set";
 		} else {
 			synchronized (spf) {
 				Log.i("add_poduct_key_in", produck_key);
-				spf.edit().putString("keys", allkeys + produck_key + filter)
-						.commit();
+				spf.edit().putString("keys", allkeys + produck_key + filter).commit();
 			}
 		}
 
 	}
-	
+
 	/**
 	 * 在SharePreference的一个变量下的一堆ProductKey中获取第一个ProductKey.
 	 *
@@ -135,7 +132,7 @@ private final String SHARE_PREFERENCES = "set";
 			return null;
 		}
 	}
-	
+
 	/**
 	 * SharePreference clean.
 	 */
@@ -152,7 +149,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the user name.
 	 *
-	 * @param name the new user name
+	 * @param name
+	 *            the new user name
 	 */
 	public void setUserName(String name) {
 		spf.edit().putString(USER_NAME, name).commit();
@@ -171,7 +169,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the phone number.
 	 *
-	 * @param phoneNumber the new phone number
+	 * @param phoneNumber
+	 *            the new phone number
 	 */
 	public void setPhoneNumber(String phoneNumber) {
 		spf.edit().putString(PHONE_NUM, phoneNumber).commit();
@@ -189,7 +188,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the hide uid.
 	 *
-	 * @param uid the new hide uid
+	 * @param uid
+	 *            the new hide uid
 	 */
 	public void setHideUid(String uid) {
 		spf.edit().putString(HIDE_UID, uid).commit();
@@ -207,7 +207,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the hide token.
 	 *
-	 * @param token the new hide token
+	 * @param token
+	 *            the new hide token
 	 */
 	public void setHideToken(String token) {
 		spf.edit().putString(HIDE_TOKEN, token).commit();
@@ -225,7 +226,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the password.
 	 *
-	 * @param psw the new password
+	 * @param psw
+	 *            the new password
 	 */
 	public void setPassword(String psw) {
 		spf.edit().putString(PASSWORD, psw).commit();
@@ -243,7 +245,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the token.
 	 *
-	 * @param token the new token
+	 * @param token
+	 *            the new token
 	 */
 	public void setToken(String token) {
 		spf.edit().putString(TOKEN, token).commit();
@@ -261,7 +264,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the uid.
 	 *
-	 * @param uid the new uid
+	 * @param uid
+	 *            the new uid
 	 */
 	public void setUid(String uid) {
 		spf.edit().putString(UID, uid).commit();
@@ -275,7 +279,7 @@ private final String SHARE_PREFERENCES = "set";
 	public String getUid() {
 		return spf.getString(UID, "");
 	}
-	
+
 	/**
 	 * Gets the server name.
 	 *
@@ -288,7 +292,8 @@ private final String SHARE_PREFERENCES = "set";
 	/**
 	 * Sets the server name.
 	 *
-	 * @param server the new server name
+	 * @param server
+	 *            the new server name
 	 */
 	public void setServerName(String server) {
 		spf.edit().putString(SEVER_NAME, server).commit();

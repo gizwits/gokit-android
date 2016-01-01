@@ -3,11 +3,12 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <RelativeLayout 
+
+    <RelativeLayout
         android:id="@+id/rl_login_band"
         android:layout_width="160dip"
         android:layout_height="40dip"
-        android:background="@color/gray">
+        android:background="@color/gray" >
 
         <TextView
             android:id="@+id/textView1"
@@ -17,16 +18,19 @@
             android:layout_centerVertical="true"
             android:text="登陆并绑定帐号"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
     </RelativeLayout>
-    <RelativeLayout 
+
+    <RelativeLayout
         android:layout_width="160dip"
         android:layout_height="1dip"
-        android:background="@color/black"></RelativeLayout>
-    <RelativeLayout 
+        android:background="@color/black" >
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="160dip"
         android:layout_height="40dip"
-        android:background="@color/gray">
+        android:background="@color/gray" >
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -35,9 +39,6 @@
             android:layout_centerVertical="true"
             android:text="绑定手机"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
     </RelativeLayout>
-
-    
 
 </LinearLayout>

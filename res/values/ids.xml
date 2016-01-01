@@ -13,19 +13,21 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- -->
+-->
 <resources>
-  <!-- Messages IDs -->
-  <item type="id" name="auto_focus"/>
-  <item type="id" name="decode"/>
-  <item type="id" name="decode_failed"/>
-  <item type="id" name="decode_succeeded"/>
-  <item type="id" name="encode_failed"/>
-  <item type="id" name="encode_succeeded"/>
-  <item type="id" name="launch_product_query"/>
-  <item type="id" name="quit"/>
-  <item type="id" name="restart_preview"/>
-  <item type="id" name="return_scan_result"/>
-  <item type="id" name="search_book_contents_failed"/>
-  <item type="id" name="search_book_contents_succeeded"/>
+
+    <!-- Messages IDs -->
+    <item name="auto_focus" type="id"/>
+    <item name="decode" type="id"/>
+    <item name="decode_failed" type="id"/>
+    <item name="decode_succeeded" type="id"/>
+    <item name="encode_failed" type="id"/>
+    <item name="encode_succeeded" type="id"/>
+    <item name="launch_product_query" type="id"/>
+    <item name="quit" type="id"/>
+    <item name="restart_preview" type="id"/>
+    <item name="return_scan_result" type="id"/>
+    <item name="search_book_contents_failed" type="id"/>
+    <item name="search_book_contents_succeeded" type="id"/>
+
 </resources>

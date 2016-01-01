@@ -1,21 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item 
+
+    <item
         android:id="@+id/action_add_device"
         android:orderInCategory="102"
         android:showAsAction="never"
-        android:title="添加设备"
-        />
-    <item 
+        android:title="添加设备"/>
+    <item
         android:id="@+id/action_logout"
         android:orderInCategory="103"
-        android:title="退出登录"
         android:showAsAction="never"
-        />
-    <item 
+        android:title="退出登录"/>
+    <item
         android:id="@+id/action_cancle"
         android:orderInCategory="105"
-        android:title="取消"
         android:showAsAction="never"
-        />
+        android:title="取消"/>
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="104"
+        android:showAsAction="never"
+        android:title="关于"/>
 
 </menu>

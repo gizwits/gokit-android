@@ -9,6 +9,7 @@ XPGWifiSDK 版本号
 
     1.6.1.15123015
 
+
 功能介绍
 
     GoKit主要展示如何使用XPGWifiSDK，开发基于GAgent智能硬件APP。项目中用到了大部分主要SDK接口，供使用XPGWifiSDK的开发者参

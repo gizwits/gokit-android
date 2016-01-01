@@ -19,23 +19,23 @@ package com.xpg.gokit.dialog.listener;
 
 // TODO: Auto-generated Javadoc
 /**
- * The listener interface for receiving setWifi events.
- * The class that is interested in processing a setWifi
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addSetWifiListener<code> method. When
- * the setWifi event occurs, that object's appropriate
- * method is invoked.
+ * The listener interface for receiving setWifi events. The class that is
+ * interested in processing a setWifi event implements this interface, and the
+ * object created with that class is registered with a component using the
+ * component's <code>addSetWifiListener<code> method. When the setWifi event
+ * occurs, that object's appropriate method is invoked.
  *
  * @see SetWifiEvent
  */
 public interface SetWifiListener {
-	
+
 	/**
 	 * Sets the.
 	 *
-	 * @param ssid the ssid
-	 * @param psw the psw
+	 * @param ssid
+	 *            the ssid
+	 * @param psw
+	 *            the psw
 	 */
-	public void set(String ssid,String psw);
+	public void set(String ssid, String psw);
 }

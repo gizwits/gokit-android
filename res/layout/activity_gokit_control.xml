@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <!--
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
             android:background="@color/gray" >
         </RelativeLayout>
     </RelativeLayout>
+    -->
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -311,6 +313,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:clickable="true"
             android:src="@drawable/add" />
     </RelativeLayout>
 
@@ -336,7 +339,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:clickable="false" />
     </RelativeLayout>
 
     <TextView
@@ -366,7 +370,8 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray" />
-     <LinearLayout
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp" >

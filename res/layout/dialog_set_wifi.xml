@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-     >
-    <LinearLayout 
+    android:background="@color/white" >
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,9 +27,9 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/relativeLayout1"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/black"
                 android:text="请输入密码"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -49,22 +49,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/black"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="25dip"
                 android:layout_marginTop="20dip"
-                android:text="SSID:" />
+                android:text="SSID:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:textColor="@color/black"
-                android:layout_marginLeft="25dip"
+                android:layout_alignParentLeft="true"
                 android:layout_marginBottom="20dip"
-                android:text="密码:" />
+                android:layout_marginLeft="25dip"
+                android:text="密码:"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/tv_ssid"
@@ -73,33 +73,33 @@
                 android:layout_alignBaseline="@+id/textView4"
                 android:layout_alignBottom="@+id/textView4"
                 android:layout_marginLeft="25dip"
-                android:textColor="@color/black"
                 android:layout_toRightOf="@+id/textView4"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/edt_psw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dip"
                 android:layout_alignBaseline="@+id/textView5"
                 android:layout_alignBottom="@+id/textView5"
+                android:layout_marginLeft="25dip"
                 android:layout_toRightOf="@+id/textView5"
                 android:ems="10"
                 android:inputType="text" />
-
         </RelativeLayout>
 
-        <LinearLayout 
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dip"
-            android:orientation="horizontal">
-            <RelativeLayout 
+            android:orientation="horizontal" >
+
+            <RelativeLayout
                 android:id="@+id/rl_cancel"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/btn_dialog"
-                android:layout_width="wrap_content">
+                android:background="@drawable/btn_dialog" >
 
                 <TextView
                     android:id="@+id/textView2"
@@ -107,23 +107,23 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/black"
                     android:text="取消"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-                
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black" />
             </RelativeLayout>
-            <RelativeLayout 
+
+            <RelativeLayout
                 android:layout_width="1dip"
                 android:layout_height="match_parent"
-                android:background="@color/gray">
-                
+                android:background="@color/gray" >
             </RelativeLayout>
-            <RelativeLayout 
+
+            <RelativeLayout
+                android:id="@+id/rl_set"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:id="@+id/rl_set"
-                android:background="@drawable/btn_dialog">
+                android:background="@drawable/btn_dialog" >
 
                 <TextView
                     android:id="@+id/textView3"
@@ -132,13 +132,10 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:text="配置"
-                    android:textColor="@color/black"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-                
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
-
-    
 
 </RelativeLayout>

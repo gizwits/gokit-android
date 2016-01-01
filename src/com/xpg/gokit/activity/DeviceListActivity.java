@@ -51,8 +51,7 @@ import com.xtremeprog.xpgconnect.XPGWifiSDK;
  * @author Lien Li
  * 
  */
-public class DeviceListActivity extends BaseActivity implements
-		OnItemClickListener, OnItemLongClickListener {
+public class DeviceListActivity extends BaseActivity implements OnItemClickListener, OnItemLongClickListener {
 	/** 新设备 */
 	protected static final int NEW_DEVICE = 0;
 	/** 绑定成功 */
@@ -88,29 +87,24 @@ public class DeviceListActivity extends BaseActivity implements
 				UpdateUI();
 				break;
 			case BINDSUCCESS:
-				Toast.makeText(DeviceListActivity.this, "绑定设备成功",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(DeviceListActivity.this, "绑定设备成功", Toast.LENGTH_SHORT).show();
 				UpdateUI();
 				dialog.dismiss();
 				break;
 			case BINDFAIL:
-				Toast.makeText(DeviceListActivity.this, "绑定设备失败",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(DeviceListActivity.this, "绑定设备失败", Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
 				break;
 			case LOGINSUCCESS:
-				Toast.makeText(DeviceListActivity.this, "登陆设备成功",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(DeviceListActivity.this, "登陆设备成功", Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
 				break;
 			case LOGINFAIL:
-				Toast.makeText(DeviceListActivity.this, "登陆设备失败",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(DeviceListActivity.this, "登陆设备失败", Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
 				break;
 			case LOG:
-				Toast.makeText(DeviceListActivity.this, (String) msg.obj,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(DeviceListActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
 				break;
 
@@ -133,8 +127,7 @@ public class DeviceListActivity extends BaseActivity implements
 	}
 
 	protected void didUserLogin(int error, String errorMessage, String uid, String token) {
-		if (uid != null && token != null && !uid.equals("")
-				&& !token.equals("") && error == 0) {
+		if (uid != null && token != null && !uid.equals("") && !token.equals("") && error == 0) {
 			final String fuid = uid;
 			final String ftoken = token;
 			setmanager.setHideUid(fuid);
@@ -148,7 +141,7 @@ public class DeviceListActivity extends BaseActivity implements
 
 		}
 	};
-	
+
 	protected void didUserLogout(int error, String errorMessage) {
 		String uid = setmanager.getUid();
 		String token = setmanager.getToken();
@@ -186,18 +179,18 @@ public class DeviceListActivity extends BaseActivity implements
 
 	private synchronized void UpdateUI() {
 		EmptyData();
-		
+
 		String uid = setmanager.getUid();
 		if (0 == uid.length()) {
 			uid = setmanager.getHideUid();
 		}
-		
+
 		for (int i = 0; i < BaseActivity.deviceslist.size(); i++) {
 
 			XPGWifiDevice device = BaseActivity.deviceslist.get(i);
 
-			if (device.isOnline() && device.getPasscode() != null
-					&& !device.getPasscode().equals("") && device.isBind(uid)) {
+			if (device.isOnline() && device.getPasscode() != null && !device.getPasscode().equals("")
+					&& device.isBind(uid)) {
 				ControlDevice controlDevice = new ControlDevice(device, true);
 				devicelist.add(controlDevice);
 			}
@@ -280,14 +273,19 @@ public class DeviceListActivity extends BaseActivity implements
 				Toast.makeText(this, "请切换至Wifi环境", Toast.LENGTH_SHORT).show();
 			}
 			break;
+
+		case R.id.action_about:
+			it.setClass(this, AboutVersionActivity.class);
+			startActivity(it);
+			break;
 		case R.id.action_login:
 			it.setClass(this, LoginActivity.class);
 			startActivity(it);
 			break;
 		case R.id.action_logout:
 			mCenter.cLogout();
-			
-			//重启程序
+
+			// 重启程序
 			System.exit(0);
 			it.setClass(getApplication(), MainActivity.class);
 			startActivity(it);
@@ -340,24 +338,22 @@ public class DeviceListActivity extends BaseActivity implements
 	public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
 		device = devicelist.get(pos);
 		if (!device.isTitle()) {
-			xpgWifiDevice = BaseActivity.findDeviceByMac(device.getMac(),
-					device.getDid());
+			xpgWifiDevice = BaseActivity.findDeviceByMac(device.getMac(), device.getDid());
 			if (null == xpgWifiDevice) {
 				return;
 			}
-			
+
 			xpgWifiDevice.setListener(deviceListener);
-			File file = new File(this.getFilesDir() + "/Devices/"
-					+ xpgWifiDevice.getProductKey() + ".json");
+			File file = new File(this.getFilesDir() + "/Devices/" + xpgWifiDevice.getProductKey() + ".json");
 			if (!file.exists()) {
 				return;
 			}
-			
+
 			if (xpgWifiDevice.isConnected()) {
 				xpgWifiDevice.disconnect();
 				return;
 			}
-			
+
 			dialog.show();
 			if (xpgWifiDevice.getDid() != null && !xpgWifiDevice.getDid().equals("")) {
 				if (setmanager.getUid() != null && setmanager.getUid().length() > 0) {
@@ -366,8 +362,8 @@ public class DeviceListActivity extends BaseActivity implements
 						xpgWifiDevice.login(setmanager.getUid(), setmanager.getToken());
 					} else {
 						dialog.setMessage("正在绑定" + xpgWifiDevice.getMacAddress() + "...");
-						XPGWifiSDK.sharedInstance().bindDevice(setmanager.getUid(), setmanager.getToken(), 
-								xpgWifiDevice.getDid(),xpgWifiDevice.getPasscode(), null);
+						XPGWifiSDK.sharedInstance().bindDevice(setmanager.getUid(), setmanager.getToken(),
+								xpgWifiDevice.getDid(), xpgWifiDevice.getPasscode(), null);
 					}
 				} else {
 					if (xpgWifiDevice.isBind(setmanager.getHideUid())) {
@@ -375,26 +371,24 @@ public class DeviceListActivity extends BaseActivity implements
 						xpgWifiDevice.login(setmanager.getHideUid(), setmanager.getHideToken());
 					} else {
 						dialog.setMessage("正在绑定" + xpgWifiDevice.getMacAddress() + "...");
-						XPGWifiSDK.sharedInstance().bindDevice(setmanager.getHideUid(), setmanager.getHideToken(), 
-								xpgWifiDevice.getDid(),xpgWifiDevice.getPasscode(), null);
+						XPGWifiSDK.sharedInstance().bindDevice(setmanager.getHideUid(), setmanager.getHideToken(),
+								xpgWifiDevice.getDid(), xpgWifiDevice.getPasscode(), null);
 					}
 				}
 			} else {
-				Toast.makeText(this, "设备Did 为空,查询设备是否连网",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "设备Did 为空,查询设备是否连网", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View v, int pos,
-			long id) {
+	public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
 		return true;
 	}
 
 	/**
 	 * 获取设备列表
-	 * */
+	 */
 	private void getDeviceList() {
 		if (isGettingDevice)
 			return;
@@ -420,21 +414,20 @@ public class DeviceListActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void didLogin(XPGWifiDevice device, int result) {//登录设备成功，进入控制界面
+	public void didLogin(XPGWifiDevice device, int result) {// 登录设备成功，进入控制界面
 		Log.d("wifi", "onLogin:" + result);
 		if (result == 0) {
 			handler.sendEmptyMessage(LOGINSUCCESS);
 			Intent it = new Intent();
 			it.setClass(DeviceListActivity.this, GokitControlActivity.class);
 			it.putExtra("device", this.device);
-			it.putExtra("islocal", device.getDid() == null
-					|| !device.getDid().equals(""));
+			it.putExtra("islocal", device.getDid() == null || !device.getDid().equals(""));
 			startActivity(it);
 		} else {
 			handler.sendEmptyMessage(LOGINFAIL);
 		}
 	};
-	
+
 	@Override
 	public void didBindDevice(int error, String errorMessage, String did) {
 		if (0 == error) {

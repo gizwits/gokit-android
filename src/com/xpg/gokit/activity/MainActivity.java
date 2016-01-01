@@ -46,22 +46,22 @@ import com.xpg.gokit.utils.NetUtils;
  * @author Lien Li
  */
 public class MainActivity extends BaseActivity implements OnClickListener {
-	
+
 	/** The Constant CHECK_TYPE. */
 	protected static final int CHECK_TYPE = 0;
-	
+
 	/** The rl_loading. */
 	RelativeLayout rl_loading;
-	
+
 	/** The rl_net_unable. */
 	RelativeLayout rl_net_unable;
-	
+
 	/** The btn_retry. */
 	Button btn_retry;
-	
+
 	/** The timer. */
 	Timer timer;
-	
+
 	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -105,19 +105,19 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			case ConnectivityManager.TYPE_WIFI:
 				Log.i("wifi", "wifi");
 				String ssid = NetUtils.getCurentWifiSSID(this);
-				if (ssid.contains("XPG-GAgent")) {//连上了GAgent模块的热点，跳转到配置页面
+				if (ssid.contains("XPG-GAgent")) {// 连上了GAgent模块的热点，跳转到配置页面
 					Intent it = new Intent();
 					it.setClass(this, DeviceApActivity.class);
 					startActivity(it);
 					return;
 				} else {
-					Intent it = new Intent();//连上了路由器，跳转到获取设备列表页面
+					Intent it = new Intent();// 连上了路由器，跳转到获取设备列表页面
 					it.setClass(this, DeviceListActivity.class);
 					startActivity(it);
 				}
 
 				break;
-			case ConnectivityManager.TYPE_MOBILE://连上了移动网络，跳转到获取设备列表页面
+			case ConnectivityManager.TYPE_MOBILE:// 连上了移动网络，跳转到获取设备列表页面
 				Log.i("mobile", "mobile");
 				Intent it = new Intent();
 				it.setClass(this, DeviceListActivity.class);

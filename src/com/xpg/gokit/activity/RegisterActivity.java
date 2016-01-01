@@ -18,10 +18,11 @@
 package com.xpg.gokit.activity;
 
 import java.util.Timer;
-
+import java.util.TimerTask;
 import com.xpg.gokit.R;
-
+import com.xpg.gokit.dialog.CaptchaCodeDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,6 +33,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -52,6 +55,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	/** The Constant TIMER. */
 	protected static final int TIMER = 2;
 
+	protected static final int CaptchaCode = 3;
+
 	/** The edt_password. */
 	EditText edt_password;
 
@@ -65,11 +70,12 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	Button btn_send_verify_code;
 
 	/** The edt_phone_number. */
-	EditText edt_phone_number;
+	TextView tv_phone_number;
 
 	/** The btn_reg. */
 	Button btn_reg;
 
+	ImageView ivGetCaptchaCode;
 
 	/** The secondleft. */
 	int secondleft = 60;
@@ -80,21 +86,23 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	/** The dialog. */
 	ProgressDialog dialog;
 
+	public static String phoneString;
+
 	/** The handler. */
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case TOAST:
-				Toast.makeText(RegisterActivity.this, (String) msg.obj,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(RegisterActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
 				dialog.cancel();
 				break;
 			case REG_SUCCESS:
-				Toast.makeText(RegisterActivity.this, (String) msg.obj,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(RegisterActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
 				dialog.cancel();
 				setResult(0);
-				finish();
+				Intent it = new Intent();
+				it.setClass(RegisterActivity.this, DeviceListActivity.class);
+				startActivity(it);
 
 				break;
 			case TIMER:
@@ -102,14 +110,14 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 				if (secondleft <= 0) {
 					timer.cancel();
 					btn_send_verify_code.setEnabled(true);
+					btn_send_verify_code.setClickable(true);
 					btn_send_verify_code.setText("获取验证码");
 				} else {
+					btn_send_verify_code.setClickable(false);
 					btn_send_verify_code.setText("剩余" + secondleft + "秒");
 				}
 				break;
-
 			}
-
 		};
 	};
 
@@ -119,15 +127,39 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_register);
 		initView();
 		initEvents();
+		initData();
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		secondleft = 60;
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				handler.sendEmptyMessage(TIMER);
+			}
+		}, 1000, 1000);
 	}
 
 	/**
 	 * Inits the events.
 	 */
 	private void initEvents() {
+		//
 		btn_reg.setOnClickListener(this);
 		btn_send_verify_code.setOnClickListener(this);
 
+	}
+
+	private void initData() {
+		Intent it = getIntent();
+		phoneString = it.getStringExtra("PHONE");
+		tv_phone_number.setText(phoneString);
 	}
 
 	/**
@@ -139,34 +171,28 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		edt_confirm_password = (EditText) findViewById(R.id.edt_con_password);
 		edt_password = (EditText) findViewById(R.id.edt_password);
 		edt_verify_code = (EditText) findViewById(R.id.edt_code);
-		edt_phone_number = (EditText) findViewById(R.id.edt_phone);
+		tv_phone_number = (TextView) findViewById(R.id.tv_phone_number);
 		dialog = new ProgressDialog(this);
 		dialog.setMessage("处理中，请稍候...");
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.register, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		} else if (id == R.id.action_login) {
-			finish();
-		}
-		return super.onOptionsItemSelected(item);
-
-	}
+	/*
+	 * @Override public boolean onCreateOptionsMenu(Menu menu) {
+	 * getMenuInflater().inflate(R.menu.register, menu); return true; }
+	 * 
+	 * @Override public boolean onOptionsItemSelected(MenuItem item) { int id =
+	 * item.getItemId(); if (id == R.id.action_settings) { return true; } else
+	 * if (id == R.id.action_login) { finish(); } return
+	 * super.onOptionsItemSelected(item);
+	 * 
+	 * }
+	 */
 
 	@Override
 	public void onClick(View v) {
 		if (v == btn_reg) {
-			String phone = edt_phone_number.getText().toString();
+			String phone = phoneString;
 			String code = edt_verify_code.getText().toString();
 			String password = edt_password.getText().toString();
 			String con_password = edt_confirm_password.getText().toString();
@@ -194,15 +220,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			dialog.show();
 		}
 		if (v == btn_send_verify_code) {
-			String phone = edt_phone_number.getText().toString();
-			phone = phone.trim();
-			if (phone.length() == 11) {
-				// 发送手机验证码
-				mCenter.cRequestSendVerifyCode(phone);
-				dialog.show();
-			} else {
-				Toast.makeText(this, "电话号码格式不正确", Toast.LENGTH_SHORT).show();
-			}
+			Intent it = new Intent();
+			it.setClass(this, CaptchaCodeDialog.class);
+			startActivity(it);
+
 		}
 
 	}
@@ -217,8 +238,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	 * @param password
 	 *            the password
 	 */
-	private void sendRegUser(final String phone, final String code,
-			final String password) {
+	private void sendRegUser(final String phone, final String code, final String password) {
 		mCenter.cRegisterPhoneUser(phone, code, password);
 	}
 
@@ -227,8 +247,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	 */
 	@Override
 	protected void didRegisterUser(int error, String errorMessage, String uid, String token) {
-		Log.i("error message uid token", error + " " + errorMessage + " " + uid
-				+ " " + token);
+		Log.i("error message uid token", error + " " + errorMessage + " " + uid + " " + token);
 		if (!uid.equals("") && !token.equals("")) {// 注册成功
 			Message msg = new Message();
 			msg.what = REG_SUCCESS;
@@ -247,21 +266,25 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 	/*
 	 * 发送验证码结果回调接口.
+	 * 
+	 * @Override protected void didRequestSendVerifyCode(int error, String
+	 * errorMessage) { Log.i("error message ", error + " " + errorMessage); if
+	 * (error == 0) {// 发送成功 pass_word.setVisibility(View.VISIBLE); Message msg
+	 * = new Message(); msg.what = TOAST; msg.obj = "发送成功";
+	 * handler.sendMessage(msg);
+	 * 
+	 * } else {// 发送失败 Message msg = new Message(); msg.what = TOAST; msg.obj =
+	 * errorMessage; handler.sendMessage(msg); }
+	 * 
+	 * };
 	 */
-	@Override
-	protected void didRequestSendVerifyCode(int error, String errorMessage) {
-		Log.i("error message ", error + " " + errorMessage);
-		if (error == 0) {// 发送成功
-			Message msg = new Message();
-			msg.what = TOAST;
-			msg.obj = "发送成功";
-			handler.sendMessage(msg);
-		} else {// 发送失败
-			Message msg = new Message();
-			msg.what = TOAST;
-			msg.obj = errorMessage;
-			handler.sendMessage(msg);
-		}
+	/*
+	 * protected void didRequestSendPhoneSMSCode(int result, java.lang.String
+	 * errorMessage) { Log.e("AppTest", result + ", " + errorMessage); if
+	 * (result == 0) {// 发送成功 Message msg = new Message(); msg.what = TOAST;
+	 * msg.obj = "发送成功"; handler.sendMessage(msg); } else {// 发送失败 Message msg =
+	 * new Message(); msg.what = TOAST; msg.obj = errorMessage;
+	 * handler.sendMessage(msg); } }
+	 */
 
-	};
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/edt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="手机号码："
+            android:inputType="phone" >
+        </EditText>
+
+        <LinearLayout
+            android:id="@+id/captcha_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:gravity="center" >
+
+            <EditText
+                android:id="@+id/etInputCaptchaCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="图片验证码" >
+            </EditText>
+
+            <ImageView
+                android:id="@+id/ivGetCaptchaCode"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btnReGetCaptchaCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="换一换" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/next_passButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="下一步" />
+    </LinearLayout>
+
+</LinearLayout>

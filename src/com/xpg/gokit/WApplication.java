@@ -24,27 +24,28 @@ import android.app.Application;
 import com.xpg.gokit.utils.AssertsUtils;
 import com.xtremeprog.xpgconnect.XPGWifiSDK;
 
-
 /**
  * The Class WApplication.
  */
 public class WApplication extends Application {
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Application#onCreate()
 	 */
 	public void onCreate() {
 		super.onCreate();
-		
+
 		try {
-			//复制assert文件夹中的json文件到设备安装目录。json文件是解析数据点必备的文件，sdk根据该文件，把二进制数据转换为json字段并返回。
+			// 复制assert文件夹中的json文件到设备安装目录。json文件是解析数据点必备的文件，sdk根据该文件，把二进制数据转换为json字段并返回。
 			AssertsUtils.copyAllAssertToCacheFolder(this.getApplicationContext());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		// 启动SDK
 		XPGWifiSDK.sharedInstance().startWithAppID(getApplicationContext(), "42a7563f305342ae805cbb21d968a0ce");
-//				"6f3074fe43894547a4f1314bd7e3ae0b");
+		// "6f3074fe43894547a4f1314bd7e3ae0b");
 		// 设定日志打印级别
 		XPGWifiSDK.sharedInstance().setLogLevel(XPGWifiSDK.XPGWifiLogLevel.XPGWifiLogLevelAll, "GoKitDemo.log", true);
 	}

@@ -39,40 +39,36 @@ import com.xpg.gokit.R;
  * @author Lien Li
  */
 public class LoginActivity extends BaseActivity implements OnClickListener {
-	
+
 	/** The Constant TOAST. */
 	protected static final int TOAST = 0;
-	
+
 	/** The Constant LOGIN_SUCCESS. */
 	protected static final int LOGIN_SUCCESS = 1;
-	
+
 	/** The Constant LOGIN_FAIL. */
 	protected static final int LOGIN_FAIL = 2;
-	
+
 	/** The Constant REQUEST_CODE. */
 	private static final int REQUEST_CODE = 0;
 
-
 	/** The btn_back. */
 	Button btn_back;
-	
+
 	/** The btn_login. */
 	Button btn_login;
-	
+
 	/** The edt_account. */
 	EditText edt_account;
-	
+
 	/** The edt_pwd. */
 	EditText edt_pwd;
-	
-	
+
 	/** The dialog. */
 	ProgressDialog dialog;
-	
+
 	/** The tv_forget. */
 	TextView tv_forget;
-
-	
 
 	/** The handler. */
 	Handler handler = new Handler() {
@@ -80,19 +76,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case TOAST:
-				Toast.makeText(LoginActivity.this, msg.obj + "",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
 				dialog.cancel();
 				break;
 			case LOGIN_SUCCESS:
-				Toast.makeText(LoginActivity.this, msg.obj + "",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
 				dialog.cancel();
 				finish();
 				break;
 			case LOGIN_FAIL:
-				Toast.makeText(LoginActivity.this, msg.obj + "",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginActivity.this, msg.obj + "", Toast.LENGTH_SHORT).show();
 				dialog.cancel();
 				break;
 
@@ -155,8 +148,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		case android.R.id.home:
 			finish();
 			break;
-		case R.id.action_reg://注册新用户
-			it.setClass(this, RegisterActivity.class);
+		// TODO
+		case R.id.action_reg:// 注册新用户
+			it.setClass(this, CaptchaCodeActivity.class);
 			startActivityForResult(it, REQUEST_CODE);
 			break;
 		default:
@@ -184,8 +178,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		if (v == btn_login) {
 			final String psw = edt_pwd.getText().toString().trim();
 			final String name = edt_account.getText().toString().trim();
-			mCenter.cLogin(name, psw);
-			dialog.show();
+			if (!name.isEmpty() && !psw.isEmpty()) {
+				mCenter.cLogin(name, psw);
+				dialog.show();
+			} else {
+				Toast.makeText(LoginActivity.this, "请输入登录信息", Toast.LENGTH_SHORT).show();
+			}
 		}
 		if (v == tv_forget) {
 			Intent it = new Intent();
@@ -194,20 +192,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	
-	/* 
+	/*
 	 * 登录成功回调
 	 */
 	@Override
 	protected void didUserLogin(int error, String errorMessage, String uid, String token) {
-		if (!uid.isEmpty()&&!token.isEmpty()) {//登陆成功
+		if (!uid.isEmpty() && !token.isEmpty()) {// 登陆成功
 			setmanager.setUid(uid);
 			setmanager.setToken(token);
 			Message msg = new Message();
 			msg.what = LOGIN_SUCCESS;
 			msg.obj = "登录成功";
 			handler.sendMessage(msg);
-		} else {//登陆失败
+		} else {// 登陆失败
 			Message msg = new Message();
 			msg.what = LOGIN_FAIL;
 			msg.obj = errorMessage;
@@ -215,19 +212,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 
 	};
-	
+
 	/**
 	 * 判断字符串是否为空
 	 * 
 	 * @param str
 	 *            传入的字符串
 	 * @return boolean true or false
-	 * */
+	 */
 	public static boolean isNumEmpty(String str) {
 		if (str == null || str == "" || str.trim().equals(""))
 			return true;
 		return false;
 	}
-	
 
 }

@@ -5,9 +5,10 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="绑定设备"/>
-    <item android:id="@+d/action_cancel"
+    <item
+        android:id="@+d/action_cancel"
         android:orderInCategory="101"
         android:showAsAction="never"
-        android:title="取消" />
+        android:title="取消"/>
 
 </menu>

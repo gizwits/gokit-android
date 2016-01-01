@@ -34,24 +34,26 @@ import com.xpg.gokit.R;
  * wifi列表下拉框数据适配器
  */
 public class WifiSpinnerAdapter implements SpinnerAdapter {
-	
+
 	/** The results. */
-	private List<ScanResult>results;
-	
+	private List<ScanResult> results;
+
 	/** The context. */
 	private Context context;
-	
+
 	/**
 	 * Instantiates a new wifi spinner adapter.
 	 *
-	 * @param c the c
-	 * @param list the list
+	 * @param c
+	 *            the c
+	 * @param list
+	 *            the list
 	 */
-	public WifiSpinnerAdapter(Context c,List<ScanResult>list){
+	public WifiSpinnerAdapter(Context c, List<ScanResult> list) {
 		this.results = list;
-		this.context  = c;
+		this.context = c;
 	}
-	
+
 	@Override
 	public int getCount() {
 		return results.size();
@@ -75,7 +77,7 @@ public class WifiSpinnerAdapter implements SpinnerAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = LayoutInflater.from(context).inflate(R.layout.item_spn_wifi, null);
-		TextView tv_wifi_name = (TextView)view.findViewById(R.id.tv_wifi);
+		TextView tv_wifi_name = (TextView) view.findViewById(R.id.tv_wifi);
 		ScanResult rsResult = results.get(position);
 		tv_wifi_name.setText(rsResult.SSID);
 		return view;
@@ -98,23 +100,21 @@ public class WifiSpinnerAdapter implements SpinnerAdapter {
 
 	@Override
 	public void registerDataSetObserver(DataSetObserver observer) {
-		
+
 	}
 
 	@Override
 	public void unregisterDataSetObserver(DataSetObserver observer) {
-		
+
 	}
 
 	@Override
 	public View getDropDownView(int position, View convertView, ViewGroup parent) {
 		View view = LayoutInflater.from(context).inflate(R.layout.item_spn_wifi, null);
-		TextView tv_wifi_name = (TextView)view.findViewById(R.id.tv_wifi);
+		TextView tv_wifi_name = (TextView) view.findViewById(R.id.tv_wifi);
 		ScanResult rsResult = results.get(position);
 		tv_wifi_name.setText(rsResult.SSID);
 		return view;
 	}
-
-
 
 }

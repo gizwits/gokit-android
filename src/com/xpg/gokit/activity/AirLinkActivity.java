@@ -17,22 +17,32 @@
  */
 package com.xpg.gokit.activity;
 
+import java.util.ArrayList;
+
+import org.json.JSONException;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.xpg.gokit.R;
 import com.xpg.gokit.utils.NetUtils;
 import com.xtremeprog.xpgconnect.XPGWifiDevice;
+import com.xtremeprog.xpgconnect.XPGWifiSDK;
+import com.xtremeprog.xpgconnect.XPGWifiSDK.XPGWifiGAgentType;
 
 /**
  * airlink 配置类
@@ -40,7 +50,7 @@ import com.xtremeprog.xpgconnect.XPGWifiDevice;
  * 发送airlink广播.使用设备之前，需要先把设备接入网络，该activity演示app通过airlink的方式使模块连上路由器。
  * 
  * @author Lien Li
- * */
+ */
 public class AirLinkActivity extends BaseActivity implements OnClickListener {
 
 	/** 配置成功. */
@@ -70,6 +80,10 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 	/** The dialog. */
 	private ProgressDialog dialog;
 
+	/** The Spinner1. */
+	private Spinner sp_mode;
+	ArrayList<XPGWifiGAgentType> types;
+	ArrayList<XPGWifiSDK.XPGWifiGAgentType> typeList;
 	/** The handler. */
 	private Handler handler = new Handler() {
 		@Override
@@ -77,20 +91,17 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 			switch (msg.what) {
 			case FAIL:
 				dialog.cancel();
-				Toast.makeText(AirLinkActivity.this, "配置失败", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(AirLinkActivity.this, "配置失败", Toast.LENGTH_SHORT).show();
 				break;
 			case SUCCESS:
 				dialog.cancel();
-				Toast.makeText(AirLinkActivity.this, "配置成功", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(AirLinkActivity.this, "配置成功", Toast.LENGTH_SHORT).show();
 				finish();
 				break;
 
 			case TIEMOUT:
 				dialog.cancel();
-				Toast.makeText(AirLinkActivity.this, "配置超时", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(AirLinkActivity.this, "配置超时", Toast.LENGTH_SHORT).show();
 				break;
 			}
 
@@ -127,12 +138,14 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 	 * Inits the view.
 	 */
 	private void initView() {
+		sp_mode = (Spinner) findViewById(R.id.sp_mode);
 		tv_wifi = (TextView) findViewById(R.id.tv_wifi);
 		edt_psw = (EditText) findViewById(R.id.edt_psw);
 		btn_set = (Button) findViewById(R.id.btn_set);
 		btn_back = (Button) findViewById(R.id.btn_back);
 		dialog = new ProgressDialog(this);
 		dialog.setMessage("配置中，请稍候...");
+		dialog.setCanceledOnTouchOutside(false);
 	}
 
 	/**
@@ -142,16 +155,37 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 		// 获取当前手机连接的wifi的ssid
 		wifi = NetUtils.getCurentWifiSSID(this);
 		tv_wifi.setText(wifi);
+		typeList = new ArrayList<XPGWifiSDK.XPGWifiGAgentType>();
+		typeList.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeMXCHIP);// 庆科
+		typeList.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeHF);// 汉枫
+		typeList.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeRTK);// 瑞昱
+		typeList.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeWM);// 联盛德
+		typeList.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeESP);// 乐鑫
+		typeList.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeQCA);// 高通
+		typeList.add(XPGWifiSDK.XPGWifiGAgentType.XPGWifiGAgentTypeTI);// TI
+
 	}
 
 	/**
 	 * Inits the listener.
 	 */
 	private void initListener() {
+		sp_mode.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				types = new ArrayList<XPGWifiSDK.XPGWifiGAgentType>();
+				types.add(typeList.get(position));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
 		btn_back.setOnClickListener(this);
 		btn_set.setOnClickListener(this);
 	}
-
 
 	@Override
 	public void onClick(View v) {
@@ -161,22 +195,25 @@ public class AirLinkActivity extends BaseActivity implements OnClickListener {
 		if (v == btn_set) {
 			dialog.show();
 			String password = edt_psw.getText().toString().trim();
-			// 发送airlink广播，把需要连接的wifi的ssid和password发给模块。
-			mCenter.cSetAirLink(wifi, password);
+			// TODO 发送airlink广播，把需要连接的wifi的ssid和password发给模块。
+			mCenter.cSetAirLink(wifi, password, types);
 		}
+
 	}
 
 	/*
 	 * 配置成功回调
 	 * 
-	 * @see
-	 * com.xpg.gokit.activity.BaseActivity#didSetDeviceWifi(int error, XPGWifiDevice device)
+	 * @see com.xpg.gokit.activity.BaseActivity#didSetDeviceWifi(int error,
+	 * XPGWifiDevice device)
 	 */
 	protected void didSetDeviceWifi(int error, XPGWifiDevice device) {
 		// 通过airlink配置模块成功连上路由器后，回调该函数。
-		Log.i("air link device", "" + device.getMacAddress() + " ");
-		handler.sendEmptyMessage(SUCCESS);
+		if (error != 0) {
+			handler.sendEmptyMessage(TIEMOUT);
+		} else {
+			handler.sendEmptyMessage(SUCCESS);
+		}
 	}
-	
 
 }

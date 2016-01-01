@@ -35,72 +35,73 @@ import android.util.Log;
  * date: 2014年11月21日 下午3:57:15 <br/>
  *
  * @author Lien
- * @version 
+ * @version
  */
 public class AssertsUtils {
-	static public String getTextByName(Context c,String name){
-		String result = "";  
-        try {  
-            InputStream in = c.getResources().getAssets().open(name);  
-            BufferedReader brReader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while(( line = brReader.readLine())!=null){
-            	result +=line;
-            }
-             
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  
-        return result;  
+	static public String getTextByName(Context c, String name) {
+		String result = "";
+		try {
+			InputStream in = c.getResources().getAssets().open(name);
+			BufferedReader brReader = new BufferedReader(new InputStreamReader(in));
+			String line = "";
+			while ((line = brReader.readLine()) != null) {
+				result += line;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
+
 	/**
 	 * 从assert中复制出文件到某个文件
+	 * 
 	 * @param c
 	 * @param orifile
 	 * @param desfile
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	static public boolean copyFileTo(Context c,String orifile,String desfile) throws IOException{
-		InputStream myInput;  
-        OutputStream myOutput = new FileOutputStream(desfile);  
-        myInput = c.getAssets().open(orifile);  
-        byte[] buffer = new byte[1024];  
-        int length = myInput.read(buffer);
-        while(length > 0)
-        {
-            myOutput.write(buffer, 0, length); 
-            length = myInput.read(buffer);
-        }
-        
-        myOutput.flush();  
-        myInput.close();  
-        myOutput.close(); 
-		
+	static public boolean copyFileTo(Context c, String orifile, String desfile) throws IOException {
+		InputStream myInput;
+		OutputStream myOutput = new FileOutputStream(desfile);
+		myInput = c.getAssets().open(orifile);
+		byte[] buffer = new byte[1024];
+		int length = myInput.read(buffer);
+		while (length > 0) {
+			myOutput.write(buffer, 0, length);
+			length = myInput.read(buffer);
+		}
+
+		myOutput.flush();
+		myInput.close();
+		myOutput.close();
+
 		return true;
 	}
-	
+
 	/**
 	 * 复制assert中的配置文件到app安装目录
-	 * */
-	static public boolean copyAllAssertToCacheFolder(Context c ) throws IOException{
-		
-		String [] files = c.getAssets().list("Devices");
+	 */
+	static public boolean copyAllAssertToCacheFolder(Context c) throws IOException {
+
+		String[] files = c.getAssets().list("Devices");
 		String filefolder = c.getFilesDir().toString();
-		File devicefile = new File(filefolder+"/Devices/");
+		File devicefile = new File(filefolder + "/Devices/");
 		devicefile.mkdirs();
-		
-		for(int i = 0 ;i<files.length;i++){
-			File devfile = new File(filefolder+"/Devices/"+files[i]);
-			if(!devfile.exists()){
-				copyFileTo(c,"Devices/"+files[i],filefolder+"/Devices/"+files[i]);
+
+		for (int i = 0; i < files.length; i++) {
+			File devfile = new File(filefolder + "/Devices/" + files[i]);
+			if (!devfile.exists()) {
+				copyFileTo(c, "Devices/" + files[i], filefolder + "/Devices/" + files[i]);
 			}
 		}
-		String []filestr = devicefile.list();
-		for(int i = 0;i < filestr.length;i++){
+		String[] filestr = devicefile.list();
+		for (int i = 0; i < filestr.length; i++) {
 			Log.i("file", filestr[i]);
 		}
-		
+
 		return true;
 	}
 }

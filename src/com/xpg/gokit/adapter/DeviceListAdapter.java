@@ -34,18 +34,20 @@ import com.xpg.gokit.R;
  * 设备列表数据适配器.
  */
 public class DeviceListAdapter extends BaseAdapter {
-	
+
 	/** The devicelist. */
 	private List<ControlDevice> devicelist;
-	
+
 	/** The context. */
 	private Context context;
 
 	/**
 	 * 设备列表数据适配器构造方法.
 	 *
-	 * @param c            上下文环境
-	 * @param list            设备列表
+	 * @param c
+	 *            上下文环境
+	 * @param list
+	 *            设备列表
 	 */
 	public DeviceListAdapter(Context c, List<ControlDevice> list) {
 		this.devicelist = list;
@@ -70,12 +72,9 @@ public class DeviceListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View v = LayoutInflater.from(context).inflate(R.layout.item_device,
-				null);
-		RelativeLayout rl_device = (RelativeLayout) v
-				.findViewById(R.id.rl_device);
-		RelativeLayout rl_title = (RelativeLayout) v
-				.findViewById(R.id.rl_title);
+		View v = LayoutInflater.from(context).inflate(R.layout.item_device, null);
+		RelativeLayout rl_device = (RelativeLayout) v.findViewById(R.id.rl_device);
+		RelativeLayout rl_title = (RelativeLayout) v.findViewById(R.id.rl_title);
 		TextView tv_name = (TextView) v.findViewById(R.id.tv_device_name);
 		TextView tv_info = (TextView) v.findViewById(R.id.tv_info);
 		TextView tv_tips = (TextView) v.findViewById(R.id.tv_tips);
@@ -85,15 +84,13 @@ public class DeviceListAdapter extends BaseAdapter {
 
 			if (!cdevice.isBind()) {// 设备未绑定
 				tv_info.setText(cdevice.getMac());
-				tv_name.setText((cdevice.getName().equals("") ? "未知设备"
-						: cdevice.getName()));
+				tv_name.setText((cdevice.getName().equals("") ? "未知设备" : cdevice.getName()));
 				tv_tips.setText("未绑定");
 
 			} else {// 设备已绑定
 				if (cdevice.isOnline()) {// 设备在线
 					tv_info.setText(cdevice.getMac());
-					tv_name.setText((cdevice.getName().equals("") ? "未知设备"
-							: cdevice.getName()));
+					tv_name.setText((cdevice.getName().equals("") ? "未知设备" : cdevice.getName()));
 					if (cdevice.getIp() != null && !cdevice.getIp().equals("")) {
 						tv_tips.setText("局域网在线");
 					} else {
@@ -101,15 +98,11 @@ public class DeviceListAdapter extends BaseAdapter {
 					}
 				} else {// 设备不在线
 					tv_info.setText(cdevice.getMac());
-					tv_info.setTextColor(context.getResources().getColor(
-							R.color.gray));
-					tv_name.setText((cdevice.getName().equals("") ? "未知设备"
-							: cdevice.getName()));
-					tv_name.setTextColor(context.getResources().getColor(
-							R.color.gray));
+					tv_info.setTextColor(context.getResources().getColor(R.color.gray));
+					tv_name.setText((cdevice.getName().equals("") ? "未知设备" : cdevice.getName()));
+					tv_name.setTextColor(context.getResources().getColor(R.color.gray));
 					tv_tips.setText("离线");
-					tv_tips.setTextColor(context.getResources().getColor(
-							R.color.gray));
+					tv_tips.setTextColor(context.getResources().getColor(R.color.gray));
 
 				}
 			}

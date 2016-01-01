@@ -2,30 +2,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical">
 
-		<TextView
-		    android:id="@+id/tv_name"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="Large Text"
-		    android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-		<EditText
-		    android:id="@+id/edt_info"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:ems="10"
-		    android:digits="1234567890abcdefABCDEF"
-		    android:minLines="10"
-		    android:inputType="textMultiLine" >
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-		</EditText>
-	    
-	</LinearLayout>
-    
+        <EditText
+            android:id="@+id/edt_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="1234567890abcdefABCDEF"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:minLines="10" >
+        </EditText>
+    </LinearLayout>
 
 </RelativeLayout>
