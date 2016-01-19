@@ -192,10 +192,10 @@ public class MessageCenter {
 	 * @param psw
 	 *            the psw
 	 */
-	public void cSetSSID(String ssid, String psw) {
+	public void cSetSSID(String ssid, String psw, String ssidAP) {
 		// xpgWifiGCC.setDeviceWifi(ssid, psw,
 		// XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, 60);
-		xpgWifiGCC.setDeviceWifi(ssid, psw, XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, ssid, 60, null);
+		xpgWifiGCC.setDeviceWifi(ssid, psw, XPGWifiConfigureMode.XPGWifiConfigureModeSoftAP, ssidAP, 30, null);
 	}
 
 	/**

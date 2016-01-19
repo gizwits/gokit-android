@@ -137,7 +137,9 @@ public class DeviceApActivity extends BaseActivity implements OnItemClickListene
 
 			@Override
 			public void set(String ssid, String psw) {
-				mCenter.cSetSSID(ssid, psw);
+
+				String ssidAP = NetUtils.getCurentWifiSSID(DeviceApActivity.this);
+				mCenter.cSetSSID(ssid, psw, ssidAP);
 
 			}
 		});
