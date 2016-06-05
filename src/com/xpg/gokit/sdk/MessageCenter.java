@@ -209,7 +209,7 @@ public class MessageCenter {
 	 *            密码
 	 */
 	public void cGetBoundDevices(String uid, String token) {
-		xpgWifiGCC.getBoundDevices(uid, token, "6f3074fe43894547a4f1314bd7e3ae0b");
+		xpgWifiGCC.getBoundDevices(uid, token, "your_product_key");
 	}
 
 	/**

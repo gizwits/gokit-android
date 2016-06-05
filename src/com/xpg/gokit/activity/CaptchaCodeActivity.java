@@ -42,7 +42,7 @@ public class CaptchaCodeActivity extends BaseActivity implements OnClickListener
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case CaptchaCode:
-				XPGWifiSDK.sharedInstance().getCaptchaCode("dc5b945db45f427c97ec9ae881850623");
+				XPGWifiSDK.sharedInstance().getCaptchaCode("your_app_secret");
 				break;
 			case TOAST1:
 				Toast.makeText(CaptchaCodeActivity.this, "图片验证码错误", Toast.LENGTH_LONG).show();

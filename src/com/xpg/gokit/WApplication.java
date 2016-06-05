@@ -44,7 +44,7 @@ public class WApplication extends Application {
 			e.printStackTrace();
 		}
 		// 启动SDK
-		XPGWifiSDK.sharedInstance().startWithAppID(getApplicationContext(), "42a7563f305342ae805cbb21d968a0ce");
+		XPGWifiSDK.sharedInstance().startWithAppID(getApplicationContext(), "your_app_id");
 		// "6f3074fe43894547a4f1314bd7e3ae0b");
 		// 设定日志打印级别
 		XPGWifiSDK.sharedInstance().setLogLevel(XPGWifiSDK.XPGWifiLogLevel.XPGWifiLogLevelAll, "GoKitDemo.log", true);
