@@ -126,7 +126,7 @@ public class GosUserLoginActivity extends GosUserModuleBaseActivity implements O
 				Toast.makeText(GosUserLoginActivity.this, R.string.toast_login_successful, Toast.LENGTH_SHORT).show();
 				String[] uidAndToken = (String[]) msg.obj;
 				// TODO 绑定推送
-				GosPushManager.pushBindService(uidAndToken[1]);
+//				GosPushManager.pushBindService(uidAndToken[1]);
 				if (!TextUtils.isEmpty(etName.getText().toString()) && !TextUtils.isEmpty(etPsw.getText().toString())) {
 					spf.edit().putString("UserName", etName.getText().toString()).commit();
 					spf.edit().putString("PassWord", etPsw.getText().toString()).commit();
