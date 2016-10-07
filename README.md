@@ -12,7 +12,9 @@ Gizwits GoKit App
 
     上述信息申请好之后，在代码中请找到"your_app_id"、"your_app_secret"、"your_product_key"字符串做相应的替换。
 
-    使用QQ帐号登录、百度或极光推送功能之前，需要您先到相应网站申请QQ登录的AppID、百度或极光推送的AppKey，在代码中作相应的替换。
+    使用QQ帐号登录、百度或极光推送功能之前，需要您先到相应网站申请QQ登录的AppID、百度或极光推送的AppKey，在配置文件中作相应的替换。
+
+    配置文件位置：assets/UIConfig.json
 
 
 GizWifiSDK 版本号
