@@ -61,4 +61,4 @@ GoKit硬件依赖
 问题反馈
 
     您可以给机智云的技术支持人员发送邮件，反馈您在使用过程中遇到的任何问题。
-    邮箱：janel@gizwits.com
+    邮箱：club@gizwits.com
