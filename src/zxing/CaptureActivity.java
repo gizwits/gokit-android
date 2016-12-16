@@ -42,9 +42,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
+import com.gizwits.opensource.appkit.DeviceModule.GosDeviceListActivity;
 import com.gizwits.opensource.gokit.R;
-import com.gizwits.opensource.gokit.DeviceModule.GosDeviceListActivity;
 import com.google.zxing.Result;
 
 /**

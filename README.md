@@ -19,7 +19,7 @@ Gizwits GoKit App
 
 GizWifiSDK 版本号
 
-    2.01.01
+    2.05.05.2916
 
 
 功能介绍

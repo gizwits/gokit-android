@@ -79,8 +79,7 @@
             android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:textColorHint="@color/text_gray_light"
-            android:textSize="14sp"
-            android:typeface="normal" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/cbLaws"
@@ -177,7 +176,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.gizwits.opensource.gokit.view.DotView
+    <com.gizwits.opensource.appkit.view.DotView
         android:id="@+id/dotView1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -194,8 +193,8 @@
         android:layout_below="@+id/btnLogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:padding="5dp"
         android:gravity="center_horizontal"
+        android:padding="5dp"
         android:text="@string/pass" />
 
 </RelativeLayout>

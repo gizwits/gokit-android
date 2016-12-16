@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gizwits.opensource.gokit"
     android:versionCode="1"
-    android:versionName="2.2.0.072001" >
+    android:versionName="2.3.0.120118" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -10,11 +10,11 @@
 
     <!-- 极光推送 -->
     <permission
-        android:name="com.gizwits.opensource.gokit.permission.JPUSH_MESSAGE"
+        android:name="com.gizwits.opensource.appkit.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
     <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="com.gizwits.opensource.gokit.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="com.gizwits.opensource.appkit.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -60,13 +60,13 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name="com.gizwits.opensource.gokit.GosApplication"
+        android:name="com.gizwits.opensource.appkit.GosApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.gizwits.opensource.gokit.UserModule.GosUserLoginActivity"
+            android:name="com.gizwits.opensource.appkit.UserModule.GosUserLoginActivity"
             android:label="@string/app_name"
             android:theme="@style/My_Start" >
             <intent-filter>
@@ -75,7 +75,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 在此处填写腾讯官网申请的AppID -->
+        <!-- 在此处填写腾讯官网申请的AppKey -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -86,7 +86,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent1105483220" />
+                <data android:scheme="QQ的appkey" />
             </intent-filter>
         </activity>
         <activity
@@ -94,40 +94,42 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- 以下是框架中使用的Activity -->
-        <activity android:name="com.gizwits.opensource.gokit.UserModule.GosRegisterUserActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.UserModule.GosRegisterUserActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.UserModule.GosForgetPasswordActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.UserModule.GosForgetPasswordActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosDeviceReadyActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosDeviceReadyActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosDeviceResetActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosDeviceResetActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosChooseDeviceActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosChooseDeviceActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosConfigCountdownActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosConfigCountdownActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosConfigFailedActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosConfigFailedActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.DeviceModule.GosDeviceListActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.DeviceModule.GosDeviceListActivity" >
         </activity>
         <activity
             android:name="zxing.CaptureActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <activity android:name="com.gizwits.opensource.gokit.SettingsModule.GosSettiingsActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.SettingsModule.GosSettiingsActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.SettingsModule.GosAboutActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.SettingsModule.GosAboutActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosCheckDeviceWorkWiFiActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosCheckDeviceWorkWiFiActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ControlModule.GosDeviceControlActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ControlModule.GosDeviceControlActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosModeListActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosModeListActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosAirlinkChooseDeviceWorkWiFiActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosAirlinkChooseDeviceWorkWiFiActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosAirlinkReadyActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosAirlinkReadyActivity" >
         </activity>
-        <activity android:name="com.gizwits.opensource.gokit.ConfigModule.GosAirlinkConfigCountdownActivity" >
+        <activity android:name="com.gizwits.opensource.appkit.ConfigModule.GosAirlinkConfigCountdownActivity" >
+        </activity>
+        <activity android:name="com.gizwits.opensource.appkit.ControlModule.GosColorsListActivity" >
         </activity>
 
         <!-- 极光推送 -->
@@ -148,18 +150,20 @@
 
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
-        
-        <!-- <service
+
+
+        <!--
+        <service
             android:name="cn.jpush.android.service.DaemonService"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
 
-                <category android:name="com.gizwits.opensource.gokit" />
+                <category android:name="com.gizwits.opensource.appkit" />
             </intent-filter>
-        </service> -->
-       
+        </service>
+        -->
 
 
         <!-- Required -->
@@ -169,7 +173,7 @@
             <intent-filter android:priority="1000" >
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
 
-                <category android:name="com.gizwits.opensource.gokit" />
+                <category android:name="com.gizwits.opensource.appkit" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -192,7 +196,7 @@
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.gizwits.opensource.gokit" />
+                <category android:name="com.gizwits.opensource.appkit" />
             </intent-filter>
         </activity>
         <!-- Required SDK核心功能 -->
@@ -206,7 +210,7 @@
 
         <!-- User defined. 用户自定义的广播接收器 -->
         <receiver
-            android:name="com.gizwits.opensource.gokit.PushModule.JPushReceiver"
+            android:name="com.gizwits.opensource.appkit.PushModule.JPushReceiver"
             android:enabled="true" >
             <intent-filter>
 
@@ -223,7 +227,7 @@
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
 
-                <category android:name="com.gizwits.opensource.gokit" />
+                <category android:name="com.gizwits.opensource.appkit" />
             </intent-filter>
         </receiver>
 
@@ -239,7 +243,7 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="" />
+            android:value="请在这填写" />
 
         <!-- 百度推送 -->
         <!-- push service start -->
@@ -290,7 +294,7 @@
 
 
         <!-- 此处Receiver名字修改为当前包名路径 -->
-        <receiver android:name="com.gizwits.opensource.gokit.PushModule.BaiDuPushReceiver" >
+        <receiver android:name="com.gizwits.opensource.appkit.PushModule.BaiDuPushReceiver" >
             <intent-filter>
 
                 <!-- 接收push消息 -->
@@ -304,10 +308,9 @@
 
         <!-- 微信登录 -->
         <activity
-            android:name="com.gizwits.opensource.gokit.wxapi.WXEntryActivity"
+            android:name="com.gizwits.opensource.appkit.wxapi.WXEntryActivity"
             android:exported="true"
             android:theme="@android:style/Theme.NoDisplay" />
-        <activity android:name=".ControlModule.GosColorsListActivity"></activity>
     </application>
 
 </manifest>

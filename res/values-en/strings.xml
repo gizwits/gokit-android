@@ -176,6 +176,7 @@
     <string name="set_info_failed">failed</string>
     <string name="waiting_device_ready">waiting for device ready</string>
     <string name="set_Alias_Remark">set device info</string>
+    <string name="device_no_ready">No response from device,Please check the running state of device</string>
 
     <!-- AitlinkChooseDeviceWorkWifiActivity -->
     <string name="choose_mode_title">Module type selection</string>

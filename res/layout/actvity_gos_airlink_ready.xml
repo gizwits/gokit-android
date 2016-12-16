@@ -47,7 +47,7 @@
         android:gravity="center_horizontal"
         android:text="@string/airlink_ready_message" />
 
-    <com.gizwits.opensource.gokit.view.GifView
+    <com.gizwits.opensource.appkit.view.GifView
         android:id="@+id/softreset"
         android:layout_width="match_parent"
         android:layout_height="200dp"

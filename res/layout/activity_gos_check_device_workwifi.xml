@@ -87,8 +87,7 @@
             android:hint="@string/softPsw_hint"
             android:inputType="textPassword"
             android:textColorHint="@color/text_gray_light"
-            android:textSize="14sp"
-            android:typeface="normal" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/cbLaws"

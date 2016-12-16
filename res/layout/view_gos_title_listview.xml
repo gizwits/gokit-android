@@ -36,7 +36,7 @@
             android:textColor="@color/black" />
     </LinearLayout>
 
-    <com.gizwits.opensource.gokit.view.SlideListView2
+    <com.gizwits.opensource.appkit.view.SlideListView2
         android:id="@+id/slideListView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +46,6 @@
         android:divider="@color/line_gray"
         android:dividerHeight="0.5dp"
         android:listSelector="@drawable/devicelist_item_selector" >
-    </com.gizwits.opensource.gokit.view.SlideListView2>
+    </com.gizwits.opensource.appkit.view.SlideListView2>
 
 </RelativeLayout>

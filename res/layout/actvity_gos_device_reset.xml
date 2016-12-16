@@ -46,7 +46,7 @@
         android:layout_margin="10dp"
         android:text="@string/resetmessage" />
 
-    <com.gizwits.opensource.gokit.view.GifView
+    <com.gizwits.opensource.appkit.view.GifView
         android:id="@+id/softreset"
         android:layout_width="match_parent"
         android:layout_height="200dp"

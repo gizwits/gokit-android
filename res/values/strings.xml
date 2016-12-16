@@ -176,6 +176,7 @@
     <string name="set_info_failed">设置失败</string>
     <string name="waiting_device_ready">等待设备就绪</string>
     <string name="set_Alias_Remark">设置设备信息</string>
+    <string name="device_no_ready">设备无响应，请检查设备是否正常工作</string>
    
     <!-- AitlinkChooseDeviceWorkWifiActivity -->
     <string name="choose_mode_title">模组类型选择</string>
