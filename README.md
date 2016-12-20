@@ -1,4 +1,4 @@
-Gizwits GoKit App
+Gizwits GoKit Android App
 ==============================
 
     这是一款使用GizWifiSDK的Android开源代码示例APP，可以帮助开发者快速入手使用GizWifiSDK开发连接机智云的物联APP。
