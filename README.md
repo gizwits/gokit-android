@@ -1,9 +1,12 @@
 Gizwits GoKit App
 ==============================
 
+    这是一款使用GizWifiSDK的Android开源代码示例APP，可以帮助开发者快速入手使用GizWifiSDK开发连接机智云的物联APP。
+    
+    GoKit App可作为Wi-Fi设备接入机智云的手机调试工具，功能包含了设备网络配置、用户注册登录、设备状态查询、设备远程控制等功能的参考实现，开发者可通过此开源程序学习物联网硬件相关的App实现方法。
 
-    这是一款使用GizWifiSDK的开源代码示例APP，可以帮助开发者快速入手，使用GizWifiSDK开发连接机智云的物联APP。
-
+    请注意：
+    
     使用机智云开源APP之前，需要先在机智云开发平台创建您自己的产品和应用。
 
     开源App需要使用您申请的AppId、AppSecret以及您自己的产品ProductKey才能正常运行。
@@ -23,9 +26,8 @@ GizWifiSDK 版本号
 
 
 功能介绍
-
-    GoKit主要展示如何使用GizWifiSDK，开发基于GAgent智能硬件APP。项目中用到了大部分主要SDK接口，供使用GizWifiSDK的开发者参
-    考。主要功能如下：
+    
+    项目主要展示如何使用GizWifiSDK开发基于GAgent的智能硬件APP，用到了大部分主要SDK接口，供使用GizWifiSDK的开发者参考。主要功能如下：
 
     ▪	初始化SDK
     ▪   用户登录到云端
